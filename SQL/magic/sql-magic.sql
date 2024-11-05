@@ -1,3 +1,7 @@
+use magic
+go
+
+
 ALTER TABLE card_types DROP CONSTRAINT FK_card_types_cards
 ALTER TABLE monster_types DROP CONSTRAINT FK_monster_types_cards
 ALTER TABLE colors DROP CONSTRAINT FK_colors_cards
