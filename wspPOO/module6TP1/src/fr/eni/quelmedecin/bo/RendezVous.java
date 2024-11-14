@@ -54,11 +54,6 @@ public class RendezVous {
 		System.out.printf("avec le Dr %s%npour ", this.getCreneau().getMedecin().getNom());
 		this.getPatient().afficher();
 	}
-	
-	@Deprecated
-	public String toString() {
-		return "";
-	}
 
 	//ACCESSEURS ET MUTATEURS
 	/**

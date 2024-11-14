@@ -1,6 +1,6 @@
-package test;
+package animal;
 
-class Chien extends Animal {
+class Chien extends Animal implements IManger {
 
 	@Override
 	public void manger() {
