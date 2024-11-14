@@ -1,9 +1,6 @@
 package fr.eni.quelmedecin.bo;
 
-import java.time.LocalDate;
 import java.util.Comparator;
-
-import fr.eni.quelmedecin.bo.MedecinSpecialiste;
 
 public class MedecinComparator implements Comparator<MedecinSpecialiste> {
 
@@ -13,6 +10,4 @@ public class MedecinComparator implements Comparator<MedecinSpecialiste> {
 		return result;
 	}
 	
-	LocalDate test = LocalDate
-
 }
