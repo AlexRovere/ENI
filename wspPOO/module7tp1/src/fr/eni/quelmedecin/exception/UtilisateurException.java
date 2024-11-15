@@ -1,4 +1,4 @@
-package fr.eni.quelmedecin.test;
+package fr.eni.quelmedecin.exception;
 
 public class UtilisateurException extends Exception {
 

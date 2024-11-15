@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+import fr.eni.quelmedecin.exception.ApplicationException;
+
 /**
  * Classe modélisant un créneau horaire pour un médecin
  * 
@@ -12,44 +14,46 @@ import java.time.format.FormatStyle;
  *
  */
 public class Creneau {
-	
-	//ATTRIBUTS D'INSTANCE
+
+	// ATTRIBUTS D'INSTANCE
 	private LocalTime heureDebut;
 	private int duree;
-	//association bidirectionnelle
-	//navigation vers Medecin 0..1
+	// association bidirectionnelle
+	// navigation vers Medecin 0..1
 	private Medecin medecin;
 
-	//CONSTRUCTEURS
+	// CONSTRUCTEURS
 	/**
 	 * Constructeur : crée une instance de type Creneau
 	 * 
 	 * @param heureDebut - heure de début du créneau
-	 * @param duree - durée du créneau en minutes
-	 * @param medecin - médecin possédant ce créneau
+	 * @param duree      - durée du créneau en minutes
+	 * @param medecin    - médecin possédant ce créneau
+	 * @throws ApplicationException
+	 * @throws ApplicationException
 	 */
-	public Creneau(LocalTime heureDebut, int duree, Medecin medecin) {
+	public Creneau(LocalTime heureDebut, int duree, Medecin medecin) throws ApplicationException, ApplicationException {
 		this.setHeureDebut(heureDebut);
 		this.setDuree(duree);
 		this.setMedecin(medecin);
 		medecin.ajouterCreneau(this);
 	}
 
-	//AUTRES METHODES
+	// AUTRES METHODES
 	/**
-	 * Affiche un créneau horaire sous la forme :
-	 * 00:00 - 00:00 (XX minutes)
+	 * Affiche un créneau horaire sous la forme : 00:00 - 00:00 (XX minutes)
 	 */
 	public void afficher() {
 		System.out.printf("%s - %s (%d minutes)%n",
-				this.getHeureDebut().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
-				this.getHeureDebut().plusMinutes(this.getDuree()).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
+				this.getHeureDebut().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)), this.getHeureDebut()
+						.plusMinutes(this.getDuree()).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
 				this.getDuree());
 	}
 
-	//ACCESSEURS ET MUTATEURS
+	// ACCESSEURS ET MUTATEURS
 	/**
 	 * Getter pour heureDebut
+	 * 
 	 * @return l'heure de debut du creneau
 	 * @see Creneau#setHeureDebut(LocalTime)
 	 */
@@ -59,6 +63,7 @@ public class Creneau {
 
 	/**
 	 * Setter pour heureDebut
+	 * 
 	 * @param heureDebut - l'heure de debut du creneau
 	 * @see Creneau#getHeureDebut()
 	 */
@@ -68,6 +73,7 @@ public class Creneau {
 
 	/**
 	 * Getter pour duree
+	 * 
 	 * @return la duree du creneau
 	 * @see Creneau#setDuree(int)
 	 */
@@ -77,6 +83,7 @@ public class Creneau {
 
 	/**
 	 * Setter pour duree
+	 * 
 	 * @param duree - la duree du creneau
 	 * @see Creneau#getDuree()
 	 */
@@ -86,6 +93,7 @@ public class Creneau {
 
 	/**
 	 * Getter pour medecin.
+	 * 
 	 * @return le medecin
 	 * @see Creneau#setMedecin(MedecinGeneraliste)
 	 */
@@ -95,11 +103,17 @@ public class Creneau {
 
 	/**
 	 * Setter pour medecin
+	 * 
 	 * @param medecin - le medecin
+	 * @throws ApplicationException
 	 * @see Creneau#getMedecin()
 	 */
-	public void setMedecin(Medecin medecin) {
-		this.medecin = medecin;
+	public void setMedecin(Medecin medecin) throws ApplicationException {
+		if (medecin != null) {
+			this.medecin = medecin;
+		} else {
+			throw new ApplicationException("Le créneau doit être rattaché à un médecin");
+		}
 	}
 
 }

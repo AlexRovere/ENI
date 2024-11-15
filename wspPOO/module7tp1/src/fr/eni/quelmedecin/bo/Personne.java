@@ -2,7 +2,9 @@ package fr.eni.quelmedecin.bo;
 
 import java.util.Comparator;
 
-import fr.eni.quelmedecin.test.UtilisateurException;
+import fr.eni.quelmedecin.controller.PersonneController;
+import fr.eni.quelmedecin.exception.ApplicationException;
+
 
 public abstract class Personne {
 	private String nom;
@@ -10,7 +12,8 @@ public abstract class Personne {
 	private String numeroDeTelephone;
 	private Adresse adresse;
 
-	public Personne(String nom, String prenom, String numeroDeTelephone, Adresse adresse) throws UtilisateurException {
+	public Personne(String nom, String prenom, String numeroDeTelephone, Adresse adresse)
+			throws ApplicationException {
 		super();
 		this.setNom(nom);
 		this.setPrenom(prenom);
@@ -35,44 +38,33 @@ public abstract class Personne {
 		return nom;
 	}
 
-	public void setNom(String nom) throws UtilisateurException {
-		if (nom != null && !nom.trim().isEmpty() && nom.length() > 0 && nom.length() < 100) {
-			this.nom = nom;
-		} else {
-			throw new UtilisateurException("Le nom doit être renseigné et comporter entre 1 et 100 caractères");
-		}
+	public void setNom(String nom) throws ApplicationException {
+		this.prenom = PersonneController.validerNom(nom);
+
 	}
 
 	public String getPrenom() {
 		return prenom;
 	}
 
-	public void setPrenom(String prenom) throws UtilisateurException {
-		if (prenom != null && !prenom.trim().isEmpty() && prenom.length() > 0 && prenom.length() < 100) {
-			this.prenom = prenom;
-		} else {
-			throw new UtilisateurException("Le prenom doit être renseigné et comporter entre 1 et 100 caractères");
-		}
+	public void setPrenom(String prenom) throws ApplicationException {
+		this.prenom = PersonneController.validerPrenom(prenom);
 	}
 
 	public String getNumeroDeTelephone() {
 		return numeroDeTelephone;
 	}
 
-	public void setNumeroDeTelephone(String numeroDeTelephone) throws UtilisateurException {
-		if(numeroDeTelephone.length() == 10) {
-			this.numeroDeTelephone = numeroDeTelephone;
-		} else {
-			throw new UtilisateurException("Le numéro de téléphone doit avoir 10 caractères si il est renseigné");
-		}
+	public void setNumeroDeTelephone(String numeroDeTelephone) throws ApplicationException {
+		this.numeroDeTelephone = PersonneController.validerNumeroDeTelephone(numeroDeTelephone);
 	}
 
 	public Adresse getAdresse() {
 		return adresse;
 	}
 
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
+	public void setAdresse(Adresse adresse) throws ApplicationException {
+		this.adresse = PersonneController.validerAdresse(adresse);
 	}
 
 }

@@ -1,6 +1,7 @@
 package fr.eni.quelmedecin.bo;
 
-import fr.eni.quelmedecin.test.UtilisateurException;
+import fr.eni.quelmedecin.controller.AdresseController;
+import fr.eni.quelmedecin.exception.ApplicationException;
 
 /**
  * Classe modélisant une adresse française en respectant les recommandations de
@@ -32,10 +33,10 @@ public class Adresse {
 	 * @param rue           - type de voie (rue, avenue, etc.) et nom de celle-ci
 	 * @param cp            - code postal
 	 * @param ville         - nom de la commune
-	 * @throws UtilisateurException
+	 * @throws ApplicationException
 	 */
 	public Adresse(String mentionsCompl, int numero, String complNumero, String rue, int cp, String ville)
-			throws UtilisateurException {
+			throws ApplicationException {
 		this.setMentionsCompl(mentionsCompl);
 		this.setNumero(numero);
 		this.setComplNumero(complNumero);
@@ -53,9 +54,9 @@ public class Adresse {
 	 * @param rue         - type de voie (rue, avenue, etc.) et nom de celle-ci
 	 * @param cp          - code postal
 	 * @param ville       - nom de la commune
-	 * @throws UtilisateurException
+	 * @throws ApplicationException
 	 */
-	public Adresse(int numero, String complNumero, String rue, int cp, String ville) throws UtilisateurException {
+	public Adresse(int numero, String complNumero, String rue, int cp, String ville) throws ApplicationException {
 		this.setNumero(numero);
 		this.setComplNumero(complNumero);
 		this.setRue(rue);
@@ -110,15 +111,11 @@ public class Adresse {
 	 * Setter pour numero
 	 * 
 	 * @param numero - le numero de la rue
-	 * @throws UtilisateurException
+	 * @throws ApplicationException
 	 * @see Adresse#getNumero()
 	 */
-	public void setNumero(int numero) throws UtilisateurException {
-		if (numero > 0) {
-			this.numero = numero;
-		} else {
-			throw new UtilisateurException("Le numéro de rue doit être positif");
-		}
+	public void setNumero(int numero) throws ApplicationException {
+		this.numero = AdresseController.validerNumero(numero);
 	}
 
 	/**
@@ -155,15 +152,12 @@ public class Adresse {
 	 * Setter pour rue
 	 * 
 	 * @param rue - le nom de la rue
-	 * @throws UtilisateurException
+	 * @throws ApplicationException
 	 * @see Adresse#getRue()
 	 */
-	public void setRue(String rue) throws UtilisateurException {
-		if (rue != null && rue.trim().length() > 0) {
-			this.rue = rue;
-		} else {
-			throw new UtilisateurException("La rue doit être renseigné");
-		}
+	public void setRue(String rue) throws ApplicationException {
+		this.rue = AdresseController.validerRue(rue);
+
 	}
 
 	/**
@@ -180,15 +174,11 @@ public class Adresse {
 	 * Setter pour cp
 	 * 
 	 * @param cp - le code postal
-	 * @throws UtilisateurException
+	 * @throws ApplicationException
 	 * @see Adresse#getCp()
 	 */
-	public void setCp(int cp) throws UtilisateurException {
-		if (cp >= 10000 & cp <= 99999) {
-			this.cp = cp;
-		} else {
-			throw new UtilisateurException("Le code postal doit être renseigné");
-		}
+	public void setCp(int cp) throws ApplicationException {
+		this.cp = AdresseController.validerCp(cp);
 	}
 
 	/**
@@ -205,14 +195,10 @@ public class Adresse {
 	 * Setter pour ville
 	 * 
 	 * @param ville - le nom de la ville
-	 * @throws UtilisateurException
+	 * @throws ApplicationException
 	 * @see Adresse#getVille()
 	 */
-	public void setVille(String ville) throws UtilisateurException {
-		if (ville != null && ville.trim().length() > 0) {
-			this.ville = ville;
-		} else {
-			throw new UtilisateurException("La ville doit être renseigné");
-		}
+	public void setVille(String ville) throws ApplicationException {
+		this.ville = AdresseController.validerVille(ville);
 	}
 }

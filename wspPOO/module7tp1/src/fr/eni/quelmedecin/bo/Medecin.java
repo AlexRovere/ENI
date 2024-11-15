@@ -1,6 +1,6 @@
 package fr.eni.quelmedecin.bo;
 
-import fr.eni.quelmedecin.test.UtilisateurException;
+import fr.eni.quelmedecin.exception.ApplicationException;
 
 /**
  * Classe modélisant un médecin généraliste
@@ -27,9 +27,10 @@ public class Medecin extends Personne implements ISoigner {
 	 * @param prenom - prénom du médecin
 	 * @param numeroDeTelephone - numéro de téléphone
 	 * @param adresse - adresse postale du medecin
-	 * @throws UtilisateurException 
+	 * @throws ApplicationException 
+	 * @throws ApplicationException 
 	 */
-	public Medecin(String nom, String prenom, String numeroDeTelephone, Adresse adresse) throws UtilisateurException {
+	public Medecin(String nom, String prenom, String numeroDeTelephone, Adresse adresse) throws ApplicationException, ApplicationException {
 		super(nom.toUpperCase(), prenom, numeroDeTelephone, adresse);
 		creneaux = new Creneau[MAX_CRENEAUX];
 	}
@@ -69,8 +70,9 @@ public class Medecin extends Personne implements ISoigner {
 
 	/**
 	 * @param creneauAAjouter
+	 * @throws ApplicationException 
 	 */
-	void ajouterCreneau(Creneau creneauAAjouter) {
+	void ajouterCreneau(Creneau creneauAAjouter) throws ApplicationException {
 		if (this != creneauAAjouter.getMedecin()) {
 			System.err.println("Ce créneau ne peut être associé à ce médecin car il est déjà associé à un autre");
 		} else {
@@ -78,7 +80,7 @@ public class Medecin extends Personne implements ISoigner {
 			while (pos < this.creneaux.length && this.creneaux[pos] != null)
 				pos++;
 			if (pos == this.creneaux.length)
-				System.err.println("Trop de créneaux sont affectés à ce médecin");
+				throw new ApplicationException("Trop de créneaux sont affectés à ce médecin");
 			else
 				this.creneaux[pos] = creneauAAjouter;
 		}
@@ -96,11 +98,11 @@ public class Medecin extends Personne implements ISoigner {
 		return tarif;
 	}
 
-	public void setTarif(int tarif) throws UtilisateurException {
+	public void setTarif(int tarif) throws ApplicationException {
 		if(tarif > this.tarif) {
 			this.tarif = tarif;
 		} else {
-			throw new UtilisateurException("Le tarif du spécialiste doit être supérieur à celui d'un généraliste");
+			throw new ApplicationException("Le tarif du spécialiste doit être supérieur à celui d'un généraliste");
 		}
 	}
 

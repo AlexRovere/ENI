@@ -5,9 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import fr.eni.quelmedecin.test.UtilisateurException;
+import fr.eni.quelmedecin.exception.ApplicationException;
 
 /**
  * Classe modélisant un patient
@@ -16,31 +15,35 @@ import fr.eni.quelmedecin.test.UtilisateurException;
  * @version 2.0
  */
 public class Patient extends Personne {
-	
-	//ATTRIBUTS D'INSTANCE
+
+	// ATTRIBUTS D'INSTANCE
 	private char sexe;
 	private long numSecu;
 	private LocalDate dateNaissance;
 	private String commentaires;
-	//association unidirectionnelle
-	//navigation vers Adresse 0..1
+	// association unidirectionnelle
+	// navigation vers Adresse 0..1
 
-	//CONSTRUCTEURS
+	// CONSTRUCTEURS
 	/**
 	 * Constructeur : crée une instance de type Patient
 	 * 
-	 * @param nom - nom du patient
-	 * @param prenom - prénom du patient
+	 * @param nom               - nom du patient
+	 * @param prenom            - prénom du patient
 	 * @param numeroDeTelephone - numéro de téléphone du patient
-	 * @param sexe - sexe du patient : 'F' pour Féminin ou 'M' pour Masculin
-	 * @param numSecu - numéro de sécurité sociale du patient
-	 * @param dateNaissance - date de naissance du patient
-	 * @param commentaires - commentaires associé à ce patient (allergie, antécédents médicaux…)
-	 * @param adresse - adresse postale du patient
-	 * @throws UtilisateurException 
+	 * @param sexe              - sexe du patient : 'F' pour Féminin ou 'M' pour
+	 *                          Masculin
+	 * @param numSecu           - numéro de sécurité sociale du patient
+	 * @param dateNaissance     - date de naissance du patient
+	 * @param commentaires      - commentaires associé à ce patient (allergie,
+	 *                          antécédents médicaux…)
+	 * @param adresse           - adresse postale du patient
+	 * @throws ApplicationException
+	 * @throws DeveloppeurException
 	 */
 	public Patient(String nom, String prenom, String numeroDeTelephone, char sexe, long numSecu,
-			LocalDate dateNaissance, String commentaires, Adresse adresse) throws UtilisateurException {
+			LocalDate dateNaissance, String commentaires, Adresse adresse)
+			throws ApplicationException {
 		super(nom.toUpperCase(), prenom, numeroDeTelephone, adresse);
 		this.setSexe(sexe);
 		this.setNumSecu(numSecu);
@@ -48,29 +51,24 @@ public class Patient extends Personne {
 		this.setCommentaires(commentaires);
 	}
 
-	//AUTRES METHODES
+	// AUTRES METHODES
 	/**
-	 * Affiche sur la console sous la forme :
-	 * NOM Prénom
-	 * Téléphone : XXXXXXXXXX
-	 * Sexe : Féminin ou Masculin
-	 * Numéro de Sécurité sociale XXXXXXXXXXXXXXX
-	 * Date de naissance : XX mois XXXX
-	 * Commentaires : XXXXXXXXXXXXXXX ou [aucun commentaire]
-	 * Adresse : Complément
-	 * XXbis rue XXXXXXXXX
-	 * 00000 XXXXXXXXXXXXX
+	 * Affiche sur la console sous la forme : NOM Prénom Téléphone : XXXXXXXXXX Sexe
+	 * : Féminin ou Masculin Numéro de Sécurité sociale XXXXXXXXXXXXXXX Date de
+	 * naissance : XX mois XXXX Commentaires : XXXXXXXXXXXXXXX ou [aucun
+	 * commentaire] Adresse : Complément XXbis rue XXXXXXXXX 00000 XXXXXXXXXXXXX
 	 */
 	public String toString() {
 		String str = String.format(
 				"%s %s%nTéléphone : %s%nSexe : %s%nNuméro de Sécurité sociale : %d%nDate de naissance : %s%nCommentaires : %s%n",
-				this.getNom(), this.getPrenom(), this.getNumeroDeTelephone(), this.getSexe() == 'F' ? "Féminin" : "Masculin",
-				this.getNumSecu(), this.getDateNaissance().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
+				this.getNom(), this.getPrenom(), this.getNumeroDeTelephone(),
+				this.getSexe() == 'F' ? "Féminin" : "Masculin", this.getNumSecu(),
+				this.getDateNaissance().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
 				this.commentaires != null ? this.getCommentaires() : "[aucun commentaire]");
-		
+
 		return str;
 	}
-	
+
 	@Deprecated
 	public String afficher() {
 		return "";
@@ -80,15 +78,15 @@ public class Patient extends Personne {
 		return sexe;
 	}
 
-	public void setSexe(char sexe) throws UtilisateurException {
+	public void setSexe(char sexe) throws ApplicationException {
 		List<Character> chars = new ArrayList<Character>();
 		chars.add('A');
-		chars.add('H');
+		chars.add('M');
 		chars.add('F');
-		if(chars.contains(sexe)) {
-			this.sexe = sexe;
+		if (sexe != 0 && chars.contains((Character) Character.toUpperCase(sexe))) {
+			this.sexe = Character.toUpperCase(sexe);
 		} else {
-			throw new UtilisateurException("Le sexe doit être renseigné au format ('H', 'A', 'F')");
+			throw new ApplicationException("Le sexe doit être renseigné au format ('M', 'A', 'F')");
 		}
 	}
 
@@ -96,12 +94,12 @@ public class Patient extends Personne {
 		return numSecu;
 	}
 
-	public void setNumSecu(long numSecu) throws UtilisateurException {
-		int length = numSecu > 0 ? (int)(Math.log10(numSecu)+1) : 0;
-		if(length == 13) {
+	public void setNumSecu(long numSecu) throws ApplicationException {
+		int length = numSecu > 0 ? (int) (Math.log10(numSecu) + 1) : 0;
+		if (length == 13) {
 			this.numSecu = numSecu;
 		} else {
-			throw new UtilisateurException("Le numéro de sécurité social doit être renseigné et comporter 13 chiffres");
+			throw new ApplicationException("Le numéro de sécurité social doit être renseigné et comporter 13 chiffres");
 		}
 	}
 
@@ -109,12 +107,23 @@ public class Patient extends Personne {
 		return dateNaissance;
 	}
 
-	public void setDateNaissance(LocalDate dateNaissance) throws UtilisateurException {
-		if(dateNaissance != null ) {
-			this.dateNaissance = dateNaissance;
-		} else {
-			throw new UtilisateurException("La date de naissance doit être renseignée");
+	public void setDateNaissance(LocalDate dateNaissance) throws ApplicationException {
+		LocalDate now = LocalDate.now();
+		LocalDate minDate = LocalDate.of(1900, 01, 01);
+		if (dateNaissance == null) {
+			throw new ApplicationException("La date de naissance doit être renseignée");
 		}
+
+		if (dateNaissance.isAfter(now)) {
+			throw new ApplicationException("la date de naissance doit être inferieur à la date du jour");
+		}
+		
+		if( dateNaissance.isBefore(minDate)) {
+			throw new ApplicationException("la date de naissance doit être supérieur au 01/01/1900");
+		}
+		
+		this.dateNaissance = dateNaissance;
+
 	}
 
 	public String getCommentaires() {
@@ -124,7 +133,5 @@ public class Patient extends Personne {
 	public void setCommentaires(String commentaires) {
 		this.commentaires = commentaires;
 	}
-	
-
 
 }

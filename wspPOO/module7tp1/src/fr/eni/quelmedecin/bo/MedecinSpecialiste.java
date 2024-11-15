@@ -1,6 +1,6 @@
 package fr.eni.quelmedecin.bo;
 
-import fr.eni.quelmedecin.test.UtilisateurException;
+import fr.eni.quelmedecin.exception.ApplicationException;
 
 public class MedecinSpecialiste extends Medecin{
 	
@@ -8,11 +8,11 @@ public class MedecinSpecialiste extends Medecin{
 	private String specialite;
 	
 	
-	public MedecinSpecialiste(String nom, String prenom, String numeroDeTelephone, Adresse adresse) throws UtilisateurException {
+	public MedecinSpecialiste(String nom, String prenom, String numeroDeTelephone, Adresse adresse) throws ApplicationException {
 		super(nom, prenom, numeroDeTelephone, adresse);
 	}
 	
-	public MedecinSpecialiste(String nom, String prenom, String numeroDeTelephone, Adresse adresse, String specialite, int tarif) throws UtilisateurException {
+	public MedecinSpecialiste(String nom, String prenom, String numeroDeTelephone, Adresse adresse, String specialite, int tarif) throws ApplicationException {
 		super(nom, prenom, numeroDeTelephone, adresse);
 		super.setTarif(tarif);
 		this.specialite = specialite;
@@ -39,11 +39,11 @@ public class MedecinSpecialiste extends Medecin{
 	}
 
 
-	public void setSpecialite(String specialite) throws UtilisateurException {
+	public void setSpecialite(String specialite) throws ApplicationException {
 		if(specialite != null && specialite.trim().length() > 0) {
 			this.specialite = specialite;
 		} else {
-			throw new UtilisateurException("La spécialité doit être renseignée");
+			throw new ApplicationException("La spécialité doit être renseignée");
 		}
 	}
 

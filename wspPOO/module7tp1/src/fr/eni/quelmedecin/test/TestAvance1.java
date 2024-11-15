@@ -23,8 +23,11 @@ public class TestAvance1 {
 		
 		System.out.println("__________________________ Adresses ______________________________");
 		//cas avec erreurs
+		try {
 		sh = new Adresse("ZAC du Moulin Neuf", -2, "B", null, 800, null);
-			
+		} catch (ApplicationException e) {
+			System.out.println(e.getMessage());
+		}
 		System.out.println("__________________________ Patients ______________________________");
 		
 		//cas avec erreurs (adresse inexistante, sexe incorrect, num secu incorrect, date de naissance incorrecte)
@@ -67,11 +70,13 @@ public class TestAvance1 {
 			System.out.println(e.getMessage());
 		}
 
-
+		try {
 		sh = new Adresse("ZAC du Moulin Neuf", 2, "B", "rue Benjamin Franklin", 44800, "Saint Herblain");
 		nio = new Adresse(19, null, "avenue Léo Lagrange", 79000, "Niort");
 		brest = new Adresse(null, 22, null, "rue de la Mer", 29000, "Brest");
-
+		} catch (ApplicationException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		
 		System.out.println("__________________________ Médecins géneralistes ______________________________");
