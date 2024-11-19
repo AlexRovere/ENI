@@ -3,11 +3,6 @@ package bo;
 
 import java.util.Scanner;
 
-import fr.eni.rallye.bo.Equipage;
-import fr.eni.rallye.bo.Equipe;
-import fr.eni.rallye.bo.Nationalite;
-import fr.eni.rallye.exception.ProgrammeurException;
-import fr.eni.rallye.exception.UtilisateurException;
 
 /**
  * Classe permettant de tester l'application
