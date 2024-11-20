@@ -3,7 +3,7 @@ package bo.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Monsters extends ACards {
+public class Monsters extends Cards {
 	private List<Monster_type> monster_types = new ArrayList<Monster_type>(); // 0..*
 	private int attack;
 	private int defense;
