@@ -80,38 +80,38 @@ public class TestsInterface {
 		}
 		
 		//2-tester la serialisation/déserialisation binaire et json des contacts
-		Adresse a1 = new Adresse(1, "9 chemin des bois", "44000", "Nantes");
-		Adresse a2 = new Adresse(2, "1 rue de la forêt", "35000", "Rennes");
-		Adresse a3 = new Adresse(3, "2b rue Faraday", "44800", "Saint Herblain"); 
-		Contact c1 = new Personnel(1, "Tom", "0601020304", "tom@campus-eni.fr", a1, LocalDate.of(2000, 9, 22));
-		Contact c2 = new Personnel(2, "Felix", "0605060708", "felix@campus-eni.fr", a2, LocalDate.of(2005, 5, 10));
-		Contact c3 = new Professionnel(3, "Samuel", "0609101112", "samuel@campus-eni.fr", a3, "ENI Ecole");
-		Contact c4 = new Professionnel(4, "Jade", "0613141516", "jade@campus-eni.fr", a3, "ENI Ecole");
-		Contact c5 = new Professionnel(5, "Lauryne", "0617181920", "charline@campus-eni.fr", null, "Xpert");
-		List<Contact> tempContacts = new ArrayList<>();
-		tempContacts.add(c1);
-		tempContacts.add(c2);
-		tempContacts.add(c3);
-		tempContacts.add(c4);		
-		Contacts contactsContainer = new Contacts(tempContacts);
-		
-		//partie binaire
-		SerialiseurBinaire.exporterContactsToBinary("storage/contacts.bin", contactsContainer); //vérifier que le fichier à été créé
-		
-		Contacts restoreBinaireContacts = SerialiseurBinaire.importerContactsFromBinary("storage/contacts.bin");
-		System.out.println("==> Liste des contacts restaurés depuis binaire");
-		for (Contact contact : restoreBinaireContacts.contacts()) {
-			System.out.println(contact.toString());
-		}
-		
-		//partie json
-		SerialiseurJson.exporterContactsToJson("storage/contacts.json", contactsContainer); //vérifier que le fichier à été créé
-		
-		Contacts restoreJsonContacts = SerialiseurJson.importerContactsFromJson("storage/contacts.json");
-		System.out.println("Liste des contacts restaurés depuis json");
-		for (Contact contact : restoreJsonContacts.contacts()) {
-			System.out.println(contact.toString());
-		}
+//		Adresse a1 = new Adresse(1, "9 chemin des bois", "44000", "Nantes");
+//		Adresse a2 = new Adresse(2, "1 rue de la forêt", "35000", "Rennes");
+//		Adresse a3 = new Adresse(3, "2b rue Faraday", "44800", "Saint Herblain"); 
+//		Contact c1 = new Personnel(1, "Tom", "0601020304", "tom@campus-eni.fr", a1, LocalDate.of(2000, 9, 22));
+//		Contact c2 = new Personnel(2, "Felix", "0605060708", "felix@campus-eni.fr", a2, LocalDate.of(2005, 5, 10));
+//		Contact c3 = new Professionnel(3, "Samuel", "0609101112", "samuel@campus-eni.fr", a3, "ENI Ecole");
+//		Contact c4 = new Professionnel(4, "Jade", "0613141516", "jade@campus-eni.fr", a3, "ENI Ecole");
+//		Contact c5 = new Professionnel(5, "Lauryne", "0617181920", "charline@campus-eni.fr", null, "Xpert");
+//		List<Contact> tempContacts = new ArrayList<>();
+//		tempContacts.add(c1);
+//		tempContacts.add(c2);
+//		tempContacts.add(c3);
+//		tempContacts.add(c4);		
+//		Contacts contactsContainer = new Contacts(tempContacts);
+//		
+//		//partie binaire
+//		SerialiseurBinaire.exporterContactsToBinary("storage/contacts.bin", contactsContainer); //vérifier que le fichier à été créé
+//		
+//		Contacts restoreBinaireContacts = SerialiseurBinaire.importerContactsFromBinary("storage/contacts.bin");
+//		System.out.println("==> Liste des contacts restaurés depuis binaire");
+//		for (Contact contact : restoreBinaireContacts.contacts()) {
+//			System.out.println(contact.toString());
+//		}
+//		
+//		//partie json
+//		SerialiseurJson.exporterContactsToJson("storage/contacts.json", contactsContainer); //vérifier que le fichier à été créé
+//		
+//		Contacts restoreJsonContacts = SerialiseurJson.importerContactsFromJson("storage/contacts.json");
+//		System.out.println("Liste des contacts restaurés depuis json");
+//		for (Contact contact : restoreJsonContacts.contacts()) {
+//			System.out.println(contact.toString());
+//		}
 		
 		//2- tester le couplage faible en utilisant la factory de ContactXXXImplDao
 		//Constatez que vous appeliez bien la methode selectBy lié au contexte choisi

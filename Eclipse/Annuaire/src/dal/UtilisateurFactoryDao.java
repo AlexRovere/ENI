@@ -6,8 +6,8 @@ import dal.impl.UtilisateurJsonImplDao;
 public abstract class UtilisateurFactoryDao {
 
 	public static UtilisateurDao createInstance(String dao) {
-		if(dao == "json") return jsonImpl();
-		if(dao == "binary") return binaryImpl();
+		if(dao.equals("json")) return jsonImpl();
+		if(dao.equals("binary")) return binaryImpl();
 		return null;
 	}
 
