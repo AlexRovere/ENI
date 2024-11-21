@@ -1,6 +1,8 @@
+package bo;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Personnel extends Contact {
+public class Personnel extends Contact implements Serializable {
 	LocalDate dateAnniversaire;
 
 	public Personnel(long numero, String nom, String telephone, String adresseMail, Adresse adresse, LocalDate dateAnniversaire ) {
@@ -8,6 +10,10 @@ public class Personnel extends Contact {
 		this.dateAnniversaire = dateAnniversaire;
 	}
 	
+	public Personnel() {
+		super();
+	}
+
 	public int getAge() {
 		int age = this.getDateAnnivesaire().getYear() - LocalDate.now().getYear();
 		return age;

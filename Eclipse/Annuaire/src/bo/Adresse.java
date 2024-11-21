@@ -1,11 +1,14 @@
+package bo;
 
-public class Adresse {
+import java.io.Serializable;
+
+public class Adresse implements Serializable {
 	private long code;
 	private String rue;
 	private String codePostal;
 	private String ville;
 	
-	public Adresse(long code, String rue, String codePostal, String ville) {
+	public Adresse(long code, String rue, String codePostal, String ville)  {
 		super();
 		this.code = code;
 		this.rue = rue;

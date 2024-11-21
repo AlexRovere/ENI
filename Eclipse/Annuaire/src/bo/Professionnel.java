@@ -1,6 +1,14 @@
+package bo;
 
-public class Professionnel extends Contact {
+import java.io.Serializable;
+
+public class Professionnel extends Contact implements Serializable {
+	
 	String nomEntreprise;
+	
+	public Professionnel() {
+		super();
+	}
 
 	public Professionnel(long numero, String nom, String telephone, String adresseMail, Adresse adresse, String nomEntreprise ) {
 		super(numero, nom, telephone, adresseMail, adresse);

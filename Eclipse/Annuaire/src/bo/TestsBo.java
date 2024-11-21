@@ -1,7 +1,11 @@
+package bo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import data.Contacts;
+import data.Utilisateurs;
 
 
 public class TestsBo {
