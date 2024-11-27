@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chifoumi</title>
+</head>
+<body>
+	<h1>Jouer !</h1>
+	
+	<div   style="display: flex; gap: 100px; flex-direction: column">
+
+	<div style="display: flex; gap: 100px">
+		<a href="/jouer?value=chi"><img src="chi.png"></a> <a
+			href="/jouer?value=fou"> <img src="fou.png"></a> <a
+			href="/jouer?value=mi"> <img src="mi.png"></a>
+	</div>
+
+
+	<form action="jouer" method="post">
+		<div style="display: flex; gap: 100px">
+		
+			<div>
+				<a href="/jouer?value=chi"><img src="chi.png"></a> <input
+					type="radio" name="value" value="chi" />
+			</div>
+			
+			<div>
+				<a href="/jouer?value=fou"> <img src="fou.png"></a> <input
+					type="radio" name="value"  value="fou" />
+			</div>
+
+			<div>
+				<a href="/jouer?value=mi"> <img src="mi.png"></a>
+				<input
+					type="radio" name="value"  value="mi" />
+			</div>
+			
+		</div>
+		<button>Valider</button>
+	</form>
+	</div>
+</body>
+</html>
