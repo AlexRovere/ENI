@@ -1,0 +1,47 @@
+<div class="container mx-auto">
+    Ajouter le jeu
+
+    <form class="flex flex-col gap-5" action="/jeux/ajouter" method="post" th:object="${jeu}">
+
+        <div class="flex gap-5">
+            <label for="titre">Nom : </label>
+            <input class="border" type="text" th:field="*{titre}" id="titre">
+        </div>
+
+        <div  class="flex gap-5">
+            <label for="reference">Référence :</label>
+            <input type="text" th:field="*{reference}" id="reference">
+        </div>
+
+        <div  class="flex gap-5">
+            <label for="ageMin">Age minimum :</label>
+            <input type="text" th:field="*{ageMin}" id="ageMin">
+        </div>
+
+        <div  class="flex gap-5">
+            <label for="description">Description :</label>
+            <input type="text" th:field="*{description}" id="description">
+        </div>
+
+        <div  class="flex gap-5">
+            <label for="dureeMoyenne">Durée moyenne :</label>
+            <input type="number" th:field="*{dureeMoyenne}" id="dureeMoyenne">
+        </div>
+
+        <div  class="flex gap-5">
+            <label for="tarifJournee">Tarif journalier :</label>
+            <input type="number" th:field="*{tarifJournee}" id="tarifJournee">
+        </div>
+
+<!--        <div  class="flex gap-5" th:object="${genres}">-->
+<!--            <label for="genres">Genres</label>-->
+<!--            <select class="border" id="genres" name="genres" multiple>-->
+<!--                <option th:each="genre: ${genres}" th:value="${genre.id}"-->
+<!--                        th:text="${genre.label}"></option>-->
+<!--            </select>-->
+<!--        </div>-->
+
+        <button type="submit">Créer</button>
+
+    </form>
+</div>

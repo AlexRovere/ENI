@@ -1,0 +1,29 @@
+<div class="container mx-auto">
+    Ajouter le client
+
+    <form action="/clients/ajouter" method="post" th:object="${client}">
+
+        <div>
+            <label for="nom">Nom : </label>
+        <input type="text" th:field="*{nom}" id="nom">
+        </div>
+
+        <div>
+            <label for="prenom">Prénom :</label>
+        <input type="text" th:field="*{prenom}" id="prenom">
+        </div>
+
+        <div>
+            <label for="email">email :</label>
+            <input type="text" th:field="*{email}" id="email">
+        </div>
+
+        <div>
+            <label for="adresse">adresse :</label>
+            <input type="text" th:field="*{adresse}" id="adresse">
+        </div>
+
+        <button type="submit">Créer</button>
+
+    </form>
+</div>
