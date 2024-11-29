@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Démo formulaire objet</title>
+</head>
+<body>
+	<h1>Démo formulaire objet</h1>
+
+	
+	
+	<form action="/ajoutPersonne" method="post" th:object="${personne}">
+		<div>
+		<label for="prenom">Prenom : </label>
+		<input type="text" th:field="*{prenom}" id="prenom" >
+		</div>
+		<div>
+		<label for="nom">Nom : </label>
+		<input type="text" th:field="*{nom}" id="nom">
+		</div>
+		<div>
+		<label for="age">Age : </label>
+		<input type="number" th:field="*{age}" id="age">
+		</div>
+		<div><select th:field="*{metier}" >
+			<option value="1">Vigneron.ne</option>
+			<option value="2">Estheticien.ne</option>
+			<option value="3">Bucheron.ne</option>
+			</select>
+		</div>
+		<button>Dire bonjour en post ! </button>		
+	</form>
+	
+	
+	<!-- Afficher la liste de toutes les personnes  -->
+	<table>
+	 	<tr th:each="personne : ${personnes}">	 	
+	 		<td th:text="${personne.nom}"></td>
+	 		<td th:text="${personne.prenom}"></td>
+	 		<td th:text="${personne.age}"></td>
+	 		<td th:text="${personne.metier.libelle}"></td>
+	 	</tr>
+	</table>
+	
+</body>
+</html>

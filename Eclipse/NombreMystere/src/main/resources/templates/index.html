@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Nombre Mystère</h1>
+
+	<h2>Essayez de découvrir le nombre mystère entre 1 et 50</h2>
+
+	<div th:if="${computerNumber}">
+		Nombre à trouver <span th:text="${computerNumber}"> Nombre à
+			trouver 
+	</div>
+
+	<div th:if="${computerNumber}">
+		Essais restants <span th:text="${tryLeft}"></span>
+	</div>
+	<div th:if="${resultat}">
+
+		<span th:text="${resultat}"></span>
+		<div>
+			<span th:text="${helper}"></span>
+		</div>
+	</div>
+
+	<div>
+		Votre proprosition <span th:text="${userNumber}"></span>
+		<form action="/" method="post">
+			<input required type="number" name="userNumber">
+			<div>
+				<button th:attr="disabled=${userWin}">Jouer</button>
+				<a href="/?reset=true"><button type="button"><span th:text="${userWin != null && userWin || tryLeft != null && tryLeft < 1  ?  'Rejouer' : 'Arreter le jeu' }"></span></button></a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -12,4 +12,10 @@ public class HomeController {
         model.addAttribute("body", "pages/game");
         return "index";
     }
+
+    @GetMapping("/clients")
+    public String clients(Model model) {
+        model.addAttribute("body", "pages/clients");
+        return "index";
+    }
 }
