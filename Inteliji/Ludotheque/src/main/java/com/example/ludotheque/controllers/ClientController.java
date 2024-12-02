@@ -40,9 +40,9 @@ public class ClientController {
         return "redirect:/clients";
     }
 
-    @GetMapping("/clients/modifier/{id}")
-    public String getModifierClient(Model model, @PathVariable("id") int id) {
-        Optional<Client> client = clientService.getById(id);
+    @GetMapping("/clients/modifier/{noClient}")
+    public String getModifierClient(Model model, @PathVariable("noClient") int noClient) {
+        Optional<Client> client = clientService.getById(noClient);
         if (client.isPresent()) {
             model.addAttribute("client", client);
             model.addAttribute("body", "pages/clients/modifierClient");
@@ -55,15 +55,14 @@ public class ClientController {
 
     @PostMapping("/clients/modifier")
     public String postModifierClient(Model model, Client client) {
-        System.out.println("controller update client");
         clientService.update(client);
         model.addAttribute("body", "pages/clients/clients");
         return "redirect:/clients";
     }
 
-    @GetMapping("/clients/supprimer/{id}")
-    public String supprimerClient(Model model, @PathVariable("id") int id) {
-        clientService.delete(id);
+    @GetMapping("/clients/supprimer/{noClient}")
+    public String supprimerClient(Model model, @PathVariable("noClient") int noClient) {
+        clientService.delete(noClient);
         model.addAttribute("body", "pages/clients/clients");
         return "redirect:/clients";
     }

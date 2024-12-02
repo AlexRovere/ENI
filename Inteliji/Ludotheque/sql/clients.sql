@@ -1,0 +1,3 @@
+insert into clients (nom, prenom, email, no_tel, rue, code_postal, ville) VALUES ('rovere', 'alex',  'rovere@gmail.com', '0601010101', '18 rue des anges', '75013', 'paris');
+insert into clients  (nom, prenom, email, no_tel, rue, code_postal, ville) VALUES ('dupont', 'jean', 'dupont@gmail.com', '0602020202', '65 rue maréchal joffre', '75000', 'paris' );
+insert into clients  (nom, prenom, email, no_tel, rue, code_postal, ville) VALUES ('doe', 'john', 'do@gmail.com', '0603030303', '35 bd des marbres', '83100', 'toulon');

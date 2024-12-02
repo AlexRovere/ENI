@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Projet 3</title>
+</head>
+<body>
+	<h1 th:text="${'coucou !'}">Bonjour !!!</h1>
+	
+	<h1 data-th-text="${'Bonjour ' + personne.prenom}">Bonjour !!!</h1>
+	
+	<h1 >Bonjour [[${personne.nom}]]!!!</h1>
+	
+	<h1 >Bonjour <span th:text="${personne.getPrenom()}">prenom</span>!!!</h1>
+	
+	<h1 th:text="${personne.afficherBonjour()}"> Bonjour !!</h1>
+	
+	<div th:if="${personne.age >= 18}">
+		Contenu pour personne majeure !
+	</div>
+	
+	<div th:if="${personne.age < 18}">
+		Contenu pour personne mineure !
+	</div>
+
+	
+	<a href="/accueil">Retour à l'accueil !!!</a>
+
+</body>
+</html>
