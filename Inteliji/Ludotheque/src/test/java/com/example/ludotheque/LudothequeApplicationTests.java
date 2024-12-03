@@ -1,7 +1,7 @@
 package com.example.ludotheque;
 
 import com.example.ludotheque.bo.Client;
-import com.example.ludotheque.dal.ClientRepositoryImpl;
+import com.example.ludotheque.dal.ClientRepositoryJdbcImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,7 @@ import java.util.Optional;
 class LudothequeApplicationTests {
 
     @Autowired
-    private ClientRepositoryImpl clientImpl;
+    private ClientRepositoryJdbcImpl clientImpl;
 
     @Test
     void contextLoads() {

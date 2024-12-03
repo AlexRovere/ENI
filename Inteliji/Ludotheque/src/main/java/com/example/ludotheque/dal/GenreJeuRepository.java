@@ -24,7 +24,7 @@ public class GenreJeuRepository implements IGenreJeuRepository {
     @Override
     public void add(GenreJeu genreJeu) {
         idxGenreJeu++;
-        genreJeu.setId(idxGenreJeu);
+        genreJeu.setNoGenre(idxGenreJeu);
         this.genreJeux.add(genreJeu);
     }
 
@@ -35,11 +35,11 @@ public class GenreJeuRepository implements IGenreJeuRepository {
 
     @Override
     public  Optional<GenreJeu> getById(int id) {
-        return this.genreJeux.stream().filter(c ->  c.getId() == id).findFirst();
+        return this.genreJeux.stream().filter(c ->  c.getNoGenre() == id).findFirst();
     }
 
     public void update(GenreJeu genreJeu) {
-        Optional<GenreJeu> oldGenreJeuOptional = getById(genreJeu.getId());
+        Optional<GenreJeu> oldGenreJeuOptional = getById(genreJeu.getNoGenre());
         if (oldGenreJeuOptional.isPresent()) {
             GenreJeu oldGenreJeu = oldGenreJeuOptional.get();
             oldGenreJeu.setLibelle(genreJeu.getLibelle());

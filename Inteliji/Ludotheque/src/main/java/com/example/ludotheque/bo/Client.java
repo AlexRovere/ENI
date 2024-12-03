@@ -20,8 +20,6 @@ public class Client {
 	@NotBlank
 	private String email;
 
-	@Size(min = 8, max=12)
-	@NotBlank
 	private String noTel;
 
 	@Size(min = 3, max=50)

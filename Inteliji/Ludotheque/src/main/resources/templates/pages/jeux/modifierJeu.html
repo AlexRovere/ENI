@@ -4,7 +4,7 @@
     <form action="/jeux/modifier" method="post" th:object="${jeu}">
 
 
-        <input type="hidden" th:field="*{id}" id="id">
+        <input type="hidden" th:field="*{noJeu}" id="id">
 
         <div>
             <label for="titre">Nom : </label>
@@ -27,8 +27,8 @@
         </div>
 
         <div>
-            <label for="dureeMoyenne">Durée moyenne :</label>
-            <input type="number" th:field="*{dureeMoyenne}" id="dureeMoyenne">
+            <label for="duree">Durée :</label>
+            <input type="number" th:field="*{duree}" id="duree">
         </div>
 
         <div>

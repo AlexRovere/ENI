@@ -1,47 +1,79 @@
 <div class="container mx-auto">
-    Ajouter le jeu
 
-    <form class="flex flex-col gap-5" action="/jeux/ajouter" method="post" th:object="${jeu}">
-
-        <div class="flex gap-5">
-            <label for="titre">Nom : </label>
-            <input class="border" type="text" th:field="*{titre}" id="titre">
+    <form class="max-w-sm mx-auto" action="/jeux/ajouter" method="post" th:object="${jeu}">
+        <h1 class="mx-auto text-center text-md my-5">    Créer un jeu
+        </h1>
+        <div style="color: red;" th:if="${#fields.hasAnyErrors()}" >
+            <p>Le formulaire comporte des erreurs</p>
         </div>
 
-        <div  class="flex gap-5">
-            <label for="reference">Référence :</label>
-            <input type="text" th:field="*{reference}" id="reference">
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Titre</label>
+            <input  type="text" th:field="*{titre}" id="titre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('titre')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
         </div>
 
-        <div  class="flex gap-5">
-            <label for="ageMin">Age minimum :</label>
-            <input type="text" th:field="*{ageMin}" id="ageMin">
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Référence</label>
+            <input type="number" th:field="*{reference}" id="reference"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('reference')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
         </div>
 
-        <div  class="flex gap-5">
-            <label for="description">Description :</label>
-            <input type="text" th:field="*{description}" id="description">
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Age Minimum</label>
+            <input type="number" min="0" max="99" step="1" th:field="*{ageMin}" id="ageMin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('ageMin')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
         </div>
 
-        <div  class="flex gap-5">
-            <label for="dureeMoyenne">Durée moyenne :</label>
-            <input type="number" th:field="*{dureeMoyenne}" id="dureeMoyenne">
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Déscription</label>
+            <input type="text" th:field="*{description}" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('description')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
         </div>
 
-        <div  class="flex gap-5">
-            <label for="tarifJournee">Tarif journalier :</label>
-            <input type="number" th:field="*{tarifJournee}" id="tarifJournee">
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Durée (minutes)</label>
+            <input type="number" min="0" max="1000" step="1" th:field="*{duree}" id="duree" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('duree')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
         </div>
 
-<!--        <div  class="flex gap-5" th:object="${genres}">-->
-<!--            <label for="genres">Genres</label>-->
-<!--            <select class="border" id="genres" name="genres" multiple>-->
-<!--                <option th:each="genre: ${genres}" th:value="${genre.id}"-->
-<!--                        th:text="${genre.label}"></option>-->
-<!--            </select>-->
-<!--        </div>-->
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Tarif journalier</label>
+            <input type="number" min="0" max="10000" th:field="*{tarifJournee}" id="tarifJournee" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('tarifJournee')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
+        </div>
 
-        <button type="submit">Créer</button>
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genres</label>
+            <select multiple th:field="*{genres}" id="genres" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option th:each="genre : ${genres}" th:value="${genre.noGenre}" >[[${genre.noGenre}]]  [[${genre.libelle}]]</option>
+            </select>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('tarifJournee')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
+        </div>
 
+        <div class="mx-auto flex justify-around">
+            <button type="button"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <a th:href="@{/jeux}">Retour</a>
+            </button>
+
+            <button type="submit" class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                Créer
+            </button>
+        </div>
     </form>
+
 </div>

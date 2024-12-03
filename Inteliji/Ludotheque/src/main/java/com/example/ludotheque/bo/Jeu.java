@@ -4,45 +4,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu {
-	private int id;
+	private int noJeu;
 	private String titre;
 	private int reference;
 	private int ageMin;
 	private String description;
-	private int dureeMoyenne;
+	private int duree;
 	private float tarifJournee;
 	private List<GenreJeu> genres = new ArrayList<>();
 
-
-	public Jeu(String titre, int reference, int ageMin, String description, int dureeMoyenne, float tarifJournee, List<GenreJeu> genres) {
+	public Jeu(String titre, int reference, int ageMin, String description, int duree, float tarifJournee, List<GenreJeu> genres) {
 		this.titre = titre;
 		this.reference = reference;
 		this.ageMin = ageMin;
 		this.description = description;
-		this.dureeMoyenne = dureeMoyenne;
+		this.duree = duree;
 		this.tarifJournee = tarifJournee;
 		this.genres = genres;
 	}
 
-	public Jeu(String titre, int reference, int ageMin, String description, int dureeMoyenne, float tarifJournee) {
+	public Jeu(String titre, int reference, int ageMin, String description, int duree, float tarifJournee) {
 		this.titre = titre;
 		this.reference = reference;
 		this.ageMin = ageMin;
 		this.description = description;
-		this.dureeMoyenne = dureeMoyenne;
+		this.duree = duree;
 		this.tarifJournee = tarifJournee;
+	}
+
+	@Override
+	public String toString() {
+		return "Jeu{" +
+				"noJeu=" + noJeu +
+				", titre='" + titre + '\'' +
+				", reference=" + reference +
+				", ageMin=" + ageMin +
+				", description='" + description + '\'' +
+				", duree=" + duree +
+				", tarifJournee=" + tarifJournee +
+				", genres=" + genres +
+				'}';
 	}
 
 	public Jeu() {
 		super();
 	}
 
-	public int getId() {
-		return id;
+	public int getNoJeu() {
+		return noJeu;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setNoJeu(int noJeu) {
+		this.noJeu = noJeu;
 	}
 
 	public String getTitre() {
@@ -77,12 +90,12 @@ public class Jeu {
 		this.description = description;
 	}
 
-	public int getDureeMoyenne() {
-		return dureeMoyenne;
+	public int getDuree() {
+		return duree;
 	}
 
-	public void setDureeMoyenne(int dureeMoyenne) {
-		this.dureeMoyenne = dureeMoyenne;
+	public void setDuree(int duree) {
+		this.duree = duree;
 	}
 
 	public float getTarifJournee() {

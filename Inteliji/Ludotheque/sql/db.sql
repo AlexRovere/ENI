@@ -1,6 +1,3 @@
--- Table: public.clients
-
--- DROP TABLE IF EXISTS public.clients;
 
 CREATE TABLE IF NOT EXISTS public.clients
 (
@@ -12,9 +9,42 @@ CREATE TABLE IF NOT EXISTS public.clients
     rue varchar NOT NULL,
     code_postal int NOT NULL,
     ville varchar NOT NULL
-)
+);
 
-    TABLESPACE pg_default;
+CREATE TABLE IF NOT EXISTS public.jeu
+(
+    no_jeu integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    titre varchar NOT NULL,
+    reference integer NOT NULL,
+    description varchar,
+    tarif_journee numeric NOT NULL,
+    age_min integer NOT NULL,
+    duree integer,
+    CONSTRAINT jeu_pkey PRIMARY KEY (no_jeu),
+    CONSTRAINT "UQ_jeu_reference" UNIQUE (reference)
+);
 
-ALTER TABLE IF EXISTS public.clients
-    OWNER to postgres;
+CREATE TABLE IF NOT EXISTS public.genres
+(
+    no_genre integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    libelle character varying COLLATE pg_catalog."default",
+    CONSTRAINT genres_pkey PRIMARY KEY (no_genre)
+);
+
+CREATE TABLE IF NOT EXISTS public.jeu_genre
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    no_jeu integer NOT NULL,
+    no_genre integer NOT NULL,
+    CONSTRAINT jeu_genre_pkey PRIMARY KEY (id),
+    CONSTRAINT "FK_jeu_genre_genre" FOREIGN KEY (no_genre)
+        REFERENCES public.genres (no_genre) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT "FK_jeu_genre_jeu" FOREIGN KEY (no_jeu)
+        REFERENCES public.jeu (no_jeu) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+

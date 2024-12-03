@@ -17,12 +17,12 @@ import java.util.Optional;
 
 @Primary
 @Repository
-public class ClientRepositoryImpl implements IClientRepository {
+public class ClientRepositoryJdbcImpl implements IClientRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private JdbcTemplate jdbcTemplate;
 
-    public ClientRepositoryImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public ClientRepositoryJdbcImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
@@ -42,7 +42,7 @@ public class ClientRepositoryImpl implements IClientRepository {
 
     @Override
     public Optional<Client> getById(int id) {
-        String sql = "select * from clients where id= ?";
+        String sql = "select * from clients where no_client= ?";
        Client client = jdbcTemplate.queryForObject(sql, (ResultSet rs, int rowNum) -> {
             Client c = new Client();
             c.setNoClient(rs.getInt("no_client"));
@@ -62,13 +62,13 @@ public class ClientRepositoryImpl implements IClientRepository {
 
     @Override
     public void update(Client client) {
-    String sql = "update clients SET nom = :nom, prenom = :prenom, email = :email, no_tel = :noTel, rue = :rue, code_postal = :codePostal, ville = :ville where id = :id" ;
+    String sql = "update clients SET nom = :nom, prenom = :prenom, email = :email, no_tel = :noTel, rue = :rue, code_postal = :codePostal, ville = :ville where no_client = :noClient" ;
         namedParameterJdbcTemplate.update(sql, new BeanPropertySqlParameterSource(client));
     }
 
     @Override
     public void delete(int id) {
-    String sql = "delete from clients where id = :id";
+    String sql = "delete from clients where no_client = :id";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
     namedParameterJdbcTemplate.update(sql, params);

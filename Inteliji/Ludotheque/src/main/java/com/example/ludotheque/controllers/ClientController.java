@@ -1,10 +1,17 @@
 package com.example.ludotheque.controllers;
 
 import com.example.ludotheque.bo.Client;
+import com.example.ludotheque.bo.GenreJeu;
+import com.example.ludotheque.services.GenreJeuService;
 import com.example.ludotheque.services.IClientService;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,10 +19,18 @@ import java.util.Optional;
 @Controller
 public class ClientController {
 
+    Logger logger = LoggerFactory.getLogger(ClientController.class);
+    private final GenreJeuService genreJeuService;
     IClientService clientService;
 
-    ClientController(IClientService clientService) {
+    ClientController(IClientService clientService, GenreJeuService genreJeuService) {
         this.clientService = clientService;
+        this.genreJeuService = genreJeuService;
+    }
+
+    @ModelAttribute("client")
+    public Client createClient() {
+        return  new Client();
     }
 
     @GetMapping({"/clients", "/"})
@@ -28,15 +43,21 @@ public class ClientController {
 
     @GetMapping("/clients/ajouter")
     public String pageAjouterClient(Model model) {
-        model.addAttribute("client", new Client());
         model.addAttribute("body", "pages/clients/ajouterClient");
         return "index";
     }
 
     @PostMapping("/clients/ajouter")
-    public String ajouterClient(Model model, Client client) {
-        clientService.add(client);
+    public String ajouterClient(Model model, @Valid @ModelAttribute("client") Client client, BindingResult result,
+                                RedirectAttributes redirectAttr) {
         model.addAttribute("body", "pages/clients/ajouterClient");
+
+        if(result.hasErrors()){
+            redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.client", result);
+            redirectAttr.addFlashAttribute("client", client);
+            return "redirect:/clients/ajouter";
+        }
+        clientService.add(client);
         return "redirect:/clients";
     }
 

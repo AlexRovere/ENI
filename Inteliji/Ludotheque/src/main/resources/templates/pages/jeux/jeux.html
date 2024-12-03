@@ -1,19 +1,22 @@
-<div class="container mx-auto">
-    <h1>Liste des jeux</h1>
+<div class="container mx-auto py-5">
+    <div class="flex justify-between items-center">
+        <h1 class="text-lg">Liste des jeux</h1>
 
-    <a href="/jeux/ajouter" class="rounded border-2 border-sky-500">Ajouter un jeu</a>
-
-    <table  class="min-w-full table-auto border-collapse">
+        <button><a href="/jeux/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            Ajouter un jeu</a>
+        </button>
+    </div>
+    <table class="min-w-full table-auto border-collapse mt-5">
         <thead>
         <tr>
-            <td class="px-4 py-2 border border-sky-500">ID</td>
+            <td class="px-4 py-2 border border-sky-500">Numéro de jeu</td>
             <td class="px-4 py-2 border border-sky-500" >Titre</td>
             <td class="px-4 py-2 border border-sky-500">Référence</td>
             <td class="px-4 py-2 border border-sky-500">Description</td>
             <td class="px-4 py-2 border border-sky-500">Age minimum</td>
-            <td class="px-4 py-2 border border-sky-500">Durée moyenne</td>
+            <td class="px-4 py-2 border border-sky-500">Durée</td>
             <td class="px-4 py-2 border border-sky-500">Tarif journalier</td>
-<!--            <td>Genres</td>-->
+            <td class="px-4 py-2 border border-sky-500">Genres</td>
             <td class="px-4 py-2 border border-sky-500">Actions</td>
 
 
@@ -21,21 +24,22 @@
         </thead>
         <tbody>
         <tr th:each="jeu: ${jeux}">
-            <td class="px-4 py-2 border border-sky-500" th:text="${jeu.id}"></td>
+
+            <td class="px-4 py-2 border border-sky-500" th:text="${jeu.noJeu}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.titre}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.reference}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.description}"></td>
 
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.ageMin}"></td>
-            <td class="px-4 py-2 border border-sky-500" th:text="${jeu.dureeMoyenne}"></td>
+            <td class="px-4 py-2 border border-sky-500" th:text="${jeu.duree}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.tarifJournee}"></td>
-<!--            <td th:text="${jeu.genres}"></td>-->
+            <td class="px-4 py-2 border border-sky-500" ><span th:each="jeu : ${jeu.genres}" th:text="${jeu.libelle} + ' '"></span></td>
 
             <td class="px-4 py-2 border border-sky-500">
-                <a th:href="@{'/jeux/modifier/' + ${jeu.id}}" class="text-blue-500 hover:text-blue-700">
+                <a th:href="@{'/jeux/modifier/' + ${jeu.noJeu}}" class="text-blue-500 hover:text-blue-700">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
-                <a th:href="@{'/jeux/supprimer/' + ${jeu.id}}" class="text-red-500 hover:text-red-700 ml-4">
+                <a th:href="@{'/jeux/supprimer/' + ${jeu.noJeu}}" class="text-red-500 hover:text-red-700 ml-4">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>

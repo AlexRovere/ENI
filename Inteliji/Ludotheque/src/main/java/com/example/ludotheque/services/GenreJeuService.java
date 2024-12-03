@@ -24,6 +24,7 @@ public class GenreJeuService implements IGenreJeuService {
 
     @Override
     public List<GenreJeu> getAll() {
+        System.out.println(genreJeuRepository.getAll().getFirst().getNoGenre());
         return genreJeuRepository.getAll();
     }
 
