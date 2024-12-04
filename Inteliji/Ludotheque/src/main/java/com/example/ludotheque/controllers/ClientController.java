@@ -1,7 +1,6 @@
 package com.example.ludotheque.controllers;
 
 import com.example.ludotheque.bo.Client;
-import com.example.ludotheque.bo.GenreJeu;
 import com.example.ludotheque.services.GenreJeuService;
 import com.example.ludotheque.services.IClientService;
 import jakarta.validation.Valid;
@@ -37,20 +36,20 @@ public class ClientController {
     public String clients(Model model) {
         List<Client> clients = clientService.getAll();
         model.addAttribute("clients", clients);
-        model.addAttribute("body", "pages/clients/clients");
+        model.addAttribute("body", "pages/clients/listeClient");
         return "index";
     }
 
     @GetMapping("/clients/ajouter")
     public String pageAjouterClient(Model model) {
-        model.addAttribute("body", "pages/clients/ajouterClient");
+        model.addAttribute("body", "pages/clients/enregistrerClient");
         return "index";
     }
 
     @PostMapping("/clients/ajouter")
     public String ajouterClient(Model model, @Valid @ModelAttribute("client") Client client, BindingResult result,
                                 RedirectAttributes redirectAttr) {
-        model.addAttribute("body", "pages/clients/ajouterClient");
+        model.addAttribute("body", "pages/clients/enregistrerClient");
 
         if(result.hasErrors()){
             redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.client", result);
@@ -66,10 +65,10 @@ public class ClientController {
         Optional<Client> client = clientService.getById(noClient);
         if (client.isPresent()) {
             model.addAttribute("client", client);
-            model.addAttribute("body", "pages/clients/modifierClient");
+            model.addAttribute("body", "pages/clients/enregistrerClient");
 
         } else {
-            model.addAttribute("body", "pages/clients/clients");
+            model.addAttribute("body", "pages/clients/listeClient");
         }
         return "index";
     }
@@ -77,14 +76,27 @@ public class ClientController {
     @PostMapping("/clients/modifier")
     public String postModifierClient(Model model, Client client) {
         clientService.update(client);
-        model.addAttribute("body", "pages/clients/clients");
+        model.addAttribute("body", "pages/clients/listeClient");
         return "redirect:/clients";
     }
 
     @GetMapping("/clients/supprimer/{noClient}")
     public String supprimerClient(Model model, @PathVariable("noClient") int noClient) {
         clientService.delete(noClient);
-        model.addAttribute("body", "pages/clients/clients");
+        model.addAttribute("body", "pages/clients/listeClient");
         return "redirect:/clients";
+    }
+
+    @GetMapping("/clients/detail/{noClient}")
+    public String detailClient(Model model, @PathVariable("noClient") int noClient) {
+        Optional<Client> client = clientService.getById(noClient);
+        if (client.isPresent()) {
+            model.addAttribute("client", client);
+            model.addAttribute("body", "pages/clients/detailClient");
+
+        } else {
+            model.addAttribute("body", "pages/clients/listeClient");
+        }
+        return "index";
     }
 }

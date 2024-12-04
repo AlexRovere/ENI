@@ -113,4 +113,8 @@ public class Jeu {
 	public void setGenres(List<GenreJeu> genres) {
 		this.genres = genres;
 	}
+
+	public void setGenre(GenreJeu genre) {
+		this.genres.add(genre);
+	}
 }

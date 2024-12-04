@@ -1,5 +1,7 @@
 package com.example.ludotheque.bo;
 
+import java.util.Objects;
+
 public class GenreJeu {
 
  private int noGenre;
@@ -24,6 +26,18 @@ public class GenreJeu {
 
     public GenreJeu() {
       super();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        GenreJeu genreJeu = (GenreJeu) o;
+        return noGenre == genreJeu.noGenre && Objects.equals(libelle, genreJeu.libelle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(noGenre, libelle);
     }
 
     public int getNoGenre() {

@@ -35,13 +35,24 @@
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.tarifJournee}"></td>
             <td class="px-4 py-2 border border-sky-500" ><span th:each="jeu : ${jeu.genres}" th:text="${jeu.libelle} + ' '"></span></td>
 
-            <td class="px-4 py-2 border border-sky-500">
-                <a th:href="@{'/jeux/modifier/' + ${jeu.noJeu}}" class="text-blue-500 hover:text-blue-700">
-                    <i class="fas fa-pencil-alt"></i>
-                </a>
-                <a th:href="@{'/jeux/supprimer/' + ${jeu.noJeu}}" class="text-red-500 hover:text-red-700 ml-4">
-                    <i class="fas fa-trash"></i>
-                </a>
+            <td class="border border-sky-500">
+                <div class="flex items-center justify-evenly">
+                    <div class="flex-1  justify-center items-center flex">
+                        <a th:href="@{'jeux/detail/' + ${jeu.noJeu}}" class="text-blue-500 hover:text-blue-700">
+                            <i class="fas fa fa-info"></i>
+                        </a>
+                    </div>
+                    <div class="flex-1  justify-center items-center flex">
+                        <a th:href="@{'jeux/modifier/' + ${jeu.noJeu}}" class="text-blue-500 hover:text-blue-700">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                    </div>
+                    <div class="flex-1  justify-center items-center flex">
+                        <a th:href="@{'jeux/supprimer/' + ${jeu.noJeu}}" class="text-red-500 hover:text-red-700 ml-4">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>

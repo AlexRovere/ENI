@@ -1,11 +1,15 @@
 <div class="container mx-auto">
 
-    <form class="max-w-sm mx-auto" action="/jeux/ajouter" method="post" th:object="${jeu}">
-        <h1 class="mx-auto text-center text-md my-5">    Créer un jeu
+    <form class="max-w-sm mx-auto" th:action="${noJeu} ? '/jeux/modifier' : '/jeux/ajouter'" method="post" th:object="${jeu}">
+        <h1 class="mx-auto text-center text-md my-5">
+            <span th:text="${noJeu} ? 'Modifier' : 'Créer'"></span> un jeu
         </h1>
         <div style="color: red;" th:if="${#fields.hasAnyErrors()}" >
             <p>Le formulaire comporte des erreurs</p>
         </div>
+
+        <input type="hidden" th:field="*{noJeu}" id="id">
+
 
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Titre</label>
@@ -57,8 +61,8 @@
 
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genres</label>
-            <select multiple th:field="*{genres}" id="genres" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option th:each="genre : ${genres}" th:value="${genre.noGenre}" >[[${genre.noGenre}]]  [[${genre.libelle}]]</option>
+            <select  multiple th:field="*{genres}" id="genres" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected th:each="genre : ${allGenres}" th:value="${genre.noGenre}" >[[${genre.noGenre}]]  [[${genre.libelle}]]</option>
             </select>
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('tarifJournee')}" th:text="${erreur}" class="font-medium"></span>
@@ -71,7 +75,7 @@
             </button>
 
             <button type="submit" class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                Créer
+                <span th:text="${noJeu} ? 'Modifier un jeu' : 'Créer un jeu'"></span>
             </button>
         </div>
     </form>

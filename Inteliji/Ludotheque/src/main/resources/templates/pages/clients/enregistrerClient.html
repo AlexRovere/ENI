@@ -1,14 +1,15 @@
 <div class="container mx-auto">
 
-    <form class="max-w-sm mx-auto" action="/clients/modifier" method="post" th:object="${client}">
-        <h1 class="mx-auto text-center text-md my-5"> Modifier un client
-        </h1>
+    <form class="max-w-sm mx-auto" th:action="${noClient} ? '/clients/modifier' : '/clients/ajouter'" method="post" th:object="${client}">
+<h1 class="mx-auto text-center text-md my-5">
+    <span th:text="${noClient} ? 'Modifier' : 'Créer'"></span> un client
+</h1>
         <div style="color: red;" th:if="${#fields.hasAnyErrors()}" >
             <p>Le formulaire comporte des erreurs</p>
         </div>
 
         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Nom</label>
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Nom</label>
             <input  type="text" th:field="*{nom}" id="nom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('nom')}" th:text="${erreur}" class="font-medium"></span>
@@ -18,7 +19,7 @@
 
 
         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Prénom</label>
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Prénom</label>
             <input type="text" th:field="*{prenom}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('prenom')}" th:text="${erreur}" class="font-medium"></span>
@@ -26,7 +27,7 @@
         </div>
 
         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Email</label>
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Email</label>
             <input type="text" th:field="*{email}" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('email')}" th:text="${erreur}" class="font-medium"></span>
@@ -34,7 +35,7 @@
         </div>
 
         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Téléphone</label>
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Téléphone</label>
             <input type="text"th:field="*{noTel}" id="noTel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('noTel')}" th:text="${erreur}" class="font-medium"></span>
@@ -42,7 +43,7 @@
         </div>
 
         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Rue</label>
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Rue</label>
             <input type="text" th:field="*{Rue}" id="Rue" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('rue')}" th:text="${erreur}" class="font-medium"></span>
@@ -50,7 +51,7 @@
         </div>
 
         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Code postal</label>
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Code postal</label>
             <input type="text" th:field="*{codePostal}" id="codePostal" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('codePostal')}" th:text="${erreur}" class="font-medium"></span>
@@ -58,21 +59,21 @@
         </div>
 
         <div class="mb-5">
-            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>
             <input type="text" th:field="*{ville}" id="ville" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('ville')}" th:text="${erreur}" class="font-medium"></span>
             </p>
         </div>
 
-        <div class="mx-auto flex justify-around">
-            <button type="button"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                <a th:href="@{/clients}">Retour</a>
-            </button>
+    <div class="mx-auto flex justify-around">
+        <button type="button"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            <a th:href="@{/clients}">Retour</a>
+        </button>
 
-            <button type="submit" class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                Modifier
-            </button>
-        </div>
+        <button type="submit" class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            <span th:text="${noJeu} ? 'Modifier un jeu' : 'Créer un jeu'"></span>
+        </button>
+    </div>
     </form>
 </div>
