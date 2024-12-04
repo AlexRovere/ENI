@@ -4,7 +4,7 @@
         <h1 class="mx-auto text-center text-md my-5">
            Détail d'un jeu
         </h1>
-
+        [[${jeu}]]
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Titre</label>
             <input readonly disabled  type="text" th:field="*{titre}" id="titre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -39,7 +39,7 @@
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genres</label>
             <select readonly disabled multiple th:field="*{genres}" id="genres" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option th:each="genre : ${genres}" th:value="${genre.noGenre}" >[[${genre.noGenre}]]  [[${genre.libelle}]]</option>
+                <option selected th:each="genre : ${allGenres}" th:value="${genre.noGenre}" >[[${genre.noGenre}]]  [[${genre.libelle}]]</option>
             </select>
         </div>
 

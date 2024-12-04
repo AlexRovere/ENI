@@ -47,4 +47,18 @@ CREATE TABLE IF NOT EXISTS public.jeu_genre
         ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS public.exemplaire_jeu
+(
+    no_exemplaire integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    no_jeu integer NOT NULL,
+    codebarre varchar COLLATE pg_catalog."default" NOT NULL,
+    louable boolean NOT NULL,
+
+    CONSTRAINT exemplaire_jeu_pkey PRIMARY KEY (no_exemplaire),
+    CONSTRAINT "UQ_examplaire_jeu_codebarre" UNIQUE (codebarre),
+    CONSTRAINT "FK_examplaire_jeu_no_jeu" FOREIGN KEY (no_jeu) REFERENCES jeu(no_jeu)
+);
+
+
+
 

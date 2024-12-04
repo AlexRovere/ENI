@@ -1,11 +1,10 @@
 package com.example.ludotheque.dal;
 
-import com.example.ludotheque.bo.GenreJeu;
+import com.example.ludotheque.bo.ExemplaireJeu;
+import com.example.ludotheque.bo.Genre;
 import com.example.ludotheque.bo.Jeu;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -36,7 +35,7 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "insert into jeu (titre, reference, description, tarif_journee, age_min, duree) VALUES (:titre, :reference, :description, :tarifJournee, :ageMin, :duree)";
         namedParameterJdbcTemplate.update(sql, new BeanPropertySqlParameterSource(jeu), keyHolder);
-        List<GenreJeu> genres = jeu.getGenres();
+        List<Genre> genres = jeu.getGenres();
         if (!genres.isEmpty()) {
             genres.forEach(e -> {
                 MapSqlParameterSource params = new MapSqlParameterSource();
@@ -51,8 +50,8 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
     @Override
     public List<Jeu> getAll() {
         String sql = "select j.no_jeu, j.titre, j.reference, j.description, j.tarif_journee, j.age_min, j.duree, " +
-                "g.no_genre, g.libelle from jeu j LEFT JOIN jeu_genre jg ON jg.no_jeu = j.no_jeu " +
-                "LEFT JOIN genres g ON jg.no_genre = g.no_genre";
+                "g.no_genre, g.libelle, ej.no_exemplaire, ej.codebarre, ej.louable, ej.no_jeu from jeu j LEFT JOIN jeu_genre jg ON jg.no_jeu = j.no_jeu " +
+                "LEFT JOIN genres g ON jg.no_genre = g.no_genre LEFT JOIN exemplaire_jeu ej ON ej.no_jeu = j.no_jeu ";
 
         Map<Integer, Jeu> jeuxMap = new HashMap<>();
 
@@ -76,14 +75,26 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
 
             int noGenre = rs.getInt("no_genre");
             if(!rs.wasNull()) {
-                GenreJeu genre = new GenreJeu();
+                Genre genre = new Genre();
                 genre.setNoGenre(rs.getInt("no_genre"));
                 genre.setLibelle(rs.getString("libelle"));
                 jeuxMap.get(jeuId).setGenre(genre);
             }
+
+            int noExemplaire = rs.getInt("no_exemplaire");
+            boolean exists =  jeuxMap.get(jeuId).getExemplaires().stream()
+                    .anyMatch(exemplaire -> exemplaire.getNoExemplaire() == noExemplaire);
+            if(!rs.wasNull() && !exists) {
+                ExemplaireJeu exemplaire = new ExemplaireJeu();
+                exemplaire.setNoExemplaire(rs.getInt("no_exemplaire"));
+                exemplaire.setNoJeu(rs.getInt("no_jeu"));
+                exemplaire.setCodeBarre(rs.getString("codebarre"));
+                exemplaire.setLouable(rs.getBoolean("louable"));
+
+                jeuxMap.get(jeuId).setExemplaireJeu(exemplaire);
+            }
             return null;
         });
-
         return new ArrayList<>(jeuxMap.values());
     }
 
@@ -91,8 +102,8 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
     public Optional<Jeu> getById(int id) {
 
         String sql = "select j.no_jeu, j.titre, j.reference, j.description, j.tarif_journee, j.age_min, j.duree, " +
-                "g.no_genre, g.libelle from jeu j LEFT JOIN jeu_genre jg ON jg.no_jeu = j.no_jeu " +
-                "LEFT JOIN genres g ON jg.no_genre = g.no_genre where j.no_jeu=:id";
+                "g.no_genre, g.libelle, ej.no_exemplaire, ej.codebarre, ej.louable, ej.no_jeu  from jeu j LEFT JOIN jeu_genre jg ON jg.no_jeu = j.no_jeu " +
+                "LEFT JOIN genres g ON jg.no_genre = g.no_genre  LEFT JOIN exemplaire_jeu ej ON ej.no_jeu = j.no_jeu where j.no_jeu=:id" ;
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
@@ -111,16 +122,32 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
                     do {
                         int noGenre = rs.getInt("no_genre");
                         if(!rs.wasNull()) {
-                            GenreJeu genre = new GenreJeu();
+                            Genre genre = new Genre();
                             genre.setNoGenre(rs.getInt("no_genre"));
                             genre.setLibelle(rs.getString("libelle"));
 
                             j.setGenre(genre);
                         }
+
+                        int noExemplaire = rs.getInt("no_exemplaire");
+
+                        boolean exists = j.getExemplaires().stream()
+                                .anyMatch(exemplaire -> exemplaire.getNoExemplaire() == noExemplaire);
+                        if(!rs.wasNull() && !exists) {
+                            ExemplaireJeu exemplaire = new ExemplaireJeu();
+                            exemplaire.setNoExemplaire(rs.getInt("no_exemplaire"));
+                            exemplaire.setNoJeu(rs.getInt("no_jeu"));
+                            exemplaire.setCodeBarre(rs.getString("codebarre"));
+                            exemplaire.setLouable(rs.getBoolean("louable"));
+
+                            j.setExemplaireJeu(exemplaire);
+                        }
                     } while (rs.next());
 
                     return j;
                 });
+
+        System.out.println(jeu);
 
         return Optional.ofNullable(jeu);
     }

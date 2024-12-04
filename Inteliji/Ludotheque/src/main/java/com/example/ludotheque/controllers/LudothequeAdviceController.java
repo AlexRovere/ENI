@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class LudothequeAdviceController {
     Logger logger = LoggerFactory.getLogger(ClientController.class);
 
-    @ExceptionHandler(Exception.class)
-    public String handleException(Exception ex, Model model) {
-        logger.error(ex.getMessage());
-        model.addAttribute("body", "pages/erreur");
-        return "index";
-    };
+  //  @ExceptionHandler(Exception.class)
+//    public String handleException(Exception ex, Model model) {
+//        logger.debug(ex.getMessage());
+//        model.addAttribute("body", "pages/erreur");
+//        return "index";
+//    };
 }

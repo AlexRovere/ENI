@@ -11,9 +11,11 @@ public class Jeu {
 	private String description;
 	private int duree;
 	private float tarifJournee;
-	private List<GenreJeu> genres = new ArrayList<>();
+	private List<Genre> genres = new ArrayList<>();
+	private List<ExemplaireJeu> exemplaires = new ArrayList<>();
 
-	public Jeu(String titre, int reference, int ageMin, String description, int duree, float tarifJournee, List<GenreJeu> genres) {
+
+	public Jeu(String titre, int reference, int ageMin, String description, int duree, float tarifJournee, List<Genre> genres) {
 		this.titre = titre;
 		this.reference = reference;
 		this.ageMin = ageMin;
@@ -43,6 +45,7 @@ public class Jeu {
 				", duree=" + duree +
 				", tarifJournee=" + tarifJournee +
 				", genres=" + genres +
+				", exemplaires=" + exemplaires +
 				'}';
 	}
 
@@ -106,15 +109,27 @@ public class Jeu {
 		this.tarifJournee = tarifJournee;
 	}
 
-	public List<GenreJeu> getGenres() {
+	public List<Genre> getGenres() {
 		return genres;
 	}
 
-	public void setGenres(List<GenreJeu> genres) {
+	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
 	}
 
-	public void setGenre(GenreJeu genre) {
+	public void setGenre(Genre genre) {
 		this.genres.add(genre);
+	}
+
+	public List<ExemplaireJeu> getExemplaires() {
+		return exemplaires;
+	}
+
+	public void setExemplaireJeux(List<ExemplaireJeu> exemplaires) {
+		this.exemplaires = exemplaires;
+	}
+
+	public void setExemplaireJeu(ExemplaireJeu exemplaire) {
+		this.exemplaires.add(exemplaire);
 	}
 }

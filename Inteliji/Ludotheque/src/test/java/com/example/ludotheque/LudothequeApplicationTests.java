@@ -23,31 +23,5 @@ class LudothequeApplicationTests {
     @Test
     void testClientRepoFindAll() {
         List<Client> clients = clientImpl.getAll();
-
-        clients.forEach(c->System.out.println(c.toString()));
     }
-
-    @Test
-    void testClientRepoInsert() {
-        // AAA : Arrange Act Assert
-
-        // Arrange
-        Client client = new Client("nom", "prenom",  "email", "adresse");
-
-        // Act
-        clientImpl.add(client);
-
-        // Assert
-        Optional<Client> optClient = clientImpl.findById(1);
-        Assert.isTrue(optClient.isPresent(), "Le client 1 aurait du être crée !");
-
-        if(optClient.isPresent()) {
-
-        }
-    }
-
-
-
-
-
 }

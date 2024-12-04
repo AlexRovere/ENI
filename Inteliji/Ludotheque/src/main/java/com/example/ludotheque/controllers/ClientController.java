@@ -1,7 +1,7 @@
 package com.example.ludotheque.controllers;
 
 import com.example.ludotheque.bo.Client;
-import com.example.ludotheque.services.GenreJeuService;
+import com.example.ludotheque.services.GenreService;
 import com.example.ludotheque.services.IClientService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -19,12 +19,12 @@ import java.util.Optional;
 public class ClientController {
 
     Logger logger = LoggerFactory.getLogger(ClientController.class);
-    private final GenreJeuService genreJeuService;
+    private final GenreService genreService;
     IClientService clientService;
 
-    ClientController(IClientService clientService, GenreJeuService genreJeuService) {
+    ClientController(IClientService clientService, GenreService genreService) {
         this.clientService = clientService;
-        this.genreJeuService = genreJeuService;
+        this.genreService = genreService;
     }
 
     @ModelAttribute("client")

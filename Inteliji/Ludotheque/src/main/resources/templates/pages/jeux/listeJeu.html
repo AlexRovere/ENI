@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <td class="px-4 py-2 border border-sky-500">Numéro de jeu</td>
+            <td class="px-4 py-2 border border-sky-500">Nombres d'exemplaires</td>
             <td class="px-4 py-2 border border-sky-500" >Titre</td>
             <td class="px-4 py-2 border border-sky-500">Référence</td>
             <td class="px-4 py-2 border border-sky-500">Description</td>
@@ -24,12 +25,11 @@
         </thead>
         <tbody>
         <tr th:each="jeu: ${jeux}">
-
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.noJeu}"></td>
+            <td class="px-4 py-2 border border-sky-500" ><span th:text="${jeu.exemplaires.size}"></span></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.titre}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.reference}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.description}"></td>
-
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.ageMin}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.duree}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.tarifJournee}"></td>

@@ -2,37 +2,37 @@ package com.example.ludotheque.bo;
 
 import java.util.Objects;
 
-public class GenreJeu {
+public class Genre {
 
  private int noGenre;
  private String libelle;
 
-    public GenreJeu(String libelle, int noGenre) {
+    public Genre(String libelle, int noGenre) {
         this.noGenre = noGenre;
         this.libelle = libelle;
     }
 
     @Override
     public String toString() {
-        return "GenreJeu{" +
+        return "Genre{" +
                 "noGenre=" + noGenre +
                 ", libelle='" + libelle + '\'' +
                 '}';
     }
 
-    public GenreJeu(String libelle) {
+    public Genre(String libelle) {
             this.libelle = libelle;
         }
 
-    public GenreJeu() {
+    public Genre() {
       super();
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        GenreJeu genreJeu = (GenreJeu) o;
-        return noGenre == genreJeu.noGenre && Objects.equals(libelle, genreJeu.libelle);
+        Genre genre = (Genre) o;
+        return noGenre == genre.noGenre && Objects.equals(libelle, genre.libelle);
     }
 
     @Override
