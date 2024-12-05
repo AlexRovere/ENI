@@ -74,7 +74,9 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
             }
 
             int noGenre = rs.getInt("no_genre");
-            if(!rs.wasNull()) {
+            boolean genreExist = jeuxMap.get(jeuId).getGenres().stream()
+                    .anyMatch(genre -> genre.getNoGenre() == noGenre);
+            if(!rs.wasNull() && !genreExist) {
                 Genre genre = new Genre();
                 genre.setNoGenre(rs.getInt("no_genre"));
                 genre.setLibelle(rs.getString("libelle"));
@@ -91,7 +93,7 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
                 exemplaire.setCodeBarre(rs.getString("codebarre"));
                 exemplaire.setLouable(rs.getBoolean("louable"));
 
-                jeuxMap.get(jeuId).setExemplaireJeu(exemplaire);
+                jeuxMap.get(jeuId).setExemplaire(exemplaire);
             }
             return null;
         });
@@ -121,7 +123,9 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
 
                     do {
                         int noGenre = rs.getInt("no_genre");
-                        if(!rs.wasNull()) {
+                        boolean genreExist = j.getGenres().stream()
+                                .anyMatch(genre -> genre.getNoGenre() == noGenre);
+                        if(!rs.wasNull() && !genreExist) {
                             Genre genre = new Genre();
                             genre.setNoGenre(rs.getInt("no_genre"));
                             genre.setLibelle(rs.getString("libelle"));
@@ -131,16 +135,16 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
 
                         int noExemplaire = rs.getInt("no_exemplaire");
 
-                        boolean exists = j.getExemplaires().stream()
+                        boolean exemplaireExist = j.getExemplaires().stream()
                                 .anyMatch(exemplaire -> exemplaire.getNoExemplaire() == noExemplaire);
-                        if(!rs.wasNull() && !exists) {
+                        if(!rs.wasNull() && !exemplaireExist) {
                             ExemplaireJeu exemplaire = new ExemplaireJeu();
                             exemplaire.setNoExemplaire(rs.getInt("no_exemplaire"));
                             exemplaire.setNoJeu(rs.getInt("no_jeu"));
                             exemplaire.setCodeBarre(rs.getString("codebarre"));
                             exemplaire.setLouable(rs.getBoolean("louable"));
 
-                            j.setExemplaireJeu(exemplaire);
+                            j.setExemplaire(exemplaire);
                         }
                     } while (rs.next());
 

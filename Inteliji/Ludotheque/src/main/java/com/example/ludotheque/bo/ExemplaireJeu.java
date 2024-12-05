@@ -6,11 +6,14 @@ public class ExemplaireJeu {
     private String codeBarre;
     private Boolean louable;
 
-    public ExemplaireJeu(int noExemplaire, int noJeu, String codeBarre, Boolean louable) {
-        this.noExemplaire = noExemplaire;
+    public ExemplaireJeu(int noJeu, String codeBarre, Boolean louable) {
         this.noJeu = noJeu;
         this.codeBarre = codeBarre;
         this.louable = louable;
+    }
+
+    public ExemplaireJeu(int noJeu) {
+        this.noJeu = noJeu;
     }
 
     public ExemplaireJeu() {

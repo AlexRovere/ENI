@@ -125,11 +125,11 @@ public class Jeu {
 		return exemplaires;
 	}
 
-	public void setExemplaireJeux(List<ExemplaireJeu> exemplaires) {
+	public void setExemplaires(List<ExemplaireJeu> exemplaires) {
 		this.exemplaires = exemplaires;
 	}
 
-	public void setExemplaireJeu(ExemplaireJeu exemplaire) {
+	public void setExemplaire(ExemplaireJeu exemplaire) {
 		this.exemplaires.add(exemplaire);
 	}
 }

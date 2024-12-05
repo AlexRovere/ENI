@@ -59,6 +59,38 @@ CREATE TABLE IF NOT EXISTS public.exemplaire_jeu
     CONSTRAINT "FK_examplaire_jeu_no_jeu" FOREIGN KEY (no_jeu) REFERENCES jeu(no_jeu)
 );
 
+CREATE TABLE IF NOT EXISTS public.locations
+(
+    no_location integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    date_debut_location date NOT NULL,
+    paye boolean NOT NULL,
+    prix_total numeric,
+    no_client integer NOT NULL,
+    CONSTRAINT locations_pkey PRIMARY KEY (no_location),
+    CONSTRAINT "FK_location_no_client" FOREIGN KEY (no_client)
+        REFERENCES public.clients (no_client) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS public.detail_location
+(
+    no_ligne integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    date_retour date,
+    tarif_location numeric NOT NULL,
+    no_location integer NOT NULL,
+    no_jeu integer NOT NULL,
+    CONSTRAINT "FK_detail_location_no_jeu" FOREIGN KEY (no_jeu)
+        REFERENCES public.jeu (no_jeu) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT "FK_detail_location_no_location" FOREIGN KEY (no_location)
+        REFERENCES public.locations (no_location) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
 
 
 

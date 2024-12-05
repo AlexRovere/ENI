@@ -1,103 +1,93 @@
 package com.example.ludotheque.bo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Location {
-	private int id;
-	private int client_id;
-	private int jeux_id;
-	private LocalDate dateDebut;
-	private LocalDate dateFin;
-	private float prix;
-	private String statut;
-	private int relanceClient;
-	private int relanceMagasin;
-	
-	public Location(int id, int client_id, int jeux_id, LocalDate dateDebut, LocalDate dateFin, float prix,
-                    String statut, int relanceClient, int relanceMagasin) {
-		super();
-		this.id = id;
-		this.client_id = client_id;
-		this.jeux_id = jeux_id;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.prix = prix;
-		this.statut = statut;
-		this.relanceClient = relanceClient;
-		this.relanceMagasin = relanceMagasin;
-	}
+    private int noLocation;
+    private LocalDate dateDebutLocation;
+    private Boolean paye;
+    private float prixTotal;
+    private Client client;
+    private List<DetailLocation> details = new ArrayList<>();
 
-	public int getId() {
-		return id;
-	}
+    public Location(LocalDate dateDebutLocation, Boolean paye, float prixTotal, Client client, List<DetailLocation> details) {
+        this.dateDebutLocation = dateDebutLocation;
+        this.paye = paye;
+        this.prixTotal = prixTotal;
+        this.client = client;
+        this.details = details;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Location(LocalDate dateDebutLocation, Boolean paye, float prixTotal, Client client) {
+        this.dateDebutLocation = dateDebutLocation;
+        this.paye = paye;
+        this.prixTotal = prixTotal;
+        this.client = client;
+    }
 
-	public int getClient_id() {
-		return client_id;
-	}
+    public Location() {
+        super();
+    }
 
-	public void setClient_id(int client_id) {
-		this.client_id = client_id;
-	}
+    @Override
+    public String toString() {
+        return "Location{" +
+                "noLocation=" + noLocation +
+                ", dateDebutLocation=" + dateDebutLocation +
+                ", paye=" + paye +
+                ", prixTotal=" + prixTotal +
+                ", client=" + client +
+                ", details=" + details +
+                '}';
+    }
 
-	public int getJeux_id() {
-		return jeux_id;
-	}
+    public int getNoLocation() {
+        return noLocation;
+    }
 
-	public void setJeux_id(int jeux_id) {
-		this.jeux_id = jeux_id;
-	}
+    public void setNoLocation(int noLocation) {
+        this.noLocation = noLocation;
+    }
 
-	public LocalDate getDateDebut() {
-		return dateDebut;
-	}
+    public LocalDate getDateDebutLocation() {
+        return dateDebutLocation;
+    }
 
-	public void setDateDebut(LocalDate dateDebut) {
-		this.dateDebut = dateDebut;
-	}
+    public void setDateDebutLocation(LocalDate dateDebutLocation) {
+        this.dateDebutLocation = dateDebutLocation;
+    }
 
-	public LocalDate getDateFin() {
-		return dateFin;
-	}
+    public Boolean getPaye() {
+        return paye;
+    }
 
-	public void setDateFin(LocalDate dateFin) {
-		this.dateFin = dateFin;
-	}
+    public void setPaye(Boolean paye) {
+        this.paye = paye;
+    }
 
-	public float getPrix() {
-		return prix;
-	}
+    public float getPrixTotal() {
+        return this.prixTotal;
+    }
 
-	public void setPrix(float prix) {
-		this.prix = prix;
-	}
+    public void setPrixTotal(float prixTotal) {
+        this.prixTotal = prixTotal;
+    }
 
-	public String getStatut() {
-		return statut;
-	}
+    public Client getClient() {
+        return client;
+    }
 
-	public void setStatut(String statut) {
-		this.statut = statut;
-	}
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
-	public int getRelanceClient() {
-		return relanceClient;
-	}
+    public List<DetailLocation> getDetails() {
+        return details;
+    }
 
-	public void setRelanceClient(int relanceClient) {
-		this.relanceClient = relanceClient;
-	}
-
-	public int getRelanceMagasin() {
-		return relanceMagasin;
-	}
-
-	public void setRelanceMagasin(int relanceMagasin) {
-		this.relanceMagasin = relanceMagasin;
-	}
-	
-	
+    public void setDetails(List<DetailLocation> details) {
+        this.details = details;
+    }
 }

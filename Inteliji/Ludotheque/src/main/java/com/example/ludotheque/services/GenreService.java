@@ -16,7 +16,6 @@ public class GenreService implements IGenreService {
         this.genreRepository = genreRepository;
     }
 
-
     @Override
     public void add(Genre genre) {
     genreRepository.add(genre);

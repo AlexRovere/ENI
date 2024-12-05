@@ -53,7 +53,7 @@ public class GenreRepositoryJdbcImpl implements IGenreRepository {
 
     @Override
     public void update(Genre genre) {
-    String sql = "update genres SET libelle= :libelle" ;
+    String sql = "update genres SET libelle= :libelle where no_genre= :noGenre" ;
         namedParameterJdbcTemplate.update(sql, new BeanPropertySqlParameterSource(genre));
     }
 

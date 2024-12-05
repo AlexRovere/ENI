@@ -1,6 +1,6 @@
-<div class="container mx-auto">
+<div class="container mx-auto flex">
 
-    <form class="max-w-sm mx-auto" th:action="${noJeu} ? '/jeux/modifier' : '/jeux/ajouter'" method="post" th:object="${jeu}">
+    <form class="max-w-sm mx-auto flex-1" th:action="${noJeu} ? '/jeux/modifier' : '/jeux/ajouter'" method="post" th:object="${jeu}">
         <h1 class="mx-auto text-center text-md my-5">
             <span th:text="${noJeu} ? 'Modifier' : 'Créer'"></span> un jeu
         </h1>
@@ -9,8 +9,6 @@
         </div>
 
         <input type="hidden" th:field="*{noJeu}" id="id">
-        [[${jeu}]]
-
 
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Titre</label>
@@ -82,5 +80,10 @@
             </button>
         </div>
     </form>
+
+
+    <div th:if="${noJeu}" class="max-w-sm mx-auto">
+        <div class="flex-1" th:insert="${listeExemplaire}"></div>
+    </div>
 
 </div>

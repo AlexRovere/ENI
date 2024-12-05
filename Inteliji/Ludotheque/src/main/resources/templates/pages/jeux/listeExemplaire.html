@@ -1,0 +1,37 @@
+<h1 class="mx-auto text-center text-md my-5">
+    Liste des exemplaires
+</h1>
+
+<table class="min-w-full table-auto border-collapse mt-5">
+    <thead>
+    <tr>
+        <td class="px-4 py-2 border border-sky-500">Numéro d'exemplaire</td>
+        <td class="px-4 py-2 border border-sky-500">Code barre</td>
+        <td class="px-4 py-2 border border-sky-500" >Louable</td>
+        <td class="px-4 py-2 border border-sky-500" >Actions</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ex : *{exemplaires}">
+        <td class="px-4 py-2 border border-sky-500" th:text="${ex.noExemplaire}"></td>
+        <td class="px-4 py-2 border border-sky-500" ><span th:text="${ex.codeBarre}"></span></td>
+        <td class="px-4 py-2 border border-sky-500" th:text="${ex.louable}"></td>
+        <td class="border border-sky-500">
+            <div class="flex items-center justify-evenly">
+                <div class="flex-1  justify-center items-center flex">
+                    <a th:href="@{'/jeux/exemplaire/modifier/' + ${ex.noExemplaire}}" class="text-blue-500 hover:text-blue-700">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                </div>
+                <div class="flex-1  justify-center items-center flex">
+                    <a th:href="@{'/jeux/exemplaire/supprimer/' + ${ex.noExemplaire}}" class="text-red-500 hover:text-red-700 ml-4">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+

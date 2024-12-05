@@ -1,0 +1,58 @@
+<div class="container mx-auto flex">
+
+    <form class="max-w-sm mx-auto flex-1" th:action="${noLocation} ? '/locations/modifier' : '/locations/ajouter'" method="post" th:object="${location}">
+        <h1 class="mx-auto text-center text-md my-5">
+            <span th:text="${noLocation} ? 'Modifier' : 'Créer'"></span> une location
+        </h1>
+        <div style="color: red;" th:if="${#fields.hasAnyErrors()}" >
+            <p>Le formulaire comporte des erreurs</p>
+        </div>
+
+        <input type="hidden" th:field="*{noLocation}" id="id">
+
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">*Date début location</label>
+            <input required   type="date" th:field="*{dateDebutLocation}" id="dateDebutLocation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('dateDebutLocation')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
+        </div>
+
+        <div class="mb-5">
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prix total</label>
+            <input  type="number" min="0" th:field="*{prixTotal}" id="prixTotal" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('prixTotal')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
+        </div>
+
+        <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" th:field="*{paye}" class="sr-only peer">
+            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Payé ?</span>
+        </label>
+        <div class="mb-5">
+            <label for="clients" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selectionner un client</label>
+            <select  id="clients" th:field="*{client}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option th:each="client : ${@clientService.getAll()}" th:value="${{client.noClient}}" th:text="${client.nom + ' ' + client.prenom}"></option>
+            </select>
+        </div>
+
+
+        <div class="mx-auto flex justify-around">
+            <button type="button"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <a th:href="@{/locations}">Retour</a>
+            </button>
+
+            <button type="submit" class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <span th:text="${noLocation} ? 'Modifier une location' : 'Créer une location'"></span>
+            </button>
+        </div>
+    </form>
+
+
+<!--    <div th:if="${noLocation}" class="max-w-sm mx-auto">-->
+<!--        <div class="flex-1" th:insert="${listeExemplaire}"></div>-->
+<!--    </div>-->
+
+</div>

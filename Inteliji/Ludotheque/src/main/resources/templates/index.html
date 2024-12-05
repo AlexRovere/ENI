@@ -14,15 +14,21 @@
     <div class="mx-auto ">
 
         <div class="flex flex-1 items-center justify-center  h-16">
+            <a href="/">
             <div class="flex shrink-0 items-center">
                 <img class="h-10 w-auto" src="/la-cryte-du-jeu-logo-16133977282.jpg" alt="Your Company">
             </div>
+            </a>
             <div class="hidden sm:ml-6 sm:block">
                 <div class="flex space-x-4">
                     <a th:href="@{/jeux}"
                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Jeux</a>
                     <a th:href="@{/clients}"
-                       class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Clients</a>
+                       class="rounded-md  px-3 py-2 text-sm font-medium text-white">Clients</a>
+                    <a th:href="@{/genres}"
+                       class="rounded-md  px-3 py-2 text-sm font-medium text-white">Genres</a>
+                    <a th:href="@{/locations}"
+                       class="rounded-md  px-3 py-2 text-sm font-medium text-white">Locations</a>
                 </div>
             </div>
         </div>
@@ -30,7 +36,7 @@
     </div>
 </nav>
 
-<div class="flex-1" th:insert="~{${body}}"></div>
+<div class="flex-1" th:insert="${body}"></div>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 
