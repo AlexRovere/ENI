@@ -1,5 +1,12 @@
-<h1 class="mx-auto text-center text-md my-5">
+<h1 class="mx-auto text-center text-md my-5 flex flex-row">
     Liste des exemplaires
+    <div class="flex-1  justify-center items-center flex items-center">
+        <a th:href="@{'/jeux/exemplaire/ajouter/' + ${jeu.noJeu}}"  class="text-blue-500 hover:text-blue-700">
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Ajouter un exemplaire
+            </button>
+        </a>
+    </div>
 </h1>
 
 <table class="min-w-full table-auto border-collapse mt-5">
@@ -15,7 +22,7 @@
     <tr th:each="ex : *{exemplaires}">
         <td class="px-4 py-2 border border-sky-500" th:text="${ex.noExemplaire}"></td>
         <td class="px-4 py-2 border border-sky-500" ><span th:text="${ex.codeBarre}"></span></td>
-        <td class="px-4 py-2 border border-sky-500" th:text="${ex.louable}"></td>
+        <td class="px-4 py-2 border border-sky-500" th:text="${ex.louable ? 'OUI' : 'NON'}"></td>
         <td class="border border-sky-500">
             <div class="flex items-center justify-evenly">
                 <div class="flex-1  justify-center items-center flex">

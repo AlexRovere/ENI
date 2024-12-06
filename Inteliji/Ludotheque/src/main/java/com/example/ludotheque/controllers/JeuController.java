@@ -30,8 +30,10 @@ public class JeuController {
     }
 
     @GetMapping("/jeux")
-    public String getJeux(Model model) {
-        List<Jeu> jeux = jeuService.getAll();
+    public String getJeux(Model model, @RequestParam(value = "filter", required = false) String filter) {
+        List<Jeu> jeux = jeuService.getAllWithFilters(filter);
+        model.addAttribute("filter", "filter");
+
         model.addAttribute("jeux", jeux);
         model.addAttribute("body", "pages/jeux/listeJeu");
         return "index";

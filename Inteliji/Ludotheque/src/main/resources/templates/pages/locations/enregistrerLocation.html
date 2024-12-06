@@ -1,6 +1,6 @@
-<div class="container mx-auto flex">
+<div class="container mx-auto flex" th:object="${location}">
 
-    <form class="max-w-sm mx-auto flex-1" th:action="${noLocation} ? '/locations/modifier' : '/locations/ajouter'" method="post" th:object="${location}">
+<form class="max-w-sm mx-auto flex-1" th:action="${noLocation} ? '/locations/modifier' : '/locations/ajouter'" method="post" >
         <h1 class="mx-auto text-center text-md my-5">
             <span th:text="${noLocation} ? 'Modifier' : 'Créer'"></span> une location
         </h1>
@@ -33,8 +33,8 @@
         </label>
         <div class="mb-5">
             <label for="clients" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selectionner un client</label>
-            <select  id="clients" th:field="*{client}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option th:each="client : ${@clientService.getAll()}" th:value="${{client.noClient}}" th:text="${client.nom + ' ' + client.prenom}"></option>
+            <select  id="clients" name="client"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option th:selected="${location.client?.noClient == client.noClient}"  th:each="client : ${@clientService.getAll()}" th:value="${client.noClient}" th:text="${client.nom + ' ' + client.prenom + ' ' + client.noClient}"></option>
             </select>
         </div>
 
@@ -51,8 +51,8 @@
     </form>
 
 
-<!--    <div th:if="${noLocation}" class="max-w-sm mx-auto">-->
-<!--        <div class="flex-1" th:insert="${listeExemplaire}"></div>-->
-<!--    </div>-->
+    <div th:if="*{noLocation}" class="max-w-sm mx-auto">
+        <div class="flex-1" th:insert="~{${listeDetailLocation}}"></div>
+    </div>
 
 </div>

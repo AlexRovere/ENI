@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.Objects;
+
 public class Client {
 	private int noClient;
 
@@ -50,6 +52,18 @@ public class Client {
 		this.rue = rue;
 		this.ville = ville;
 		this.codePostal = codePostal;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		Client client = (Client) o;
+		return noClient == client.noClient && codePostal == client.codePostal && Objects.equals(nom, client.nom) && Objects.equals(prenom, client.prenom) && Objects.equals(email, client.email) && Objects.equals(noTel, client.noTel) && Objects.equals(rue, client.rue) && Objects.equals(ville, client.ville);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(noClient, nom, prenom, email, noTel, rue, codePostal, ville);
 	}
 
 	public Client() {

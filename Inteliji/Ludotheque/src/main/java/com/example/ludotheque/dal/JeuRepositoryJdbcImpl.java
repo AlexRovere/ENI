@@ -151,8 +151,6 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
                     return j;
                 });
 
-        System.out.println(jeu);
-
         return Optional.ofNullable(jeu);
     }
 
@@ -185,5 +183,64 @@ public class JeuRepositoryJdbcImpl implements IJeuRepository {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("no_jeu", id);
         namedParameterJdbcTemplate.update(sql, params);
+    }
+
+
+    @Override
+    public List<Jeu> getAllWithFilters(String filter) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select j.no_jeu, j.titre, j.reference, j.description, j.tarif_journee, j.age_min, j.duree, " +
+                "g.no_genre, g.libelle, ej.no_exemplaire, ej.codebarre, ej.louable, ej.no_jeu from jeu j LEFT JOIN jeu_genre jg ON jg.no_jeu = j.no_jeu " +
+                "LEFT JOIN genres g ON jg.no_genre = g.no_genre LEFT JOIN exemplaire_jeu ej ON ej.no_jeu = j.no_jeu ");
+
+        if(filter != null && !filter.isEmpty()) {
+            sql.append("WHERE lower(titre || description) LIKE " + "'%").append(filter.toLowerCase()).append("%'");
+        }
+
+        Map<Integer, Jeu> jeuxMap = new HashMap<>();
+
+        List<Jeu> jeux = namedParameterJdbcTemplate.query(sql.toString(), (ResultSet rs, int rowNum) -> {
+
+            int jeuId = rs.getInt("no_jeu");
+
+            if (!jeuxMap.containsKey(jeuId)) {
+                Jeu j = new Jeu();
+                j.setNoJeu(jeuId);
+                j.setTitre(rs.getString("titre"));
+                j.setReference(rs.getInt("reference"));
+                j.setDescription(rs.getString("description"));
+                j.setTarifJournee(rs.getFloat("tarif_journee"));
+                j.setAgeMin(rs.getInt("age_min"));
+                j.setDuree(rs.getInt("duree"));
+                j.setGenres(new ArrayList<>());
+
+                jeuxMap.put(jeuId, j);
+            }
+
+            int noGenre = rs.getInt("no_genre");
+            boolean genreExist = jeuxMap.get(jeuId).getGenres().stream()
+                    .anyMatch(genre -> genre.getNoGenre() == noGenre);
+            if(!rs.wasNull() && !genreExist) {
+                Genre genre = new Genre();
+                genre.setNoGenre(rs.getInt("no_genre"));
+                genre.setLibelle(rs.getString("libelle"));
+                jeuxMap.get(jeuId).setGenre(genre);
+            }
+
+            int noExemplaire = rs.getInt("no_exemplaire");
+            boolean exists =  jeuxMap.get(jeuId).getExemplaires().stream()
+                    .anyMatch(exemplaire -> exemplaire.getNoExemplaire() == noExemplaire);
+            if(!rs.wasNull() && !exists) {
+                ExemplaireJeu exemplaire = new ExemplaireJeu();
+                exemplaire.setNoExemplaire(rs.getInt("no_exemplaire"));
+                exemplaire.setNoJeu(rs.getInt("no_jeu"));
+                exemplaire.setCodeBarre(rs.getString("codebarre"));
+                exemplaire.setLouable(rs.getBoolean("louable"));
+
+                jeuxMap.get(jeuId).setExemplaire(exemplaire);
+            }
+            return null;
+        });
+        return new ArrayList<>(jeuxMap.values());
     }
 }

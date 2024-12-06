@@ -1,5 +1,6 @@
 package com.example.ludotheque.services;
 
+import com.example.ludotheque.bo.ExemplaireJeu;
 import com.example.ludotheque.bo.Jeu;
 import com.example.ludotheque.dal.IJeuRepository;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,15 @@ public class JeuService implements IJeuService {
 
     public void delete(int id) {
         jeuRepository.delete(id);
+    }
+
+    public long getQuantityOfExemplaireAvaible(Jeu jeu) {
+      return  jeu.getExemplaires().stream().filter(ExemplaireJeu::getLouable).count();
+    };
+
+    @Override
+    public List<Jeu> getAllWithFilters(String filter) {
+        return jeuRepository.getAllWithFilters(filter);
     }
 
 }

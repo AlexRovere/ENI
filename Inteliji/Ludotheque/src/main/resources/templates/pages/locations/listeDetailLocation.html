@@ -1,0 +1,56 @@
+<h1 class="mx-auto text-center text-md my-5 flex flex-row">
+    Liste des lignes de location
+    <div class="flex-1  justify-center items-center flex items-center">
+        <a th:href="@{'/locations/lignes/ajouter/' + ${location.noLocation}}"  class="text-blue-500 hover:text-blue-700">
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Ajouter une ligne
+            </button>
+        </a>
+    </div>
+</h1>
+
+<table class="min-w-full table-auto border-collapse mt-5">
+    <thead>
+    <tr>
+        <td class="px-4 py-2 border border-sky-500">Numéro de lignes</td>
+        <td class="px-4 py-2 border border-sky-500">Date de retour</td>
+        <td class="px-4 py-2 border border-sky-500">Tarif de location</td>
+        <td class="px-4 py-2 border border-sky-500" >Numéro de jeu</td>
+        <td class="px-4 py-2 border border-sky-500" >Nom du jeu</td>
+        <td class="px-4 py-2 border border-sky-500" >Référence du jeu</td>
+        <td class="px-4 py-2 border border-sky-500" >Actions</td>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    <tr th:each="ligne : *{details}">
+        <td class="px-4 py-2 border border-sky-500" th:text="${ligne.noLigne}"></td>
+        <td class="px-4 py-2 border border-sky-500" ><span th:text="${ligne.dateRetour}"></span></td>
+        <td class="px-4 py-2 border border-sky-500" th:text="${ligne.tarifLocation}"></td>
+        <td class="px-4 py-2 border border-sky-500" th:text="${ligne.jeu.noJeu}">
+        <td class="px-4 py-2 border border-sky-500" th:text="${ligne.jeu.titre}"></td>
+        <td class="px-4 py-2 border border-sky-500" th:text="${ligne.jeu.reference}"></td>
+
+
+        <td class="border border-sky-500">
+            <div class="flex items-center justify-evenly">
+                <div class="flex-1  justify-center items-center flex">
+                    <a th:href="@{'/locations/lignes/modifier/' + ${ligne.noLigne}}" class="text-blue-500 hover:text-blue-700">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                </div>
+                <div class="flex-1  justify-center items-center flex">
+                    <a th:href="@{'/locations/lignes/supprimer/' + ${ligne.noLigne}}" class="text-red-500 hover:text-red-700 ml-4">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+

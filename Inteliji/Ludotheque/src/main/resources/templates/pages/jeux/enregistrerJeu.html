@@ -1,6 +1,6 @@
-<div class="container mx-auto flex">
+<div class="container mx-auto flex" th:object="${jeu}">
 
-    <form class="max-w-sm mx-auto flex-1" th:action="${noJeu} ? '/jeux/modifier' : '/jeux/ajouter'" method="post" th:object="${jeu}">
+    <form class="max-w-sm mx-auto flex-1" th:action="${noJeu} ? '/jeux/modifier' : '/jeux/ajouter'" method="post">
         <h1 class="mx-auto text-center text-md my-5">
             <span th:text="${noJeu} ? 'Modifier' : 'Créer'"></span> un jeu
         </h1>

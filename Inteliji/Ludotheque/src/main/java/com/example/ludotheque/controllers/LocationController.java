@@ -41,6 +41,7 @@ public class LocationController {
         logger.debug(locationService.getAll().toString());
         model.addAttribute("location", new Location());
         model.addAttribute("body", "pages/locations/enregistrerLocation");
+
         return "index";
     }
 
@@ -56,12 +57,11 @@ public class LocationController {
         Optional<Location> locationOpt = locationService.getById(noLocation);
         if (locationOpt.isPresent()) {
             Location location = locationOpt.get();
-            System.out.println(location);
             int clientSelected = location.getClient().getNoClient();
             model.addAttribute("clientSelected", clientSelected);
             model.addAttribute("location", location);
             model.addAttribute("body", "pages/locations/enregistrerLocation");
-//            model.addAttribute("listeDetailLocation", "pages/locations/listeDetailLocation");
+            model.addAttribute("listeDetailLocation", "pages/locations/listeDetailLocation");
         } else {
             model.addAttribute("body", "pages/locations/listeLocation");
         }
@@ -79,6 +79,7 @@ public class LocationController {
     public String supprimerLocation(Model model, @PathVariable("noLocation") int noLocation) {
         locationService.delete(noLocation);
         model.addAttribute("body", "pages/locations/listeLocation");
+
         return "redirect:/locations";
     }
 
@@ -89,10 +90,13 @@ public class LocationController {
             Location location = locationOpt.get();
             model.addAttribute("location", location);
             model.addAttribute("body", "pages/locations/detailLocation");
+            model.addAttribute("listeDetailLocation", "pages/locations/listeDetailLocation");
 
         } else {
             model.addAttribute("body", "pages/locations/listeLocation");
         }
         return "index";
     }
+
+
 }

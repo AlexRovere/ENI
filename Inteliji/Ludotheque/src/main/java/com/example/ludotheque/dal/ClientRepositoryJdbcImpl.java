@@ -74,6 +74,17 @@ public class ClientRepositoryJdbcImpl implements IClientRepository {
     namedParameterJdbcTemplate.update(sql, params);
     }
 
+    @Override
+    public List<Client> getAllWithFilters(String filter) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select * from clients ");
+
+        if(filter != null && !filter.isEmpty()) {
+            sql.append("WHERE lower(nom || prenom || email) LIKE " + "'%").append(filter.toLowerCase()).append("%'");
+        }
+        return jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Client.class));
+    }
+
     class ClientRowMapper implements RowMapper<Client> {
 
         @Override

@@ -33,8 +33,9 @@ public class ClientController {
     }
 
     @GetMapping({"/clients", "/"})
-    public String clients(Model model) {
-        List<Client> clients = clientService.getAll();
+    public String clients(Model model,  @RequestParam(value = "filter", required = false) String filter) {
+        List<Client> clients = clientService.getAllWithFilters(filter);
+        model.addAttribute("filter", "filter");
         model.addAttribute("clients", clients);
         model.addAttribute("body", "pages/clients/listeClient");
         return "index";

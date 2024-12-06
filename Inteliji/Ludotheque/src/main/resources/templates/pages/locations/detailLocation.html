@@ -1,6 +1,5 @@
-<div class="container mx-auto">
-
-    <div class="max-w-sm mx-auto" th:object="${location}">
+<div class="container mx-auto flex" th:object="${location}">
+    <div class="max-w-sm mx-auto flex-1"   >
         <h1 class="mx-auto text-center text-md my-5">
             Détail de la location
         </h1>
@@ -38,5 +37,9 @@
                 <a th:href="@{/locations}">Retour</a>
             </button>
         </div>
+    </div>
+
+    <div class="max-w-sm mx-auto">
+        <div class="flex-1" th:insert="${listeDetailLocation}"></div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 package com.example.ludotheque.services;
 
 import com.example.ludotheque.bo.Client;
+import com.example.ludotheque.bo.Jeu;
 import com.example.ludotheque.dal.IClientRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,10 @@ public class ClientService implements IClientService {
 
     public void delete(int id) {
         clientRepository.delete(id);
+    }
+
+    @Override
+    public List<Client> getAllWithFilters(String filter) {
+        return clientRepository.getAllWithFilters(filter);
     }
 }

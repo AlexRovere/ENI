@@ -1,6 +1,7 @@
 package com.example.ludotheque.dal;
 
 import com.example.ludotheque.bo.ExemplaireJeu;
+import com.example.ludotheque.bo.Location;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -65,9 +66,31 @@ public class ExemplaireJeuJdbcImpl implements IExemplaireJeuRepository {
 
     @Override
     public void delete(int id) {
-    String sql = "delete from exemplaire_jeu where no_exemplaire = :id";
+        String sql = "delete from exemplaire_jeu where no_exemplaire = :id";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-    namedParameterJdbcTemplate.update(sql, params);
+        namedParameterJdbcTemplate.update(sql, params);
+    }
+
+    public void returnAllExemplaireToStoreFromLocation (Location location) {
+        String sql = "update exemplaire_jeu  SET louable = true from locations l left join detail_location dl ON l.no_location = dl.no_location\n" +
+                "LEFT JOIN jeu j ON j.no_jeu = dl.no_jeu LEFT JOIN exemplaire_jeu ej ON ej.no_jeu = j.no_jeu  where l.no_location = :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", location.getNoLocation());
+        namedParameterJdbcTemplate.update(sql, params);
+    }
+
+    public void giveExemplaireToClient (int noJeu) {
+        String sql = "WITH cte AS (SELECT ej.no_exemplaire FROM exemplaire_jeu ej WHERE ej.louable = true AND ej.no_jeu = :id LIMIT 1) UPDATE exemplaire_jeu ej SET louable = false FROM cte WHERE ej.no_exemplaire = cte.no_exemplaire";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", noJeu);
+        namedParameterJdbcTemplate.update(sql, params);
+    }
+
+    public void returnExemplaireToStore (int noJeu) {
+        String sql = "WITH cte AS (SELECT ej.no_exemplaire FROM exemplaire_jeu ej WHERE ej.louable = false AND ej.no_jeu = :id LIMIT 1) UPDATE exemplaire_jeu ej SET louable = true FROM cte WHERE ej.no_exemplaire = cte.no_exemplaire";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", noJeu);
+        namedParameterJdbcTemplate.update(sql, params);
     }
 }

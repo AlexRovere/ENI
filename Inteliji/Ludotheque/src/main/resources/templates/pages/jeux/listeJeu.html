@@ -1,6 +1,17 @@
 <div class="container mx-auto py-5">
     <div class="flex justify-between items-center">
         <h1 class="text-lg">Liste des jeux</h1>
+        <form class="flex items-center gap-5" th:action="@{/jeux}" method="get">
+            <input type="text" th:name="${filter}"  id="filter" />
+            <button type="submit" class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                Filtrer
+            </button>
+            <a th:action="@{jeux}">
+            <button class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                Réinitialiser les filtres
+            </button>
+            </a>
+        </form>
 
         <button><a href="/jeux/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Ajouter un jeu</a>
@@ -38,7 +49,6 @@
 
             <td class="px-4 py-2 border border-sky-500">
                 <div class="flex-1  justify-center items-center flex">
-
                 <a th:href="@{'/jeux/exemplaire/ajouter/' + ${jeu.noJeu}}"  class="text-blue-500 hover:text-blue-700">
                     <i class="fas fa fa-plus"></i>
                 </a>

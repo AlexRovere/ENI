@@ -90,4 +90,9 @@ public class Location {
     public void setDetails(List<DetailLocation> details) {
         this.details = details;
     }
+
+    public void setDetail(DetailLocation detail) {
+        this.details.add(detail);
+    }
+
 }
