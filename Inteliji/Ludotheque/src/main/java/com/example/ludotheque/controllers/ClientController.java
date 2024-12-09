@@ -1,5 +1,6 @@
 package com.example.ludotheque.controllers;
 
+import com.example.ludotheque.Exception.EmailAlreadyTakenException;
 import com.example.ludotheque.bo.Client;
 import com.example.ludotheque.services.GenreService;
 import com.example.ludotheque.services.IClientService;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ClientController {
+public class ClientController extends AuthController {
 
     Logger logger = LoggerFactory.getLogger(ClientController.class);
     private final GenreService genreService;
@@ -32,7 +33,7 @@ public class ClientController {
         return  new Client();
     }
 
-    @GetMapping({"/clients", "/"})
+    @GetMapping("/clients")
     public String clients(Model model,  @RequestParam(value = "filter", required = false) String filter) {
         List<Client> clients = clientService.getAllWithFilters(filter);
         model.addAttribute("filter", "filter");
@@ -52,13 +53,23 @@ public class ClientController {
                                 RedirectAttributes redirectAttr) {
         model.addAttribute("body", "pages/clients/enregistrerClient");
 
-        if(result.hasErrors()){
-            redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.client", result);
+        try {
+
+            clientService.isClientEmailTaken(client.getEmail());
+            if(result.hasErrors()){
+                redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.client", result);
+                redirectAttr.addFlashAttribute("client", client);
+                return "redirect:/clients/ajouter";
+            }
+        } catch (EmailAlreadyTakenException e) {
             redirectAttr.addFlashAttribute("client", client);
+            redirectAttr.addFlashAttribute("emailAlreadyTaken", e.getMessage());
             return "redirect:/clients/ajouter";
         }
         clientService.add(client);
+
         return "redirect:/clients";
+
     }
 
     @GetMapping("/clients/modifier/{noClient}")

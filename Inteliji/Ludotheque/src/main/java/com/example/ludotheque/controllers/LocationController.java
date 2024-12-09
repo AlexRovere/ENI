@@ -10,22 +10,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class LocationController {
+public class LocationController extends AuthController {
 
-    private final ClientService clientService;
-    Logger logger = LoggerFactory.getLogger(LocationController.class);
+    private final IClientService clientService;
+    private final ToolsService toolsService;
+    private final IJeuService jeuService;
+    private final ILocationService locationService;
+    private final Logger logger = LoggerFactory.getLogger(LocationController.class);
 
-    IJeuService jeuService;
-    ILocationService locationService;
-
-    LocationController(IJeuService jeuService, ILocationService locationService, ClientService clientService) {
+    LocationController(IJeuService jeuService, ILocationService locationService, ClientService clientService, ToolsService toolsService) {
         this.locationService = locationService;
         this.jeuService = jeuService;
         this.clientService = clientService;
+        this.toolsService = toolsService;
     }
 
     @GetMapping("/locations")
@@ -87,7 +89,9 @@ public class LocationController {
     public String detailLocation(Model model, @PathVariable("noLocation") int noLocation) {
         Optional<Location> locationOpt = locationService.getById(noLocation);
         if (locationOpt.isPresent()) {
+            LocalDate testDate = LocalDate.now();
             Location location = locationOpt.get();
+            model.addAttribute("testDate", testDate);
             model.addAttribute("location", location);
             model.addAttribute("body", "pages/locations/detailLocation");
             model.addAttribute("listeDetailLocation", "pages/locations/listeDetailLocation");

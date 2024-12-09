@@ -1,7 +1,9 @@
 package com.example.ludotheque.dal;
 
+import com.example.ludotheque.Exception.EmailAlreadyTakenException;
 import com.example.ludotheque.bo.Client;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,6 +27,14 @@ public class ClientRepositoryJdbcImpl implements IClientRepository {
     public ClientRepositoryJdbcImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    public void isClientEmailTaken(String email) throws EmailAlreadyTakenException {
+        String sql = "SELECT COUNT(*) from clients where email = ?";
+      Integer count=  jdbcTemplate.queryForObject(sql, Integer.class, email);
+      if(count != null & count > 0) {
+          throw new EmailAlreadyTakenException("Email déjà utilisé");
+      }
     }
 
 

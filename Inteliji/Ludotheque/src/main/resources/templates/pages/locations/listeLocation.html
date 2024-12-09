@@ -27,7 +27,7 @@
         <tbody>
         <tr th:each="loc: ${locations}">
             <td class="px-4 py-2 border border-sky-500" th:text="${loc.noLocation}"></td>
-            <td class="px-4 py-2 border border-sky-500" th:text="${loc.dateDebutLocation}"></td>
+            <td class="px-4 py-2 border border-sky-500" th:text="${@toolsService.formatDate(loc.dateDebutLocation)}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${loc.details.size()}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${loc.prixTotal} + ' €'"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${@locationService.calculateTotalPrice(loc)} + ' €'"></td>

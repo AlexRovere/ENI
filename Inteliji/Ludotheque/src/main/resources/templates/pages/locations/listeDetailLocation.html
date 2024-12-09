@@ -26,7 +26,7 @@
 
     <tr th:each="ligne : *{details}">
         <td class="px-4 py-2 border border-sky-500" th:text="${ligne.noLigne}"></td>
-        <td class="px-4 py-2 border border-sky-500" ><span th:text="${ligne.dateRetour}"></span></td>
+        <td class="px-4 py-2 border border-sky-500" ><span th:text="${@toolsService.formatDate(ligne.dateRetour)}"></span></td>
         <td class="px-4 py-2 border border-sky-500" th:text="${ligne.tarifLocation}"></td>
         <td class="px-4 py-2 border border-sky-500" th:text="${ligne.jeu.noJeu}">
         <td class="px-4 py-2 border border-sky-500" th:text="${ligne.jeu.titre}"></td>

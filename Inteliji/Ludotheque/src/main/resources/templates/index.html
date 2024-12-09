@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>La crypte des jeux</title>
-     <link th:href="@{/main.css}" rel="stylesheet" />
+     <link th:href="@{/css/main.css}" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
         <div class="flex flex-1 items-center justify-center  h-16">
             <a href="/">
             <div class="flex shrink-0 items-center">
-                <img class="h-10 w-auto" src="/la-cryte-du-jeu-logo-16133977282.jpg" alt="Your Company">
+                <img class="h-10 w-auto" src="/images/la-cryte-du-jeu-logo-16133977282.jpg" alt="Your Company">
             </div>
             </a>
             <div class="hidden sm:ml-6 sm:block">
@@ -29,6 +29,11 @@
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Genres</a>
                     <a th:href="@{/locations}"
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Locations</a>
+                    <a th:if="${!isLogged}" th:href="@{/login}"
+                       class="rounded-md  px-3 py-2 text-sm font-medium text-white">Se connecter</a>
+                    <form  class="rounded-md  px-3 py-2 text-sm font-medium text-white" th:if="${isLogged}" th:action="@{/logout}" method="post">
+                        <button type="submit">Se déconnecter</button>
+                    </form>
                 </div>
             </div>
         </div>

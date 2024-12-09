@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class JeuController {
+public class JeuController extends AuthController {
 
     Logger logger = LoggerFactory.getLogger(JeuController.class);
 
@@ -29,7 +29,7 @@ public class JeuController {
         this.exemplaireJeuService = exemplaireJeuService;
     }
 
-    @GetMapping("/jeux")
+    @GetMapping({"/jeux", "/"})
     public String getJeux(Model model, @RequestParam(value = "filter", required = false) String filter) {
         List<Jeu> jeux = jeuService.getAllWithFilters(filter);
         model.addAttribute("filter", "filter");

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Optional;
 
 @Controller
-public class DetailLocationController {
+public class DetailLocationController extends AuthController {
 
     Logger logger = LoggerFactory.getLogger(LocationController.class);
 
@@ -30,8 +30,9 @@ public class DetailLocationController {
     public String getAjouterLigne(Model model,  @PathVariable("noLocation") int noLocation) {
         Optional<Location> locationOpt = locationService.getById(noLocation);
         if(locationOpt.isPresent()) {
-            Location location = locationOpt.get();
-            model.addAttribute("detailLocation", new DetailLocation(location));
+            DetailLocation detailLocation = new DetailLocation();
+            detailLocation.setLocation(locationOpt.get());
+            model.addAttribute("detailLocation", detailLocation);
             model.addAttribute("body", "pages/detailLocation/enregistrerDetailLocation");
         } else {
             model.addAttribute("body", "pages/locations/listeLocation");

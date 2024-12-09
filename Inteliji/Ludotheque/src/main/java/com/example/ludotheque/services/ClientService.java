@@ -1,5 +1,6 @@
 package com.example.ludotheque.services;
 
+import com.example.ludotheque.Exception.EmailAlreadyTakenException;
 import com.example.ludotheque.bo.Client;
 import com.example.ludotheque.bo.Jeu;
 import com.example.ludotheque.dal.IClientRepository;
@@ -18,7 +19,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public void add(Client client) {
+    public void add(Client client)  {
         clientRepository.add(client);
     }
 
@@ -43,5 +44,9 @@ public class ClientService implements IClientService {
     @Override
     public List<Client> getAllWithFilters(String filter) {
         return clientRepository.getAllWithFilters(filter);
+    }
+
+    public void isClientEmailTaken(String email) throws EmailAlreadyTakenException {
+        clientRepository.isClientEmailTaken(email);
     }
 }
