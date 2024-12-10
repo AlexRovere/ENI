@@ -28,11 +28,6 @@ public class ClientController extends AuthController {
         this.genreService = genreService;
     }
 
-    @ModelAttribute("client")
-    public Client createClient() {
-        return  new Client();
-    }
-
     @GetMapping("/clients")
     public String clients(Model model,  @RequestParam(value = "filter", required = false) String filter) {
         List<Client> clients = clientService.getAllWithFilters(filter);
@@ -44,6 +39,9 @@ public class ClientController extends AuthController {
 
     @GetMapping("/clients/ajouter")
     public String pageAjouterClient(Model model) {
+        if(!model.containsAttribute("client")) {
+            model.addAttribute("client", new Client());
+        }
         model.addAttribute("body", "pages/clients/enregistrerClient");
         return "index";
     }
@@ -52,18 +50,14 @@ public class ClientController extends AuthController {
     public String ajouterClient(Model model, @Valid @ModelAttribute("client") Client client, BindingResult result,
                                 RedirectAttributes redirectAttr) {
         model.addAttribute("body", "pages/clients/enregistrerClient");
-
         try {
-
             clientService.isClientEmailTaken(client.getEmail());
-            if(result.hasErrors()){
-                redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.client", result);
-                redirectAttr.addFlashAttribute("client", client);
-                return "redirect:/clients/ajouter";
-            }
         } catch (EmailAlreadyTakenException e) {
+            result.rejectValue("email", null, e.getMessage());
+        }
+        if(result.hasErrors()){
+            redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.client", result);
             redirectAttr.addFlashAttribute("client", client);
-            redirectAttr.addFlashAttribute("emailAlreadyTaken", e.getMessage());
             return "redirect:/clients/ajouter";
         }
         clientService.add(client);
@@ -73,23 +67,47 @@ public class ClientController extends AuthController {
     }
 
     @GetMapping("/clients/modifier/{noClient}")
-    public String getModifierClient(Model model, @PathVariable("noClient") int noClient) {
-        Optional<Client> client = clientService.getById(noClient);
-        if (client.isPresent()) {
-            model.addAttribute("client", client);
-            model.addAttribute("body", "pages/clients/enregistrerClient");
-
+    public String getModifierClient(Model model, @PathVariable("noClient") int noClient, RedirectAttributes redirectAttr) {
+        if(!model.containsAttribute("client")) {
+            Optional<Client> client = clientService.getById(noClient);
+            if (client.isPresent()) {
+                model.addAttribute("client", client);
+                model.addAttribute("body", "pages/clients/enregistrerClient");
+            } else {
+                model.addAttribute("body", "pages/clients/listeClient");
+            }
         } else {
-            model.addAttribute("body", "pages/clients/listeClient");
+            model.addAttribute("body", "pages/clients/enregistrerClient");
         }
         return "index";
     }
 
     @PostMapping("/clients/modifier")
-    public String postModifierClient(Model model, Client client) {
-        clientService.update(client);
+    public String postModifierClient(Model model, @Valid @ModelAttribute("client") Client client, BindingResult result, RedirectAttributes redirectAttr) {
         model.addAttribute("body", "pages/clients/listeClient");
-        return "redirect:/clients";
+
+        Optional<Client> oldClientOptional = clientService.getById(client.getNoClient());
+        if(oldClientOptional.isPresent()) {
+            Client oldClient = oldClientOptional.get();
+            if(!oldClient.getEmail().equals(client.getEmail())) {
+                try {
+                    clientService.isClientEmailTaken(client.getEmail());
+                } catch (EmailAlreadyTakenException e) {
+                    result.rejectValue("email", null, e.getMessage());
+                }
+            }
+                if(result.hasErrors()){
+                    redirectAttr.addFlashAttribute( "org.springframework.validation.BindingResult.client", result);
+                    redirectAttr.addFlashAttribute("client", client);
+                    return "redirect:/clients/modifier/" + client.getNoClient();
+                }
+                clientService.update(client);
+                return "redirect:/clients";
+        } else {
+            model.addAttribute("client", client);
+            model.addAttribute("body", "pages/clients/enregistrerClient");
+        }
+        return "index";
     }
 
     @GetMapping("/clients/supprimer/{noClient}")

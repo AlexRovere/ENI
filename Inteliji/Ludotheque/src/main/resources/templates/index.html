@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>La crypte des jeux</title>
@@ -24,24 +24,34 @@
                     <a th:href="@{/jeux}"
                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Jeux</a>
                     <a th:href="@{/clients}"
+                       sec:authorize="isAuthenticated()"
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Clients</a>
                     <a th:href="@{/genres}"
+                       sec:authorize="isAuthenticated()"
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Genres</a>
                     <a th:href="@{/locations}"
+                       sec:authorize="isAuthenticated()"
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Locations</a>
                     <a th:if="${!isLogged}" th:href="@{/login}"
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Se connecter</a>
+                    <a th:if="${!isLogged}" th:href="@{/sign-up}"
+                       class="rounded-md  px-3 py-2 text-sm font-medium text-white">Créer un compte</a>
                     <form  class="rounded-md  px-3 py-2 text-sm font-medium text-white" th:if="${isLogged}" th:action="@{/logout}" method="post">
                         <button type="submit">Se déconnecter</button>
                     </form>
+                    <div  sec:authorize="isAuthenticated()"   class="rounded-md  px-3 py-2 text-sm font-medium text-white">
+                        Logged : <span sec:authentication="name">Bob</span>
+                        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+                    </div>
                 </div>
+
             </div>
         </div>
 
     </div>
 </nav>
 
-<div class="flex-1" th:insert="~{${body}}"></div>
+<div class="flex-1 max-h-full" th:insert="~{${body}}"></div>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 

@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="max-w-sm mx-auto">
+    <div sec:authorize="hasRole('ADMIN')" class="max-w-sm mx-auto">
         <div class="flex-1" th:insert="${listeExemplaire}"></div>
     </div>
 

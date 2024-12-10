@@ -13,7 +13,7 @@
             </a>
         </form>
 
-        <button><a href="/jeux/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+        <button sec:authorize="hasRole('ADMIN')"><a href="/jeux/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Ajouter un jeu</a>
         </button>
     </div>
@@ -29,10 +29,10 @@
             <td class="px-4 py-2 border border-sky-500">Durée</td>
             <td class="px-4 py-2 border border-sky-500">Tarif journalier</td>
             <td class="px-4 py-2 border border-sky-500">Genres</td>
-            <td class="px-4 py-2 border border-sky-500">Ajouter un exemplaire</td>
-            <td class="px-4 py-2 border border-sky-500">Détail</td>
-            <td class="px-4 py-2 border border-sky-500">Modifier</td>
-            <td class="px-4 py-2 border border-sky-500">Supprimer</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Ajouter un exemplaire</td>
+            <td  class="px-4 py-2 border border-sky-500">Détail</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Modifier</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Supprimer</td>
         </tr>
         </thead>
         <tbody>
@@ -47,28 +47,28 @@
             <td class="px-4 py-2 border border-sky-500" th:text="${jeu.tarifJournee}"></td>
             <td class="px-4 py-2 border border-sky-500" ><span th:each="jeu : ${jeu.genres}" th:text="${jeu.libelle} + ' '"></span></td>
 
-            <td class="px-4 py-2 border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">
                 <div class="flex-1  justify-center items-center flex">
                 <a th:href="@{'/jeux/exemplaire/ajouter/' + ${jeu.noJeu}}"  class="text-blue-500 hover:text-blue-700">
                     <i class="fas fa fa-plus"></i>
                 </a>
                 </div>
             </td>
-            <td class="px-4 py-2 border border-sky-500">
+            <td  class="px-4 py-2 border border-sky-500">
                 <div class="flex-1  justify-center items-center flex">
                     <a th:href="@{'jeux/detail/' + ${jeu.noJeu}}" class="text-blue-500 hover:text-blue-700">
                         <i class="fas fa fa-info"></i>
                     </a>
                 </div>
             </td>
-            <td class="px-4 py-2 border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">
                 <div class="flex-1  justify-center items-center flex">
                     <a th:href="@{'jeux/modifier/' + ${jeu.noJeu}}" class="text-blue-500 hover:text-blue-700">
                         <i class="fas fa-pencil-alt"></i>
                     </a>
                 </div>
             </td>
-            <td class="px-4 py-2 border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">
                 <div class="flex-1  justify-center items-center flex">
                     <a th:href="@{'jeux/supprimer/' + ${jeu.noJeu}}" class="text-red-500 hover:text-red-700 ml-4">
                         <i class="fas fa-trash"></i>

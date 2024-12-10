@@ -1,9 +1,10 @@
 package com.example.ludotheque.dal;
 
-import org.springframework.security.core.userdetails.User;
+import com.example.ludotheque.bo.UserApplication;
 
 import java.util.Optional;
 
 public interface IUserRepository {
-    Optional<User> getByLogin(String login);
+    Optional<UserApplication> getByLogin(String login);
+    void addUser(UserApplication user);
 }

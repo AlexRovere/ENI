@@ -1,7 +1,7 @@
 <div class="container mx-auto py-5">
     <div class="flex justify-between items-center">
         <h1 class="text-lg">Liste des locations</h1>
-        <button><a href="/locations/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+        <button sec:authorize="hasRole('ADMIN')"><a href="/locations/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Ajouter une location</a>
         </button>
     </div>
@@ -16,10 +16,10 @@
             <td class="px-4 py-2 border border-sky-500">Payé</td>
             <td class="px-4 py-2 border border-sky-500">Nom du client</td>
             <td class="px-4 py-2 border border-sky-500">Prénom du client</td>
-            <td class="px-4 py-2 border border-sky-500">Ajouter une ligne</td>
-            <td class="px-4 py-2 border border-sky-500">Détail</td>
-            <td class="px-4 py-2 border border-sky-500">Modifier</td>
-            <td class="px-4 py-2 border border-sky-500">Supprimer</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Ajouter une ligne</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Détail</td>
+            <td sec:authorize="hasRole('ADMIN')"  class="px-4 py-2 border border-sky-500">Modifier</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Supprimer</td>
 
 
         </tr>
@@ -35,7 +35,7 @@
             <td class="px-4 py-2 border border-sky-500" th:text="${loc.client.nom}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${loc.client.prenom}"></td>
 
-            <td class="px-4 py-2 border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">
                 <div class="flex-1  justify-center items-center flex">
 
                     <a th:href="@{'/locations/lignes/ajouter/' + ${loc.noLocation}}"  class="text-blue-500 hover:text-blue-700">
@@ -43,14 +43,14 @@
                     </a>
                 </div>
             </td>
-            <td class="px-4 py-2 border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">
                 <div class="flex-1  justify-center items-center flex">
                     <a th:href="@{'locations/detail/' + ${loc.noLocation}}" class="text-blue-500 hover:text-blue-700">
                         <i class="fas fa fa-info"></i>
                     </a>
                 </div>
             </td>
-            <td class="px-4 py-2 border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">
                 <div th:if="${loc.paye} == false" class="flex-1  justify-center items-center flex">
                     <a th:href="@{'locations/modifier/' + ${loc.noLocation}}" class="text-blue-500 hover:text-blue-700">
                         <i class="fas fa-pencil-alt"></i>
@@ -59,7 +59,7 @@
                 <div th:unless="${!loc.paye}">Non modifiable</div>
 
             </td>
-            <td class="px-4 py-2 border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">
                 <div  class="flex-1  justify-center items-center flex">
                     <a th:href="@{'locations/supprimer/' + ${loc.noLocation}}" class="text-red-500 hover:text-red-700 ml-4">
                         <i class="fas fa-trash"></i>

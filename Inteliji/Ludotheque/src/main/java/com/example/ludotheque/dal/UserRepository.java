@@ -1,5 +1,6 @@
 package com.example.ludotheque.dal;
 
+import com.example.ludotheque.bo.UserApplication;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,22 +22,32 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public Optional<User> getByLogin(String login) {
+    public Optional<UserApplication> getByLogin(String login) {
         String sql = "select * from users where login = :login";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("login", login);
-        User dbUser = namedParameterJdbcTemplate.queryForObject(sql, params, ((ResultSet rs, int rowNum) ->  {
+        UserApplication user = namedParameterJdbcTemplate.queryForObject(sql, params, ((ResultSet rs, int rowNum) ->  {
             String dbLogin = rs.getString("login");
             String password =  rs.getString("password");
-            String role = rs.getString("roles");
-            Collection<GrantedAuthority> roles = Arrays.stream(role.split(","))
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(Collectors.toList());
+            String roles = rs.getString("roles");
 
-            return new User(dbLogin, password, roles);
+//            Collection<GrantedAuthority> roles = Arrays.stream(role.split(","))
+//                    .map(SimpleGrantedAuthority::new)
+//                    .collect(Collectors.toList());
+
+            return new UserApplication(dbLogin, password, roles);
 
         }));
-        return Optional.ofNullable(dbUser);
+        return Optional.ofNullable(user);
+
+    }
+
+    public void addUser(UserApplication user) {
+        String sql = "insert into users (login, password, roles) VALUES (:login, :password, 'USER')";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("login", user.getLogin());
+        params.addValue("password", user.getPassword());
+        namedParameterJdbcTemplate.update(sql, params);
 
     }
 }

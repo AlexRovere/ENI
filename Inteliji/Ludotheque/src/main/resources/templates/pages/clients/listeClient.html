@@ -13,7 +13,7 @@
             </a>
         </form>
 
-    <button><a href="/clients/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter un client</a></button>
+    <button sec:authorize="hasRole('ADMIN')"><a href="/clients/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter un client</a></button>
     </div>
     <table class="min-w-full table-auto border-collapse mt-5">
         <thead>
@@ -26,7 +26,7 @@
             <td class="px-4 py-2 border border-sky-500">Rue</td>
             <td class="px-4 py-2 border border-sky-500">Code postal</td>
             <td class="px-4 py-2 border border-sky-500">Ville</td>
-            <td class="px-4 py-2 border border-sky-500">Action</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Action</td>
 
         </tr>
         </thead>
@@ -41,7 +41,7 @@
             <td class="px-4 py-2 border border-sky-500" th:text="${client.codePostal}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${client.ville}"></td>
             <td class="border border-sky-500">
-            <div class="flex items-center justify-evenly">
+            <div sec:authorize="hasRole('ADMIN')" class="flex items-center justify-evenly">
                 <div class="flex-1  justify-center items-center flex">
                 <a th:href="@{'clients/detail/' + ${client.noClient}}" class="text-blue-500 hover:text-blue-700">
                     <i class="fas fa fa-info"></i>

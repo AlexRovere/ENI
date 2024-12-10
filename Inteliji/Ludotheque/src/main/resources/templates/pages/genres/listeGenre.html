@@ -1,7 +1,7 @@
 <div class="container mx-auto py-5">
     <div class="flex justify-between items-center">
         <h1 class="text-lg">Liste des genres</h1>
-        <button><a href="/genres/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+        <button sec:authorize="hasRole('ADMIN')"><a href="/genres/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Ajouter un genre</a>
         </button>
     </div>
@@ -10,7 +10,7 @@
         <tr>
             <td class="px-4 py-2 border border-sky-500">Numéro du genre</td>
             <td class="px-4 py-2 border border-sky-500">Libellé</td>
-            <td class="px-4 py-2 border border-sky-500">Actions</td>
+            <td sec:authorize="hasRole('ADMIN')" class="px-4 py-2 border border-sky-500">Actions</td>
 
         </tr>
         </thead>
@@ -18,7 +18,7 @@
         <tr th:each="g: ${genres}">
             <td class="px-4 py-2 border border-sky-500" th:text="${g.noGenre}"></td>
             <td class="px-4 py-2 border border-sky-500" th:text="${g.libelle}"></td>
-            <td class="border border-sky-500">
+            <td sec:authorize="hasRole('ADMIN')" class="border border-sky-500">
                 <div class="flex items-center justify-evenly">
                     <div class="flex-1  justify-center items-center flex">
                         <a th:href="@{'genres/modifier/' + ${g.noGenre}}" class="text-blue-500 hover:text-blue-700">
