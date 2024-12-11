@@ -17,17 +17,12 @@ import java.util.Optional;
 @Controller
 public class LocationController extends AuthController {
 
-    private final IClientService clientService;
-    private final ToolsService toolsService;
-    private final IJeuService jeuService;
+
     private final ILocationService locationService;
     private final Logger logger = LoggerFactory.getLogger(LocationController.class);
 
-    LocationController(IJeuService jeuService, ILocationService locationService, ClientService clientService, ToolsService toolsService) {
+    LocationController(ILocationService locationService) {
         this.locationService = locationService;
-        this.jeuService = jeuService;
-        this.clientService = clientService;
-        this.toolsService = toolsService;
     }
 
     @GetMapping("/locations")

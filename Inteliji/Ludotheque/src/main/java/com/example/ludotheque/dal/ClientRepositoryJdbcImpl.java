@@ -3,7 +3,6 @@ package com.example.ludotheque.dal;
 import com.example.ludotheque.Exception.EmailAlreadyTakenException;
 import com.example.ludotheque.bo.Client;
 import org.springframework.context.annotation.Primary;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

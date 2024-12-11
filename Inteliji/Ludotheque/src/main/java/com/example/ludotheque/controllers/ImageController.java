@@ -1,7 +1,6 @@
 package com.example.ludotheque.controllers;
 
 import com.example.ludotheque.bo.Image;
-import com.example.ludotheque.bo.Jeu;
 import com.example.ludotheque.dal.ImageRepository;
 import com.example.ludotheque.services.ImageService;
 import org.springframework.stereotype.Controller;
@@ -13,19 +12,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class ImageController extends AuthController {
 
     private final ImageRepository imageRepository;
-    private final ImageService imageService;
 
-    ImageController(ImageRepository imageRepository, ImageService imageService) {
+    ImageController(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
-        this.imageService = imageService;
     }
 
     @GetMapping("/img")

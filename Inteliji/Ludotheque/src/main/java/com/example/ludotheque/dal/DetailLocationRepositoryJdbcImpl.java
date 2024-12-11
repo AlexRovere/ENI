@@ -1,9 +1,7 @@
 package com.example.ludotheque.dal;
 
-import com.example.ludotheque.bo.Client;
 import com.example.ludotheque.bo.DetailLocation;
 import com.example.ludotheque.bo.Jeu;
-import com.example.ludotheque.bo.Location;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

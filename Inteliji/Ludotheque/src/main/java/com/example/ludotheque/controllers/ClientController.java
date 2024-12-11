@@ -20,12 +20,10 @@ import java.util.Optional;
 public class ClientController extends AuthController {
 
     Logger logger = LoggerFactory.getLogger(ClientController.class);
-    private final GenreService genreService;
     IClientService clientService;
 
-    ClientController(IClientService clientService, GenreService genreService) {
+    ClientController(IClientService clientService) {
         this.clientService = clientService;
-        this.genreService = genreService;
     }
 
     @GetMapping("/clients")

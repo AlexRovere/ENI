@@ -4,7 +4,7 @@ import com.example.ludotheque.bo.UserApplication;
 
 import java.util.Optional;
 
-public interface IUserRepository {
+public interface IUserRepository extends ICrudRepository<UserApplication> {
     Optional<UserApplication> getByLogin(String login);
-    void addUser(UserApplication user);
+    void deleteUser(String login);
 }

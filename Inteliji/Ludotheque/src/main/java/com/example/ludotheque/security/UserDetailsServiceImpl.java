@@ -36,8 +36,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         throw new UsernameNotFoundException("User not found");
 
     }
-
-    public void addUser(UserApplication user) {
-        this.userRepository.addUser(user);
-    }
 }

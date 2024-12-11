@@ -2,6 +2,8 @@ package com.example.ludotheque.controllers;
 
 import com.example.ludotheque.bo.UserApplication;
 import com.example.ludotheque.security.UserDetailsServiceImpl;
+import com.example.ludotheque.services.IUserApplicationService;
+import com.example.ludotheque.services.UserApplicatonService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController extends AuthController {
 
-    private final UserDetailsServiceImpl demoUserDetailsServiceImpl;
-    private PasswordEncoder passwordEncoder;
+    private final IUserApplicationService userApplicationService;
+    private final PasswordEncoder passwordEncoder;
 
-    LoginController(PasswordEncoder passwordEncoder, UserDetailsServiceImpl demoUserDetailsServiceImpl) {
+    LoginController(PasswordEncoder passwordEncoder, IUserApplicationService userApplicationService) {
         this.passwordEncoder = passwordEncoder;
-        this.demoUserDetailsServiceImpl = demoUserDetailsServiceImpl;
+        this.userApplicationService = userApplicationService;
     }
 
     @RequestMapping("/login")
@@ -38,7 +40,7 @@ public class LoginController extends AuthController {
         UserApplication user = new UserApplication();
         user.setLogin(login);
         user.setPassword(passwordEncoder.encode(password));
-        demoUserDetailsServiceImpl.addUser(user);
+        userApplicationService.add(user);
         model.addAttribute("body", "pages/security/sign-up");
         return "index";
     }

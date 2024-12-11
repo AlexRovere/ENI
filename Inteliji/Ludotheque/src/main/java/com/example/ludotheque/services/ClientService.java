@@ -2,7 +2,6 @@ package com.example.ludotheque.services;
 
 import com.example.ludotheque.Exception.EmailAlreadyTakenException;
 import com.example.ludotheque.bo.Client;
-import com.example.ludotheque.bo.Jeu;
 import com.example.ludotheque.dal.IClientRepository;
 import org.springframework.stereotype.Service;
 
