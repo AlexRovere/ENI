@@ -13,6 +13,7 @@ public class Jeu {
 	private float tarifJournee;
 	private List<Genre> genres = new ArrayList<>();
 	private List<ExemplaireJeu> exemplaires = new ArrayList<>();
+	private Image image;
 
 
 	public Jeu(String titre, int reference, int ageMin, String description, int duree, float tarifJournee, List<Genre> genres) {
@@ -46,7 +47,16 @@ public class Jeu {
 				", tarifJournee=" + tarifJournee +
 				", genres=" + genres +
 				", exemplaires=" + exemplaires +
+				", image=" + image +
 				'}';
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	public Jeu() {

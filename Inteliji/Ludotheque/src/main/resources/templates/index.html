@@ -32,6 +32,9 @@
                     <a th:href="@{/locations}"
                        sec:authorize="isAuthenticated()"
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Locations</a>
+                    <a th:href="@{/img}"
+                       sec:authorize="isAuthenticated()"
+                       class="rounded-md  px-3 py-2 text-sm font-medium text-white">Images</a>
                     <a th:if="${!isLogged}" th:href="@{/login}"
                        class="rounded-md  px-3 py-2 text-sm font-medium text-white">Se connecter</a>
                     <a th:if="${!isLogged}" th:href="@{/sign-up}"

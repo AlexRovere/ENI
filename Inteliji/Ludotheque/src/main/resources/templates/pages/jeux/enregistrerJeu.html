@@ -61,7 +61,20 @@
         <div class="mb-5">
             <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genres</label>
             <select  multiple th:field="*{genres}" id="genres" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected th:each="genre : ${allGenres}" th:value="${genre.noGenre}" >[[${genre.noGenre}]]  [[${genre.libelle}]]</option>
+            <option  selected th:each="genre : ${allGenres}" th:value="${genre.noGenre}" >[[${genre.noGenre}]]  [[${genre.libelle}]]</option>
+            </select>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                <span  th:each="erreur: ${#fields.errors('tarifJournee')}" th:text="${erreur}" class="font-medium"></span>
+            </p>
+        </div>
+
+        <div class="mb-5">
+
+            <label  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Images</label>
+            <select name="idImage" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option th:selected="${jeu.image?.id == img.id}" selected th:each="img : ${images}" th:value="${img.id}" >
+                    [[${img.fileName}]]
+                </option>
             </select>
             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                 <span  th:each="erreur: ${#fields.errors('tarifJournee')}" th:text="${erreur}" class="font-medium"></span>

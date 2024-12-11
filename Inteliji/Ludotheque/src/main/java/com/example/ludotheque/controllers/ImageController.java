@@ -1,19 +1,19 @@
 package com.example.ludotheque.controllers;
 
 import com.example.ludotheque.bo.Image;
-import com.example.ludotheque.bo.dto.ImageDto;
+import com.example.ludotheque.bo.Jeu;
 import com.example.ludotheque.dal.ImageRepository;
 import com.example.ludotheque.services.ImageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,24 +32,63 @@ public class ImageController extends AuthController {
     public String getImage(Model model) throws IOException {
         model.addAttribute("body", "pages/images/listeImage");
         Iterable<Image> images = imageRepository.findAll();
-        List<ImageDto> imageDtos = new ArrayList<>();
-        for(Image img : images) {
-            imageDtos.add(imageService.convertToImageDto(img));
-        }
-
-        model.addAttribute("images", imageDtos);
-//        Image img = new Image();
-//        img.setFileName("heroquest.jpg");
-//        img.setMimeType("images/jpg");
-//            try (InputStream inputStream = getClass().getResourceAsStream("/static/images/heroquest.jpg")) {
-//
-//                if (inputStream == null) {
-//                    throw new IOException("Image not found in classpath");
-//                }
-//                img.setData(inputStream.readAllBytes());
-//            imageRepository.save(img);
-//        }
+        model.addAttribute("images", images);
         return "index";
+    }
+
+    @GetMapping("/img/ajouter")
+    public String getAjouterImage(Model model) {
+        model.addAttribute("body", "pages/images/enregistrerImage");
+        return "index";
+    }
+
+    @PostMapping("/img/ajouter")
+    public String postAjouterImage(Model model, @RequestParam MultipartFile img, @RequestParam("fileName") String fileName) {
+        Image image = new Image();
+        image.setFileName(fileName);
+        image.setMimeType(img.getContentType());
+        try {
+            image.setData(img.getBytes());
+            imageRepository.save(image);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        model.addAttribute("body", "pages/images/enregistrerImage");
+        return "redirect:/img";
+    }
+
+    @GetMapping("/img/modifier/{id}")
+    public String getModifierImage(Model model, @PathVariable("id") int id) {
+        Optional<Image> image = imageRepository.findById(id);
+        if (image.isPresent()) {
+            model.addAttribute("image", image.get());
+            model.addAttribute("body", "pages/images/enregistrerImage");
+        } else {
+            model.addAttribute("body", "pages/images/listeImage");
+        }
+        return "index";
+    }
+
+    @PostMapping("/img/modifier")
+    public String postModifierImage(Model model, @RequestParam MultipartFile img, @RequestParam("fileName") String fileName, @RequestParam("imageId") int id) {
+        Optional<Image> imageOptional = imageRepository.findById(id);
+        if (imageOptional.isPresent()) {
+            Image image = imageOptional.get();
+            image.setFileName(fileName);
+            try {
+                // Update si nouvelle image
+                if(!img.isEmpty()){
+                image.setData(img.getBytes());
+                }
+                imageRepository.save(image);
+                model.addAttribute("body", "pages/images/enregistrerImage");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            model.addAttribute("body", "pages/images/listeImage");
+        }
+        return "redirect:/img";
     }
 
     @GetMapping("/img/supprimer/{id}")

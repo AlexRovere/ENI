@@ -1,14 +1,31 @@
-<div class="flex">
-    <div th:each="img : ${images}">
-        <div class="flex justify-center">
-        <h1>Image : <span th:text="${img.fileName}"></span></h1>
+<div class="container mx-auto py-5">
+    <div class="flex justify-between items-center">
 
-        <div class="flex-1  justify-center items-center flex">
-            <a th:href="@{'img/supprimer/' + ${img.id}}" class="text-red-500 hover:text-red-700 ml-4">
-                <i class="fas fa-trash"></i>
-            </a>
+    <h1>Liste des images</h1>
+
+<button sec:authorize="hasRole('ADMIN')"><a href="/img/ajouter"  class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+        Ajouter une image</a>
+    </button>
+    </div>
+    <div class="container flex flex-1" >
+    <div th:each="img : ${images}" class="mx-auto " >
+        <div class="flex justify-center">
+        <h1>Nom : <span th:text="${img.fileName}"></span></h1>
+
+        <div class="justify-center items-center flex gap-5">
+
+            <div class="justify-center items-center flex">
+                <a th:href="@{'img/modifier/' + ${img.id}}"  class="text-blue-500 hover:text-blue-700">
+                    <i class="fas fa fa-pencil"></i>
+                </a>
+                <a th:href="@{'img/supprimer/' + ${img.id}}" class="text-red-500 hover:text-red-700 ml-4">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
         </div>
         </div>
-    <!-- Afficher l'image en base64 -->
-        <img th:src="'data:image/jpeg;base64,' + ${img.data}" alt="Image" />    </div>
+
+        <img th:src="'data:image/jpeg;base64,' + ${@imageService.convertByteToString(img.data)}" alt="Image" style="height: 300px; width: 500px;"/>    </div>
+    </div>
 </div>
+

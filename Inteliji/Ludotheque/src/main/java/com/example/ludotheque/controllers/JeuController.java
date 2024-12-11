@@ -1,7 +1,9 @@
 package com.example.ludotheque.controllers;
 
 import com.example.ludotheque.bo.ExemplaireJeu;
+import com.example.ludotheque.bo.Image;
 import com.example.ludotheque.bo.Jeu;
+import com.example.ludotheque.dal.ImageRepository;
 import com.example.ludotheque.services.IExemplaireJeuService;
 import com.example.ludotheque.services.IGenreService;
 import com.example.ludotheque.services.IJeuService;
@@ -17,16 +19,18 @@ import java.util.Optional;
 @Controller
 public class JeuController extends AuthController {
 
+    private final ImageRepository imageRepository;
     Logger logger = LoggerFactory.getLogger(JeuController.class);
 
     IJeuService jeuService;
     IGenreService genreService;
     IExemplaireJeuService exemplaireJeuService;
 
-    JeuController(IJeuService jeuService, IGenreService genreService, IExemplaireJeuService exemplaireJeuService) {
+    JeuController(IJeuService jeuService, IGenreService genreService, IExemplaireJeuService exemplaireJeuService, ImageRepository imageRepository) {
         this.jeuService = jeuService;
         this.genreService = genreService;
         this.exemplaireJeuService = exemplaireJeuService;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping({"/jeux", "/"})
@@ -44,12 +48,17 @@ public class JeuController extends AuthController {
         logger.debug(genreService.getAll().toString());
         model.addAttribute("jeu", new Jeu());
         model.addAttribute("allGenres", genreService.getAll());
+        model.addAttribute("images", imageRepository.findAll());
         model.addAttribute("body", "pages/jeux/enregistrerJeu");
         return "index";
     }
 
     @PostMapping("/jeux/ajouter")
-    public String postAjouterJeu(Model model, Jeu jeu) {
+    public String postAjouterJeu(Model model, Jeu jeu, @RequestParam("idImage") int idImage) {
+        if(idImage > 0) {
+            Optional<Image> img = imageRepository.findById(idImage);
+            img.ifPresent(jeu::setImage);
+        }
         jeuService.add(jeu);
         model.addAttribute("body", "pages/jeux/enregistrerJeu");
         return "redirect:/jeux";
@@ -61,6 +70,7 @@ public class JeuController extends AuthController {
         if (jeu.isPresent()) {
             model.addAttribute("jeu", jeu.get());
             model.addAttribute("allGenres", genreService.getAll());
+            model.addAttribute("images", imageRepository.findAll());
             model.addAttribute("body", "pages/jeux/enregistrerJeu");
             model.addAttribute("listeExemplaire", "pages/jeux/listeExemplaire");
         } else {
@@ -70,7 +80,11 @@ public class JeuController extends AuthController {
     }
 
     @PostMapping("/jeux/modifier")
-    public String postModifierJeu(Model model, Jeu jeu) {
+    public String postModifierJeu(Model model, Jeu jeu, @RequestParam("idImage") int idImage) {
+        if(idImage > 0) {
+            Optional<Image> img = imageRepository.findById(idImage);
+            img.ifPresent(jeu::setImage);
+        }
         jeuService.update(jeu);
         model.addAttribute("body", "pages/jeux/listeJeu");
         return "redirect:/jeux";
