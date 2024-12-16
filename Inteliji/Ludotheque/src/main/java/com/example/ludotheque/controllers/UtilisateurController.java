@@ -1,14 +1,12 @@
 package com.example.ludotheque.controllers;
 
-import com.example.ludotheque.bo.Image;
-import com.example.ludotheque.bo.Jeu;
 import com.example.ludotheque.bo.UserApplication;
 import com.example.ludotheque.services.IUserApplicationService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +15,12 @@ import java.util.Optional;
 public class UtilisateurController extends AuthController {
 
     private final IUserApplicationService userApplicationService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UtilisateurController(IUserApplicationService userApplicationService) {
+    public UtilisateurController(IUserApplicationService userApplicationService, PasswordEncoder passwordEncoder) {
         super();
         this.userApplicationService = userApplicationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/utilisateurs")
@@ -30,10 +30,29 @@ public class UtilisateurController extends AuthController {
         return "index";
     }
 
-    @GetMapping("/utilisateurs/modifier/{login}")
-    public String getModifierUtilisateur(Model model, @PathVariable("login") String login) {
+    @GetMapping("/utilisateurs/ajouter")
+    public String getAjouterUtilisateur(Model model) {
         List<String> roles = Arrays.asList("USER", "ADMIN");
-        Optional<UserApplication> userApplicationOptional = userApplicationService.getByLogin(login);
+        UserApplication user = new UserApplication();
+
+            model.addAttribute("user", user);
+            model.addAttribute("roles", roles);
+            model.addAttribute("body", "pages/utilisateurs/enregistrerUtilisateur");
+        return "index";
+    }
+
+    @PostMapping("/utilisateurs/ajouter")
+    public String postAjouterUtilisateur(Model model, @ModelAttribute("UserApplication") UserApplication userApplication ) {
+        String password = passwordEncoder.encode(userApplication.getPassword());
+        userApplication.setPassword(password);
+        userApplicationService.add(userApplication);
+        return "redirect:/utilisateurs";
+    }
+
+    @GetMapping("/utilisateurs/modifier/{id}")
+    public String getModifierUtilisateur(Model model, @PathVariable("id") int id) {
+        List<String> roles = Arrays.asList("USER", "ADMIN");
+        Optional<UserApplication> userApplicationOptional = userApplicationService.getById(id);
         if(userApplicationOptional.isPresent()) {
             UserApplication userApplication = userApplicationOptional.get();
             model.addAttribute("user", userApplication);
@@ -49,15 +68,18 @@ public class UtilisateurController extends AuthController {
 
     @PostMapping("/utilisateurs/modifier")
     public String postModifierUtilisateur(Model model, @ModelAttribute("UserApplication") UserApplication userApplication ) {
-        userApplicationService.update(userApplication);
-        model.addAttribute("body", "pages/jeux/listeJeu");
+        Optional<UserApplication> userApplicationOptional = userApplicationService.getById(userApplication.getId());
+        if(userApplicationOptional.isPresent()) {
+            UserApplication oldUserApplication = userApplicationOptional.get();
+            oldUserApplication.setRoles(userApplication.getRoles());
+            userApplicationService.update(oldUserApplication);
+        }
         return "redirect:/utilisateurs";
     }
 
-    @GetMapping("/utilisateurs/supprimer/{login}")
-    public String getUtilisateurs(Model model, @PathVariable("login") String login) {
-        System.out.println(login);
-        userApplicationService.deleteUser(login);
+    @GetMapping("/utilisateurs/supprimer/{id}")
+    public String getUtilisateurs(Model model, @PathVariable("id") int id) {
+        userApplicationService.delete(id);
         return "redirect:/utilisateurs";
     }
 }

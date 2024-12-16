@@ -1,6 +1,8 @@
 package com.example.ludotheque.dal;
 
 import com.example.ludotheque.bo.UserApplication;
+import jakarta.validation.constraints.Null;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -41,17 +43,12 @@ public class UserRepository implements IUserRepository{
     }
 
     public void add(UserApplication user) {
-        String sql = "insert into users (login, password, roles) VALUES (:login, :password, 'USER')";
+        String sql = "insert into users (login, password, roles) VALUES (:login, :password, :roles)";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("login", user.getLogin());
         params.addValue("password", user.getPassword());
-        namedParameterJdbcTemplate.update(sql, params);
-    }
-
-    public void deleteUser(String login) {
-        String sql = "delete FROM users where login= :login";
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("login", login);
+        String roles = user.getRoles().isBlank() ?  "USER" :  user.getRoles();
+        params.addValue("roles", roles);
         namedParameterJdbcTemplate.update(sql, params);
     }
 
@@ -63,20 +60,42 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public Optional<UserApplication> getById(int id) {
-        return Optional.empty();
+        String sql = "select * from users where id = :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+        UserApplication user = null;
+        try {
+                user = namedParameterJdbcTemplate.queryForObject(sql, params, ((ResultSet rs, int rowNum) -> {
+                int idUser = rs.getInt("id");
+                String dbLogin = rs.getString("login");
+                String password = rs.getString("password");
+                String roles = rs.getString("roles");
+
+                return new UserApplication(idUser, dbLogin, password, roles);
+
+            }));
+        } catch (EmptyResultDataAccessException e ) {
+            System.err.println(e);
+        }
+        return Optional.ofNullable(user);
     }
 
     @Override
-    public void update(UserApplication entity) {
+    public void update(UserApplication userApplication) {
         String sql = "update users SET roles = :roles where login = :login";
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("roles", entity.getRoles());
-        params.addValue("login", entity.getLogin());
+        String roles = userApplication.getRoles().isBlank() ?  "USER" :  userApplication.getRoles();
+
+        params.addValue("roles", roles);
+        params.addValue("login", userApplication.getLogin());
         namedParameterJdbcTemplate.update(sql, params);
     }
 
     @Override
     public void delete(int id) {
-
+        String sql = "delete FROM users where id= :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+        namedParameterJdbcTemplate.update(sql, params);
     }
 }

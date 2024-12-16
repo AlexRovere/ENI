@@ -1,0 +1,68 @@
+<div class="container mx-auto">
+    <h1>[[${jeu.titre}]]</h1>
+	
+		<div>
+            <span>Référence : </span>
+            <span th:text="${jeu.reference}"></span>
+         </div>
+		<div>
+            <span>Description : </span>
+            <span th:text="${jeu.description}"></span>
+         </div>
+		<div>
+            <span>Tarif à la journée : </span>
+            <span >[[${jeu.tarifJournee}]] Euros</span>
+         </div>
+		<div>
+            <span>Age minimum : </span>
+            <span >[[${jeu.ageMin}]] ans</span>
+         </div>
+		<div>
+            <span>duree : </span>
+            <span >[[${jeu.duree}]] minutes</span>
+         </div>
+		<div>
+            <span>Genres :</span>
+            <th:block th:each="genre: ${jeu.genres}" >            
+            <span th:text="${genre.libelle}"></span>&nbsp;
+            </th:block>
+         </div>
+		<div>
+			<div>Exemplaires :</div>
+			<table>
+			<tr><th>codebarre</th><th>louable</th>
+			<th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYE')">
+			<th>Actions</th>
+			</th:block>
+			</tr>
+			<tr>
+			<span th:text="${erreur}" style="color:red"></span>
+			<div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYE')">
+			<form th:action="@{'/jeux/' + ${jeu.noJeu} + '/exemplaires/ajouter'}" method="post">
+			<input type="hidden" 	th:name="${_csrf.parameterName}" 	th:value="${_csrf.token}"/>
+				<input type="hidden" name="noJeu" th:value="${jeu.noJeu}"/>
+				<td><input type="text" maxlength="13" name="codebarre"></td>
+				<td>
+								<input
+				type="radio" id="louable-oui" name="louable"
+				value="true" checked/> <label for="louable-oui">Oui</label> <input
+				type="radio" id="louable-non"  name="louable"
+				value="false" /> <label for="louable-non">Non</label>				
+				</td>
+				<td><button>Ajouter</button></td>
+			</form>
+			</div>
+			</tr>
+			<tr th:each="exemplaire: ${jeu.exemplaires}">
+				<td>[[${exemplaire.codebarre}]]</td>
+				<td th:if="${exemplaire.louable}">LOUABLE</td>
+				<td th:unless="${exemplaire.louable}">NON LOUABLE</td>
+				<th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYE')">
+				<td><a th:href="@{'/jeux/' + ${jeu.noJeu} + '/exemplaires/' + ${exemplaire.noExemplaireJeu} + '/supprimer'}">Supprimer</a></td>
+				</th:block>
+			</tr>
+			<tr th:if="${#lists.isEmpty(jeu.exemplaires)}"><td colspan=2>Aucun exemplaire</td></tr>
+			</table>
+			
+		</div>
+</div>

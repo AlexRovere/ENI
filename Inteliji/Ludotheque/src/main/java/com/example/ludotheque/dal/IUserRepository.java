@@ -6,5 +6,4 @@ import java.util.Optional;
 
 public interface IUserRepository extends ICrudRepository<UserApplication> {
     Optional<UserApplication> getByLogin(String login);
-    void deleteUser(String login);
 }

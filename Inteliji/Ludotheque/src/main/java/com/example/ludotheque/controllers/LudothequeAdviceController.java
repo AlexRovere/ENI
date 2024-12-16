@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class LudothequeAdviceController {
+public class LudothequeAdviceController extends AuthController {
     Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @ExceptionHandler(Exception.class)

@@ -11,13 +11,14 @@ import java.util.Optional;
 public class UserApplicatonService implements IUserApplicationService {
 
     IUserRepository userRepository;
+
     UserApplicatonService(IUserRepository userRepository) {
-        this.userRepository= userRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public void add(UserApplication entity) {
-
+        this.userRepository.add(entity);
     }
 
     public List<UserApplication> getAll() {
@@ -26,7 +27,7 @@ public class UserApplicatonService implements IUserApplicationService {
 
     @Override
     public Optional<UserApplication> getById(int id) {
-        return Optional.empty();
+        return this.userRepository.getById(id);
     }
 
     @Override
@@ -36,15 +37,7 @@ public class UserApplicatonService implements IUserApplicationService {
 
     @Override
     public void delete(int id) {
-
+        this.userRepository.delete(id);
     }
 
-    @Override
-    public void deleteUser(String login) {
-        this.userRepository.deleteUser(login);
-    }
-
-    public Optional<UserApplication> getByLogin(String login) {
-        return this.userRepository.getByLogin(login);
-    }
 }
