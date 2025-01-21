@@ -20,11 +20,12 @@ public class LoginController extends AuthController {
 
     LoginController(PasswordEncoder passwordEncoder, IUserApplicationService userApplicationService) {
         this.passwordEncoder = passwordEncoder;
-        this.userApplicationService = userApplicationService;
+            this.userApplicationService = userApplicationService;
     }
 
     @RequestMapping("/login")
     public String login(Model model) {
+        System.out.println(passwordEncoder.encode("password"));
         model.addAttribute("body", "pages/security/login");
         return "index";
     }

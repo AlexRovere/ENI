@@ -1,0 +1,23 @@
+* {
+  font-family: "MinecraftiaRegular", sans-serif;
+}
+
+#letters {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+  justify-content: center;
+}
+
+#usedLetters {
+  display: flex;
+  gap: 10px;
+}
+
+#main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
