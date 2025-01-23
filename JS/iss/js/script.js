@@ -2,8 +2,8 @@ async function callApi () {
   let res = await fetch('http://api.open-notify.org/iss-now.json')
   return res.json()
 }
-
 let { iss_position: position } = await callApi()
+
 let latitude = position.latitude
 let longitude = position.longitude
 let map = L.map('map').setView([latitude, longitude], 5);
