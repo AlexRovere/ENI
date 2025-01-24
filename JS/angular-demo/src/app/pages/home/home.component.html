@@ -1,0 +1,18 @@
+<h1 class="text-center">Bienvenue {{firstname}} {{age}} ans</h1>
+<div class="flex">
+  <button (click)="decrementCounter()" class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+    Enlever</button>
+  @if(counter > 0) {
+  {{counter}}
+  }
+  <button (click)="incrementCounter()" class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+    Ajouter</button>
+</div>
+
+<div>
+  @for(todo of todos; track $index) {
+  <div>{{todo}} {{$index}}</div>
+  } @empty {
+  <div>Rien à faire today !</div>
+  }
+</div>

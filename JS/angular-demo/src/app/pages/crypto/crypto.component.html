@@ -1,0 +1,11 @@
+<button (click)="getCryptoPrice(crypto.toString())" class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+  CALL API</button>
+
+<div class="justify-center flex gap-5 pt-5">
+  <select [(ngModel)]="selectedCrypto" (ngModelChange)="changeCrypto($event)">
+    <option *ngFor="let item of cryptos" [value]="item.value">
+      {{item.label}} ({{item.value}})
+    </option>
+  </select>
+  <div>PRIX DU {{selectedCrypto}} : <span class="text-bold text-xl">{{price}} € </span></div>
+</div>

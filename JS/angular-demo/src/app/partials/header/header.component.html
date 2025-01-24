@@ -1,0 +1,5 @@
+<div class="flex gap-5 justify-center py-5 text-blue-500 font-size-xl clickable text-2xl">
+  @for (item of menu; track $index) {
+  <a [routerLink]="item.path">{{item.name}}</a>
+  }
+</div>
