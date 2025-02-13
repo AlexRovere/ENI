@@ -1,9 +1,12 @@
 <header class="py-4">
-    <nav>
+    <nav class="flex items-center justify-center gap-8">
+        <div>
+            <a href="{{ path('home_index') }}" title="Go back to homepage">
+                <img width="30" height="auto" src="{{ asset('img/logo.svg') }}"
+                     alt="Bucket-List Logo">
+            </a>
+        </div>
         <ul class="flex justify-center gap-8">
-            <li>
-                <a href="{{ path('home_index') }}">Acccueil</a>
-            </li>
             <li>
                 <a href="{{ path('app_about') }}">About</a>
             </li>

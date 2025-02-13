@@ -2,30 +2,57 @@
 
 namespace App\Controller;
 
+use App\Entity\Wish;
+use App\Repository\WishRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 final class WishController extends AbstractController
 {
     #[Route('/wish', name: 'app_wish')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
-        $wishes = [
-            ["label" => "mon premier souhait"],
-            ["label" => "mon deuxième souhait"],
-        ];
+//        $wish = (new Wish())
+//            ->setTitle('mon premier souhait')
+//            ->setDescription("description")
+//            ->setAuthor("alex")
+//            ->setIsPublished(false)
+//            ->setDateCreated(new DateTime());
+//
+//        $wish2 = (new Wish())
+//            ->setTitle('mon deuxième souhait')
+//            ->setDescription("description")
+//            ->setAuthor("bob")
+//            ->setIsPublished(true)
+//            ->setDateCreated(new DateTime());
+//
+//        $em->persist($wish);
+//        $em->persist($wish2);
+//        $em->flush();
+
+        $wishesRepo = $em->getRepository(Wish::class);
+
+
         return $this->render('wish/index.html.twig', [
             'controller_name' => 'WishController',
-            'wishes' => $wishes
+            'wishes' => $wishesRepo->findAll()
         ]);
     }
 
-    #[Route('/wish/{id}', name: 'app_wish_detail')]
-    public function detail(int $id): Response
+    #[Route('/wish/{id}', name: 'app_wish_detail', requirements: ['id' => '\d+'])]
+    public function detail(int $id, EntityManagerInterface $em): Response
     {
+        $wishRepo = $em->getRepository(Wish::class);
+        $wish = $wishRepo->find($id);
+        if (!$id || !isset($wish)) {
+            return $this->redirect('/');
+        }
         return $this->render('wish/detail.html.twig', [
-            'id' => $id
+            'wish' => $wish
         ]);
     }
 }
