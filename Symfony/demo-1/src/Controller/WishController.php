@@ -16,27 +16,7 @@ final class WishController extends AbstractController
     #[Route('/wish', name: 'app_wish')]
     public function index(EntityManagerInterface $em): Response
     {
-//        $wish = (new Wish())
-//            ->setTitle('mon premier souhait')
-//            ->setDescription("description")
-//            ->setAuthor("alex")
-//            ->setIsPublished(false)
-//            ->setDateCreated(new DateTime());
-//
-//        $wish2 = (new Wish())
-//            ->setTitle('mon deuxième souhait')
-//            ->setDescription("description")
-//            ->setAuthor("bob")
-//            ->setIsPublished(true)
-//            ->setDateCreated(new DateTime());
-//
-//        $em->persist($wish);
-//        $em->persist($wish2);
-//        $em->flush();
-
         $wishesRepo = $em->getRepository(Wish::class);
-
-
         return $this->render('wish/index.html.twig', [
             'controller_name' => 'WishController',
             'wishes' => $wishesRepo->findAll()

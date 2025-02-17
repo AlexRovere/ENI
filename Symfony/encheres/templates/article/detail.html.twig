@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container h-full max-w-lg mx-auto flex flex-col" >
+    <h1 class="mx-auto text-center text-md my-5 text-lg font-bold">
+        Détail de l'article {{ article.nomArticle}}
+        <div>Etat de la vente : {{article.etatVente}}</div>
+        <div>Vendeur : {{ article.utilisateur.pseudo}}</div>
+        {% if article.etatVente == 'COMPLETED' or article.etatVente == 'COLLECTED' %}
+            {% if enchere.utilisateur and enchere.utilisateur.pseudo %}
+                <div>{{ enchere.utilisateur.pseudo }} a remporté l'enchère</div>
+            {% else %}
+                <div>Personne n'a remporté l'enchère</div>
+            {% endif %}
+        {% endif %}
+    </h1>
+    <div class="overflow-scroll mb-20 ">
+        <input type="hidden" value="{{ article.noArticle }}">
+        <div class="flex justify-center">
+            <img  src="{{ asset('build/images/logo.jpg') }}" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"  style="height: 100px; width: 200px;"/>
+        </div>
+
+        <div class="p-5 flex flex-col gap-5">
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de l'article</label>
+                <input disabled readonly type="text" value="{{ article.nomArticle }}" id="nomArticle"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+
+
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                <textarea disabled readonly type="text" value="{{ article.description }}"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </textarea>
+            </div>
+
+            <div>
+                <label for="categorie"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Catégorie</label>
+                <input disabled readonly id="categorie" name="categorie"value="{{ article.categorie.libelle }}"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+
+            {% if(enchere.utilisateur is defined) %}
+            <div >
+                Meilleur offre :  {{article.encheres[0].montantEnchere}} points par {{article.encheres[0].utilisateur.pseudo}}
+            </div>
+
+            {% else %}
+
+            <div >
+                Aucune offre pour le moment !
+            </div>
+
+            {% endif %}
+
+            <div>
+                Prix initial : {{ article.prixInitial }} points
+            </div>
+
+            <div class="flex gap-5">
+                <div class="flex-grow">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Début de
+                        l'enchère</label>
+                    <input disabled readonly type="date" name="dateDebutEncheres"
+                           value="{{ article.dateDebutEncheres | date("d/m/Y") }}"
+                           id="dateDebutEncheres"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+
+                <div class="flex-grow">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fin de
+                        l'enchère</label>
+                    <input disabled readonly type="date" name="dateFinEncheres"
+                           value="{{ article.dateFinEncheres | date("d/m/Y")  }}" id="dateFinEncheres"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+            </div>
+
+            <h1>Retrait</h1>
+{#            <div>#}
+{#                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>#}
+{#                <input disabled readonly type="text" id="ville" name="ville" value="{{ article.retraits[0].ville }}"#}
+{#                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">#}
+{#            </div>#}
+{#            <div>#}
+{#                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rue</label>#}
+{#                <input disabled readonly type="text" id="rue" name="rue" value="{{ article.retraits[0].rue }}"#}
+{#                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">#}
+{#            </div>#}
+{#            <div>#}
+{#                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code postal</label>#}
+{#                <input disabled readonly type="text" id="codePostal" name="codePostal" value="{{ article.retraits[0].codePostal }}"#}
+{#                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">#}
+{#            </div>#}
+        </div>
+    </div>
+{#    <div class="text-center text-green-500 text-lg" th:if="${success}">{{ success}}</div>#}
+{#    <div class="text-center text-red-500 text-lg" th:if="${errorNotEnoughCredit}">{{ errorNotEnoughCredit}}</div>#}
+{#    <div class="text-center text-red-500 text-lg" th:if="${errorMinimumEnchere}">{{ errorMinimumEnchere}}</div>#}
+
+{#    <div class="mx-auto flex flex-col justify-around items-center gap-5">#}
+{#        <form th:if="${noUtilisateur != null && noUtilisateur != article.utilisateur.noUtilisateur && article.etatVente.name() == 'PROCESSING'}" th:action="@{/articles/encheres/{noArticle}(noArticle=${article.noArticle})}" method="post">#}
+{#            <div class="flex items-center gap-5">#}
+{#                Ma proposition :#}
+{#                <input type="number" name="montantEnchere"  th:max="$#}{#authentication.principal.credit}"/>#}
+{#                <button type="submit"#}
+{#                        class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">#}
+{#                    Enchérir#}
+{#                </button>#}
+{#            </div>#}
+{#        </form>#}
+{#        <div class="flex justify-around gap-5">#}
+{#            <a th:href="@{/articles}" class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">#}
+{#                Retour#}
+{#            </a>#}
+
+{#            <a th:if="${noUtilisateur == article.utilisateur.noUtilisateur &&  article.etatVente.name() == 'CREATED'}"#}
+{#               th:href="@{/articles/supprimer/{noArticle}(noArticle=${article.noArticle})}" type="button"#}
+{#               class="flex justify-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">#}
+{#                Supprimer l'article#}
+{#            </a>#}
+{#            <a th:if="${noUtilisateur == article.utilisateur.noUtilisateur && article.etatVente.name() == 'CREATED'}"#}
+{#               th:href="@{/articles/modifier/{noArticle}(noArticle=${article.noArticle})}" type="button"#}
+{#               class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">#}
+{#                Modifier l'article#}
+{#            </a>#}
+
+{#            <a th:if="${noUtilisateur == article.utilisateur.noUtilisateur && (article.etatVente.name() == 'COMPLETED' && !article.retraitEffectue) && enchere.utilisateur != null}"#}
+{#               th:href="@{/articles/retrait/{noArticle}(noArticle=${article.noArticle})}" type="button"#}
+{#               class="flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">#}
+{#                Confirmer le retrait#}
+{#            </a>#}
+{#        </div>#}
+
+
+{#    </div>#}
+</div>
+
+{% endblock %}
+
