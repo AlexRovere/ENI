@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello WishController!{% endblock %}
+
+{% block body %}
+
+    <div class="text-center pb-8">
+        <a class="custom-button" href="{{ path('app_wish_create') }}">Ajouter un wish</a>
+    </div>
+
+
+    <div class="flex gap-8 justify-center items-center grow flex-wrap">
+
+    {% for idx, wish in wishes %}
+
+        <a href="{{ path('app_wish_detail', {"id": wish.id}) }}">
+
+        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{wish.title }}</h5>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ wish.description }}</p>
+        </div>
+        </a>
+
+    {% endfor %}
+    </div>
+{% endblock %}

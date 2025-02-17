@@ -1,3 +1,6 @@
+
+@tailwind utilities;
+
 body {
     min-height: 100vh;
 }
@@ -22,4 +25,8 @@ footer {
     padding: 1.5rem 0;
     text-align: center;
     background-color: #EDDCD2;
+}
+
+.custom-button {
+    @apply text-red-500;
 }

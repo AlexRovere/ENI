@@ -4,15 +4,23 @@
 
 {% block body %}
 
-    <div class="flex gap-8 justify-center items-center grow">
+    <div class="text-center">
+        <a class="custom-button" href="{{ path('app_wish_create') }}">Ajouter un wish</a>
+    </div>
+
+
+    <div class="flex gap-8 justify-center items-center grow flex-wrap">
+
     {% for idx, wish in wishes %}
 
-        <div class="outline-2 outline-offset-5 outline-pink-500">
         <a href="{{ path('app_wish_detail', {"id": wish.id}) }}">
-            <div> {{wish.title }}</div>
-        </a>
+
+        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{wish.title }}</h5>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ wish.description }}</p>
         </div>
+        </a>
+
     {% endfor %}
-    </ul>
     </div>
 {% endblock %}

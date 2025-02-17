@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AboutController!{% endblock %}
+
+{% block body %}
+
+    {% for team in teams %}
+        <div>
+        {{ team.firstname == 'Fabien' ?  team.firstname ~ '❤' : team.firstname  }} - {{ team.lastname }}
+        Né le {{ team.dateOfBirth | date('d/m/Y') }}
+        Créateur de {{ team.creatorOf }}
+        </div>
+    {% endfor %}
+
+{% endblock %}
