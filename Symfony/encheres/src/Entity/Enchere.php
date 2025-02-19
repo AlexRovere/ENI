@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Enchere
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: 'no_enchere')]
     private ?int $noEnchere = null;
 
@@ -22,9 +22,11 @@ class Enchere
     private ?int $montantEnchere = null;
 
     #[ORM\ManyToOne(inversedBy: 'encheres')]
+    #[ORM\JoinColumn(name: 'no_article', referencedColumnName: 'no_article', nullable: false)]
     private ?Article $article = null;
 
     #[ORM\ManyToOne(inversedBy: 'encheres')]
+    #[ORM\JoinColumn(name: 'no_utilisateur', referencedColumnName: 'no_utilisateur', nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
     public function getNoEnchere(): ?int

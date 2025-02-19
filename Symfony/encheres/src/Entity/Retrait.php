@@ -69,4 +69,6 @@ class Retrait
         $this->ville = $ville;
         return $this;
     }
+
+
 }

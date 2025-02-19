@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategorieController!{% endblock %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    <a href="{{ path('app_categorie_create') }}">Créer une catégorie</a>
+    <ul>
+        {% for categorie in categories %}
+            <li>{{ categorie.libelle }}
+                | <a href="{{ path('app_categorie_detail', {id: categorie.noCategorie}) }}">Voir le détail</a>
+                | <a href="{{ path('app_categorie_update', {id: categorie.noCategorie}) }}">Modifier</a>
+                | <a href="{{ path('app_categorie_delete', {id: categorie.noCategorie}) }}">Supprimer</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

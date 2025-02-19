@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div>
+        {{ form_start(form) }}
+        {{ form_row(form) }}
+        <button type="submit" class="custom-button">{{ form.vars.value.noCategorie ? 'Modifier' : 'Créer' }}</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+

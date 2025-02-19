@@ -12,10 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ORM\Table(name: 'articles')]
+#[ORM\HasLifecycleCallbacks]
 class Article
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
     #[ORM\Column(name: 'no_article')]
     private ?int $noArticle = null;
 
@@ -238,5 +239,10 @@ class Article
             }
         }
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function onPersist(): void {
+        $this->setRetraitEffectue(false);
     }
 }

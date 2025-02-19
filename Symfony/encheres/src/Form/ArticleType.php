@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class ArticleType extends AbstractType
 {
@@ -35,12 +36,14 @@ class ArticleType extends AbstractType
                 ]])
             ->add('dateDebutEncheres', DateType::class, [
                 'label' => 'dateDebutEncheres',
+                'data' => new \DateTime(),
                 'widget' => 'single_text',
                 'attr' => [
                     'class' =>  $inputClass,
                 ]])
             ->add('dateFinEncheres', DateType::class, [
                 'label' => 'dateFinEncheres',
+                'data' => (new \DateTime())->modify('+1 day'),
                 'widget' => 'single_text',
                 'attr' => [
                     'class' =>  $inputClass,
@@ -49,16 +52,6 @@ class ArticleType extends AbstractType
                 'label' => 'prixInitial',
                 'attr' => [
                     'class' =>  $inputClass,
-                ]])
-            ->add('prixVente', IntegerType::class, [
-                'label' => 'prixVente',
-                'attr' => [
-                    'class' =>  $inputClass,
-                ]])
-            ->add('retraitEffectue',CheckboxType::class, [
-                'label' => 'retraitEffectue',
-                'attr' => [
-                    'class' => 'ms-2 text-sm font-medium text-gray-900 dark:text-gray-300',
                 ]])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
@@ -71,7 +64,7 @@ class ArticleType extends AbstractType
                 'choice_label' => 'pseudo',
                 'attr' => [
                     'class' => $selectClass
-            ]])
+                ]])
             ->add('save', SubmitType::class, [
                 'label' => 'Save',
                 'attr' => [

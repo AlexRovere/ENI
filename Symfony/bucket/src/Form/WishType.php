@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Categorie;
+use App\Entity\Category;
 use App\Entity\Wish;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,12 +18,16 @@ class WishType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('author')
-            ->add('submit', SubmitType::class, [
-                'label' => 'Créer',
-                'attr' => [
-                    'class' => 'custom-button'
-                ]
-            ]);
+            ->add('isPublished')
+            ->add('dateCreated', null, [
+                'widget' => 'single_text',
+            ])
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'id',
+                'multiple' => true,
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

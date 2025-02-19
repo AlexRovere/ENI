@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="8f1a65af-f83c-4afc-bee2-9754bb612b5b" name="buckets@localhost Mapping">
+      <data-sources db="280ff428-1459-4db1-91ca-71f5e5500e66" />
+      <scope>
+        <node kind="database" negative="1" />
+      </scope>
+    </mapping>
+  </component>
+</project>
