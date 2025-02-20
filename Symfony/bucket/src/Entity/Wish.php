@@ -29,7 +29,6 @@ class Wish
     private ?string $description = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank]
     private ?string $author = null;
 
     #[ORM\Column]
@@ -41,19 +40,12 @@ class Wish
     /**
      * @var Collection<int, Category>
      */
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'wish')]
-    private Collection $categories;
-
-    /**
-     * @var Collection<int, Category>
-     */
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'wishes')]
-    private Collection $category;
+    private Collection $categories;
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,14 +127,6 @@ class Wish
         $this->setDateCreated(new \DateTime());
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
     public function addCategory(Category $category): static
     {
         if (!$this->categories->contains($category)) {
@@ -165,8 +149,9 @@ class Wish
     /**
      * @return Collection<int, Category>
      */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
+
 }

@@ -6,6 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
@@ -21,7 +22,7 @@ class Category
     /**
      * @var Collection<int, Wish>
      */
-    #[ORM\ManyToMany(targetEntity: Wish::class, mappedBy: 'category')]
+    #[ORM\ManyToMany(targetEntity: Wish::class, mappedBy: 'categories')]
     private Collection $wishes;
 
     public function __construct()

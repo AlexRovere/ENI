@@ -6,14 +6,46 @@
                      alt="Bucket-List Logo">
             </a>
         </div>
-        <ul class="flex justify-center gap-8">
+        <ul class="flex flex justify-center items-center gap-8 w-1/2">
             <li>
                 <a href="{{ path('app_wish') }}">Wishs</a>
             </li>
             <li>
                 <a href="{{ path('app_about') }}">About</a>
             </li>
+            {% if(is_granted("IS_AUTHENTICATED")) %}
+            <li>
+                <a href="{{ path('app_wish_create') }}">Créer un wish !</a>
+            </li>
+            {% endif %}
+
+            {% if(is_granted("ROLE_ADMIN")) %}
+                <li>
+                    <a href="{{ path('app_category_list') }}">Catégories</a>
+                </li>
+            {% endif %}
+
+
+            <li class="flex-grow">
+
+            </li>
+            {% if(is_granted("IS_AUTHENTICATED")) %}
+                <li>
+                    <a href="{{ path('app_logout') }}">Déconnexion</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_register') }}">Créer un compte</a>
+                </li>
+            {% endif %}
         </ul>
+        {% if(is_granted("IS_AUTHENTICATED")) %}
+            <div>Bienvenue {{ app.user.pseudo }} !</div>
+        {% endif %}
+
     </nav>
 </header>
 

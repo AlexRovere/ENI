@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Wish;
 use App\Form\WishType;
-use App\Repository\WishRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class WishController extends AbstractController
 {
@@ -30,6 +29,7 @@ final class WishController extends AbstractController
     {
         $wishRepo = $em->getRepository(Wish::class);
         $wish = $wishRepo->find($id);
+        $categories = $wish->getCategories();
         if (!$id || !isset($wish)) {
             return $this->redirect('/');
         }
@@ -38,6 +38,7 @@ final class WishController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('wish/create', name: 'app_wish_create')]
     public function createWish(Request $request, EntityManagerInterface $em): Response
     {
@@ -45,7 +46,8 @@ final class WishController extends AbstractController
         $wishForm = $this->createForm(WishType::class, $wish);
         $wishForm->handleRequest($request);
 
-        if($wishForm->isSubmitted() && $wishForm->isValid()) {
+        if ($wishForm->isSubmitted() && $wishForm->isValid()) {
+            $wish->setAuthor($this->getUser()->getUserIdentifier());
             $em->persist($wish);
             $em->flush();
             $this->addFlash('success', 'le wish a bien été créée');
@@ -58,13 +60,17 @@ final class WishController extends AbstractController
         ]);
     }
 
-    #[Route('wish/update/{id}', name: 'app_wish_update',   requirements: ['id' => '\d+'])]
-    public function updateWish(Request $request, EntityManagerInterface $em, Wish $wish): Response
+    #[IsGranted('ROLE_USER')]
+    #[Route('wish/update/{id}', name: 'app_wish_update', requirements: ['id' => '\d+'])]
+    public function updateWish(Wish $wish, Request $request, EntityManagerInterface $em): Response
     {
+        if($wish->getAuthor() !== $this->getUser()->getUserIdentifier()) {
+            throw new AccessDeniedException();
+        }
         $wishForm = $this->createForm(WishType::class, $wish);
         $wishForm->handleRequest($request);
 
-        if($wishForm->isSubmitted() && $wishForm->isValid()) {
+        if ($wishForm->isSubmitted() && $wishForm->isValid()) {
             $em->persist($wish);
             $em->flush();
             $this->addFlash('success', 'le wish a bien été modifié');
@@ -77,13 +83,12 @@ final class WishController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/wish/delete/{id}', name: 'app_wish_delete', requirements: ['id' => '\d+'])]
-    public function deleteWish(int $id, EntityManagerInterface $em): Response
+    public function deleteWish(Wish $wish, EntityManagerInterface $em): Response
     {
-        $wishRepo = $em->getRepository(Wish::class);
-        $wish = $wishRepo->find($id);
-        if (!$id || !isset($wish)) {
-            return $this->redirect('/wish');
+        if($wish->getAuthor() !== $this->getUser()->getUserIdentifier() && !$this->isGranted("ROLE_ADMIN")) {
+            throw new AccessDeniedException();
         }
         $em->remove($wish);
         $em->flush();
