@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-blue-500 p-8">Hello  {{ name }} {{data}}!</div>
+    <div class="bg-blue-500 p-8">Hello  {{ twigProprs}} </div>
 
 
 
@@ -47,7 +47,6 @@
 
 <script setup>
     defineProps({
-        name: String,
+        twigProprs: String,
     });
-    let data = "c'est cool !"
 </script>
