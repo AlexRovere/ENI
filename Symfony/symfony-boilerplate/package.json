@@ -3,7 +3,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "serve": "conc \"symfony serve\" \"npm run dev\""
     },
     "devDependencies": {
         "@hotwired/stimulus": "^3.0.0",

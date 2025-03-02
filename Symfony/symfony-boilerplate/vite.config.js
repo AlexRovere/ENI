@@ -8,14 +8,33 @@ export default defineConfig({
 
     server: {
         host: '127.0.0.1',
+        hmr: true,
+        watch: {
+            usePolling: true,
+            include: ['**/*.php', '**/*.twig']
+        }
 
     },
     plugins: [
         vuePlugin(),
         symfonyPlugin({
-            stimulus: true
+            stimulus: true,
+            refresh: ['templates/**/*.twig']
         }),
         tailwindcss(),
+        {
+            name: 'twig-php-reload',
+            handleHotUpdate({ file, server }) {
+                if (file.endsWith('.twig')) {
+                    console.log('Reloading due to change in:', file);
+                    server.ws.send({
+                        type: 'full-reload',
+                        path: '*'
+                    });
+                    return [];
+                }
+            }
+        }
     ],
     build: {
         rollupOptions: {
