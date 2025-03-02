@@ -1,3 +1,2 @@
-import './bootstrap.js';
-import "./app.css";
+import './js/dark-mode.js';
 import 'flowbite';
