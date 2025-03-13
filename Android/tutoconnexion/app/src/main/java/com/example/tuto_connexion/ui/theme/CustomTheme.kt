@@ -1,6 +1,5 @@
 package com.example.tuto_connexion.ui.theme
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,14 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -25,6 +22,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -39,10 +41,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.tuto_connexion.R
 
 @Composable
-fun TutoInput(placeholderText: String, icone: ImageVector? = null) {
+fun TutoInput(placeholderText: String, icone: ImageVector? = null, value: MutableState<String> = mutableStateOf("") ) {
     Box(modifier = Modifier.padding(vertical = 10.dp)) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
@@ -53,8 +57,10 @@ fun TutoInput(placeholderText: String, icone: ImageVector? = null) {
                 focusedContainerColor = Color(0xDDFFFFFF)
             ),
             shape = RoundedCornerShape(40.dp),
-            value = "",
-            onValueChange = {},
+            value = value.value,
+            onValueChange = { newText ->
+                value.value = newText
+            },
             leadingIcon = {
                 icone?.let {
                     Icon(
@@ -101,7 +107,7 @@ fun TutoBasePage(content: @Composable ColumnScope.() -> Unit) {
 }
 
 @Composable
-fun TutoButton(title: String, modifier: Modifier = Modifier) {
+fun TutoButton(title: String, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
     Button(
         modifier = modifier
             .width(200.dp)
@@ -111,7 +117,7 @@ fun TutoButton(title: String, modifier: Modifier = Modifier) {
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent
         ),
-        onClick = {},
+        onClick = { onClick?.invoke() }
     ) {
         Box(
             contentAlignment = Alignment.Center, modifier = Modifier

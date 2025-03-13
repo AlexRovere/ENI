@@ -2,8 +2,7 @@
     <string name="app_name">tuto-connexion</string>
     <string name="app_title_sign_in">Login</string>
     <string name="app_btn_sign_in">Connection</string>
-    <string name="app_field_email_hint">Email</string>
-    <string name="app_field_password_hint">Password</string>
+
     <string name="app_icon_label_default">Icone</string>
 
     <string name="app_msg_ask_reset_password">Forgot password ?</string>
@@ -11,5 +10,16 @@
 
     <string name="app_msg_ask_have_account">Don\'t have an account ?</string>
     <string name="app_btn_sign_up">Register now !</string>
+
+    <string name="app_field_email_hint">Email</string>
+    <string name="app_field_password_hint">Password</string>
+    <string name="app_field_password_confirmation_hint" >passwordConfirmation</string>
+    <string name="app_field_pseudo_hint" >pseudo</string>
+    <string name="app_field_city_code_hint" >cityCode</string>
+    <string name="app_field_city_hint" >city</string>
+    <string name="app_field_phone_number_hint" >phoneNumber</string>
+
+    <string name="app_title_sign_up" >Sign Up</string>
+
 
 </resources>

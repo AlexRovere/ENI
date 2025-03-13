@@ -12,13 +12,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PageSignIn()
+            AppNavigation()
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-
+fun Home() {
+    AppNavigation()
 }
