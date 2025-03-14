@@ -171,3 +171,15 @@ fun TutoH2(title: String) {
         color = Color.White
     )
 }
+
+@Composable
+fun TutoText(title: String) {
+    Text(
+        text = title,
+        modifier = Modifier.fillMaxWidth(),
+        fontSize = 20.sp,
+        textAlign = TextAlign.Center,
+        color = Color.White
+    )
+}
+
