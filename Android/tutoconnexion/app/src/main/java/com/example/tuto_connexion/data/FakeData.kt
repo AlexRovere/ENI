@@ -1,7 +1,7 @@
 package com.example.tuto_connexion.data
 
 import com.example.tuto_connexion.R
-import com.example.tuto_connexion.domain.model.Article
+import com.example.tuto_connexion.demo.model.Article
 
 val article1 = Article(
     id = 1,
