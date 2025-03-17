@@ -13,22 +13,32 @@
         android:theme="@style/Theme.Tutoconnexion"
         tools:targetApi="31">
         <activity
-            android:name=".demo_intent.DemoPage1Activity"
-            android:exported="true"
-            >
+            android:name=".demo_mvvm.DemoViewModelActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".demo_stateful.DemoStateful2Activity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".demo_stateful.DemoStatefulActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".demo_intent.DemoPage1Activity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Tutoconnexion">
 
         </activity>
+
     </application>
 
 </manifest>
