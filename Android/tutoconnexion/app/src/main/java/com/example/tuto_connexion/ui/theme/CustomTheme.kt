@@ -1,5 +1,6 @@
 package com.example.tuto_connexion.ui.theme
 
+import ProgressDialog
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -100,6 +101,7 @@ fun TutoBasePage(content: @Composable ColumnScope.() -> Unit) {
                     )
                 ) {
                     content()
+                    ProgressDialog()
                 }
             }
         }

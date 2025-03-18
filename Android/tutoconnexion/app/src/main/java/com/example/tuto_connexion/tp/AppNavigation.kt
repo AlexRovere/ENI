@@ -28,6 +28,7 @@ object Routes {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation() {
+    val articleViewModel = ArticleViewModel()
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -43,7 +44,7 @@ fun AppNavigation() {
             PageForgotPassword(navController = navController)
         }
         composable(Routes.ARTICLES) {
-            PageArticles(navController = navController, articleViewModel = ArticleViewModel())
+            PageArticles(navController = navController, articleViewModel = articleViewModel)
         }
         composable(
             Routes.ARTICLE_DETAIL, arguments = listOf(
