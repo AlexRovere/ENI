@@ -1,4 +1,4 @@
-package com.example.tuto_connexion
+package com.example.tuto_connexion.tp.helpers
 
 import android.content.Context
 import android.content.Intent

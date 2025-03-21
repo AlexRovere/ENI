@@ -39,15 +39,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tuto_connexion.R
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
-fun TutoInput(placeholderText: String, icone: ImageVector? = null, value: MutableState<String> = mutableStateOf("") ) {
+fun TutoInput(placeholderText: String,
+              icone: ImageVector? = null,
+              value: String = "",
+              onValueChange: (String) -> Unit ) {
     Box(modifier = Modifier.padding(vertical = 10.dp)) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
@@ -58,10 +63,8 @@ fun TutoInput(placeholderText: String, icone: ImageVector? = null, value: Mutabl
                 focusedContainerColor = Color(0xDDFFFFFF)
             ),
             shape = RoundedCornerShape(40.dp),
-            value = value.value,
-            onValueChange = { newText ->
-                value.value = newText
-            },
+            value = value,
+            onValueChange = onValueChange ,
             leadingIcon = {
                 icone?.let {
                     Icon(

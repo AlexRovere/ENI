@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.tuto_connexion.AppViewHelper
+import com.example.tuto_connexion.tp.helpers.AppViewHelper
 import com.example.tuto_connexion.demo.demo_intent.data.DataSrc
 import com.example.tuto_connexion.tp.MainActivity
 import com.example.tuto_connexion.ui.theme.TutoBasePage

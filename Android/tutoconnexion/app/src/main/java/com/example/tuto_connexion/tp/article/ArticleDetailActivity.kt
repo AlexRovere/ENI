@@ -15,13 +15,15 @@ import com.example.tuto_connexion.ui.theme.TutoBoxCenter
 import com.example.tuto_connexion.ui.theme.TutoButton
 import com.example.tuto_connexion.ui.theme.TutoH1
 
+
 @Composable
 fun PageArticleDetail(navController: NavController, article: Article?) {
     TutoBasePage {
 
         TutoH1(title = "Page detail article")
         TutoBoxCenter {
-            TutoButton(title = "Retour à la liste", onClick = { navController.navigate(Routes.ARTICLES) })
+            TutoButton(
+                title = "Retour à la liste", onClick = { navController.navigate(Routes.ARTICLES) })
         }
         LazyColumn {
             item {

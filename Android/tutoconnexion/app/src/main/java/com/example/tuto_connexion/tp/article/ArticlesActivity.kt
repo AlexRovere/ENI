@@ -2,7 +2,6 @@ package com.example.tuto_connexion.tp.article
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -33,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.tuto_connexion.tp.Routes
 import com.example.tuto_connexion.tp.article.viewModel.ArticleViewModel
+import com.example.tuto_connexion.tp.auth.viewModel.AuthViewModel
 import com.example.tuto_connexion.ui.theme.TutoBasePage
 import com.example.tuto_connexion.ui.theme.TutoBoxCenter
 import com.example.tuto_connexion.ui.theme.TutoButton
@@ -40,11 +39,13 @@ import com.example.tuto_connexion.ui.theme.TutoH1
 
 
 @Composable
-fun PageArticles(navController: NavController, articleViewModel: ArticleViewModel) {
+fun PageArticles(navController: NavController, articleViewModel: ArticleViewModel, authViewModel: AuthViewModel) {
     val articlesState by articleViewModel.articles.collectAsState()
     TutoBasePage {
         TutoBoxCenter {
-            TutoButton(title = "Déconnexion", onClick = { navController.navigate(Routes.SIGN_IN) })
+            TutoButton(title = "Déconnexion", onClick = { authViewModel.logout(
+                onLogoutSuccess = { navController.navigate(Routes.SIGN_IN)}
+            ) })
         }
         TutoH1(title = "Liste des articles")
         TutoBoxCenter {
@@ -114,5 +115,5 @@ fun PageArticles(navController: NavController, articleViewModel: ArticleViewMode
 @Composable
 fun PageArticlesPreview() {
     val navController = rememberNavController()
-    PageArticles(navController = navController, articleViewModel = ArticleViewModel())
+    PageArticles(navController = navController, articleViewModel = ArticleViewModel(), authViewModel = AuthViewModel())
 }

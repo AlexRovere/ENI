@@ -17,7 +17,7 @@
     <string name="app_field_pseudo_hint" >pseudo</string>
     <string name="app_field_city_code_hint" >cityCode</string>
     <string name="app_field_city_hint" >city</string>
-    <string name="app_field_phone_number_hint" >phoneNumber</string>
+    <string name="app_field_phone_hint" >phoneNumber</string>
 
     <string name="app_title_sign_up" >Sign Up</string>
 

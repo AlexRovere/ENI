@@ -1,8 +1,9 @@
 package com.example.tuto_connexion.tp
 
-import android.util.Log
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,7 +15,14 @@ import com.example.tuto_connexion.tp.article.viewModel.ArticleViewModel
 import com.example.tuto_connexion.tp.auth.PageForgotPassword
 import com.example.tuto_connexion.tp.auth.PageSignIn
 import com.example.tuto_connexion.tp.auth.PageSignUp
+import com.example.tuto_connexion.tp.auth.viewModel.AuthViewModel
 import com.example.tuto_connexion.tp.data.articles
+import com.example.tuto_connexion.tp.model.Article
+import androidx.compose.runtime.getValue
+import com.example.tuto_connexion.tp.auth.SignInPreview
+import com.example.tuto_connexion.tp.auth.viewModel.ResetPasswordViewModel
+import com.example.tuto_connexion.tp.auth.viewModel.SignUpViewModel
+
 
 object Routes {
     const val SIGN_IN = "sign-in"
@@ -29,22 +37,30 @@ object Routes {
 @Composable
 fun AppNavigation() {
     val articleViewModel = ArticleViewModel()
+    val authViewModel = AuthViewModel()
+    val signUpViewModel = SignUpViewModel()
+    val resetPasswordViewModel = ResetPasswordViewModel()
+
+
     val navController = rememberNavController()
+    val isConnected by authViewModel.isConnected.collectAsState()
+
     NavHost(
         navController = navController,
         startDestination = Routes.SIGN_IN,
     ) {
         composable(Routes.SIGN_IN) {
-            PageSignIn(navController = navController)
+            PageSignIn(navController = navController, authViewModel = authViewModel)
         }
+
         composable(Routes.SIGN_UP) {
-            PageSignUp(navController = navController)
+            PageSignUp(navController = navController, signUpViewModel = signUpViewModel)
         }
         composable(Routes.FORGOT_PASSWORD) {
-            PageForgotPassword(navController = navController)
+            PageForgotPassword(navController = navController, resetPasswordViewModel = resetPasswordViewModel)
         }
         composable(Routes.ARTICLES) {
-            PageArticles(navController = navController, articleViewModel = articleViewModel)
+            PageArticles(navController = navController, articleViewModel = articleViewModel, authViewModel= authViewModel)
         }
         composable(
             Routes.ARTICLE_DETAIL, arguments = listOf(
@@ -52,8 +68,13 @@ fun AppNavigation() {
         ) { backStateEntry ->
 
             val articleId = backStateEntry.arguments?.getString("articleId") ?: ""
+//            val isArticleFound = articleViewModel.getArticle(articleId)
+//            var article: Article = Article()
+//            LaunchedEffect(articleId) {
+//                article = articleViewModel.getArticle(articleId)
+//            }
+
             val article = articles.find { it.id == articleId.toIntOrNull() }
-            Log.d("custom", "je te log la geule !")
             if(article !== null) {
                 PageArticleDetail(navController = navController, article = article)
             } else {
@@ -67,4 +88,5 @@ fun AppNavigation() {
 
         }
     }
+
 }
