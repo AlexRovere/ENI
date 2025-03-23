@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tuto_connexion.tp.api.AuthService
 import com.example.tuto_connexion.tp.api.SignUpRequest
+import com.example.tuto_connexion.tp.helpers.AppAlertDialogHelpers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -61,9 +62,11 @@ class SignUpViewModel : ViewModel() {
             try {
                 val apiResponse = AuthService.AuthApi.authApi.signup(signUpRequest.value)
                 if (apiResponse.code == "200") {
-                    onSignUpSuccess()
+                    AppAlertDialogHelpers.get().showDialog(
+                        message = apiResponse.message, onClose = {  onSignUpSuccess() })
                 } else {
-                    println(apiResponse.message)
+                    AppAlertDialogHelpers.get().showDialog(
+                        message = apiResponse.message)
                 }
             } catch (e: Exception) {
                 Log.d("custom", e.message.toString())

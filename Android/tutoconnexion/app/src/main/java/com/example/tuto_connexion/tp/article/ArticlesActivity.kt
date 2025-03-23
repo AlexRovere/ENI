@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
-import com.example.tuto_connexion.tp.Routes
+import com.example.tuto_connexion.tp.MainActivity.Routes
 import com.example.tuto_connexion.tp.article.viewModel.ArticleViewModel
 import com.example.tuto_connexion.tp.auth.viewModel.AuthViewModel
 import com.example.tuto_connexion.ui.theme.TutoBasePage
@@ -39,7 +39,8 @@ import com.example.tuto_connexion.ui.theme.TutoH1
 
 
 @Composable
-fun PageArticles(navController: NavController, articleViewModel: ArticleViewModel, authViewModel: AuthViewModel) {
+fun PageArticles(navController: NavController, articleViewModel: ArticleViewModel) {
+    val authViewModel = AuthViewModel.get()
     val articlesState by articleViewModel.articles.collectAsState()
     TutoBasePage {
         TutoBoxCenter {
@@ -115,5 +116,5 @@ fun PageArticles(navController: NavController, articleViewModel: ArticleViewMode
 @Composable
 fun PageArticlesPreview() {
     val navController = rememberNavController()
-    PageArticles(navController = navController, articleViewModel = ArticleViewModel(), authViewModel = AuthViewModel())
+    PageArticles(navController = navController, articleViewModel = ArticleViewModel())
 }

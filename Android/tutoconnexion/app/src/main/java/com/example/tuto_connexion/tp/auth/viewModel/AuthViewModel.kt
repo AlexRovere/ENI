@@ -1,19 +1,28 @@
 package com.example.tuto_connexion.tp.auth.viewModel
 
+import AppDialogHelpers
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tuto_connexion.tp.api.AuthService
 import com.example.tuto_connexion.tp.api.LoginRequest
-import com.example.tuto_connexion.tp.api.SignUpRequest
+import com.example.tuto_connexion.tp.helpers.AppAlertDialogHelpers
+import com.example.tuto_connexion.tp.helpers.EniViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.reflect.typeOf
 
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel : EniViewModel() {
+
+    companion object {
+        val instance: AuthViewModel by lazy { AuthViewModel() }
+
+        fun get(): AuthViewModel {
+            return instance;
+        }
+    }
 
     private val _email = MutableStateFlow("isaac@gmail.com")
     val email = _email.asStateFlow()
@@ -59,26 +68,49 @@ class AuthViewModel : ViewModel() {
             email = email.value, password = password.value
         )
 
-        viewModelScope.launch {
-            AppDialogHelpers.get().showDialog(message = "Connexion en cours...")
-            delay(1000)
-
-            try {
-                val apiResponse = AuthService.AuthApi.authApi.login(request)
+        genericApiCall(progressMessage = "Connexion en cours",
+            onExec = {
+            AuthService.AuthApi.authApi.login(request)
+        },
+            onFinish = { apiResponse ->
                 if (apiResponse.code == "200") {
                     _isConnected.value = true
                     _token.value = apiResponse.data!!
-                    onLoginSucess()
-                } else {
-                    println(apiResponse.message)
-                }
-            } catch (e: Exception) {
-                Log.d("custom", e.message.toString())
-            } finally {
-                AppDialogHelpers.get().closeDialog()
 
+                    AppAlertDialogHelpers.get().showDialog(
+                        message = apiResponse.message, onClose = { onLoginSucess() })
+                } else {
+                    AppAlertDialogHelpers.get().showDialog(
+                        message = apiResponse.message
+                    )
+                }
             }
-        }
+        )
+
+//        viewModelScope.launch {
+//            AppDialogHelpers.get().showDialog(message = "Connexion en cours...")
+//            delay(1000)
+//
+//            try {
+//                val apiResponse = AuthService.AuthApi.authApi.login(request)
+//                if (apiResponse.code == "200") {
+//                    _isConnected.value = true
+//                    _token.value = apiResponse.data!!
+//
+//                    AppAlertDialogHelpers.get().showDialog(
+//                        message = apiResponse.message, onClose = { onLoginSucess() })
+//                } else {
+//                    AppAlertDialogHelpers.get().showDialog(
+//                        message = apiResponse.message
+//                    )
+//                }
+//            } catch (e: Exception) {
+//                Log.d("custom", e.message.toString())
+//            } finally {
+//                AppDialogHelpers.get().closeDialog()
+//
+//            }
+//        }
     }
 
 }

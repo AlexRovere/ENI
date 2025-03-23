@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.tuto_connexion.tp.Routes
+import com.example.tuto_connexion.tp.MainActivity.Routes
 import com.example.tuto_connexion.tp.auth.viewModel.ResetPasswordViewModel
 import com.example.tuto_connexion.ui.theme.TutoBasePage
 import com.example.tuto_connexion.ui.theme.TutoBoxCenter

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.tuto_connexion.tp.Routes
+import com.example.tuto_connexion.tp.MainActivity.Routes
 import com.example.tuto_connexion.tp.data.articles
 import com.example.tuto_connexion.tp.model.Article
 import com.example.tuto_connexion.ui.theme.TutoBasePage

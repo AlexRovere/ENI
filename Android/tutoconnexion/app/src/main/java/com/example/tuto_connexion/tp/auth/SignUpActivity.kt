@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tuto_connexion.R
-import com.example.tuto_connexion.tp.Routes
+import com.example.tuto_connexion.tp.MainActivity.Routes
 import com.example.tuto_connexion.tp.auth.viewModel.SignUpViewModel
 import com.example.tuto_connexion.ui.theme.TutoBasePage
 import com.example.tuto_connexion.ui.theme.TutoButton

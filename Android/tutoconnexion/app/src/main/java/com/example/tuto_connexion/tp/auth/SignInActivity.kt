@@ -10,19 +10,21 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tuto_connexion.R
-import com.example.tuto_connexion.tp.Routes
+import com.example.tuto_connexion.tp.ArticleActivity
+import com.example.tuto_connexion.tp.MainActivity.Routes
 import com.example.tuto_connexion.tp.auth.viewModel.AuthViewModel
+import com.example.tuto_connexion.tp.helpers.AppViewHelper
 import com.example.tuto_connexion.ui.theme.TutoBasePage
 import com.example.tuto_connexion.ui.theme.TutoBoxCenter
 import com.example.tuto_connexion.ui.theme.TutoButton
@@ -32,18 +34,11 @@ import com.example.tuto_connexion.ui.theme.TutoInput
 
 
 @Composable
-fun PageSignIn(navController: NavController, authViewModel: AuthViewModel) {
+fun PageSignIn(navController: NavController) {
+    val authViewModel = AuthViewModel.get()
     val email by authViewModel.email.collectAsState()
     val password by authViewModel.password.collectAsState()
-    val isConnected by authViewModel.isConnected.collectAsState()
-
-
-    LaunchedEffect(isConnected) {
-        if (isConnected) {
-            navController.navigate(Routes.ARTICLES)
-        }
-    }
-
+    val context = LocalContext.current
     TutoBasePage {
         Spacer(modifier = Modifier.weight(1f))
         TutoH1(title = stringResource(R.string.app_title_sign_in))
@@ -75,7 +70,7 @@ fun PageSignIn(navController: NavController, authViewModel: AuthViewModel) {
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 authViewModel.login(onLoginSucess = {
-                    navController.navigate(Routes.ARTICLES)
+                    AppViewHelper.openActivity(context = context, ArticleActivity::class)
                 })
             }
         )
@@ -101,5 +96,5 @@ fun PageSignIn(navController: NavController, authViewModel: AuthViewModel) {
 @Composable
 fun SignInPreview() {
     val navController = rememberNavController()
-    PageSignIn(navController, authViewModel = AuthViewModel())
+    PageSignIn(navController)
 }

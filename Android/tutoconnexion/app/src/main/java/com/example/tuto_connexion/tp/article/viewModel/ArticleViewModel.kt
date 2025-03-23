@@ -48,8 +48,8 @@ class ArticleViewModel : ViewModel() {
 //    }
 
 
-    init {
-        reloadArticles()
-    }
+//    init {
+//        reloadArticles()
+//    }
 
 }

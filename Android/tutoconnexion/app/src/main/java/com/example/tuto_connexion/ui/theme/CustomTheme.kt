@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tuto_connexion.R
+import com.example.tuto_connexion.tp.helpers.AlertDialog
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
@@ -105,6 +106,7 @@ fun TutoBasePage(content: @Composable ColumnScope.() -> Unit) {
                 ) {
                     content()
                     ProgressDialog()
+                    AlertDialog()
                 }
             }
         }
