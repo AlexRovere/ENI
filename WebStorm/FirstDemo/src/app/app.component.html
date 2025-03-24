@@ -1,7 +1,9 @@
 <div class="h-screen flex flex-col">
-<app-header/>
-<div class="grow">
-<app-home/>
-</div>
-<app-footer/>
+  <app-header [isLoggedIn]=true></app-header>
+    <div class="grow p-8">
+      <app-home/>
+      <app-image-toggle/>
+      <app-clicker/>
+    </div>
+    <app-footer/>
 </div>
