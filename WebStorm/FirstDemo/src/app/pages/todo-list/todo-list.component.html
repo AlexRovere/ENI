@@ -1,0 +1,34 @@
+<div class=" h-full flex w-1/2 mx-auto justify-between gap-5 ">
+  {{ isTodoFormHidden }}
+
+  @for (cat of categories; track $index) {
+    <div class="flex flex-col gap-5 grow text-center bg-gray-100">
+      <div class="flex justify-around">
+        <h2>{{ cat }}</h2>
+        <button (click)="showTodoForm(cat)">Add</button>
+      </div>
+
+      @for (todo of filterTodoByCat(cat); track $index) {
+        <div
+          [ngClass]="addClassTodo(cat)"
+          class="bg-gray-200 clickable py-3 row">
+          {{ todo.title }}
+          <button (click)="deleteTodo(todo)">Delete</button>
+        </div>
+      }
+    </div>
+  }
+  @if (!isTodoFormHidden) {
+    <div class="flex flex-col gap-5 bg-gray-300 w-1/3 h-1/3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <h2>Add TODO {{newTodo.category}}</h2>
+      title
+      <input class="bg-white" [(ngModel)]="newTodo.title">
+      {{newTodo.title}}
+      desc
+      <input class="bg-white" [(ngModel)]="newTodo.description" />
+
+      <button (click)="createTodo()">Ajouter</button>
+
+    </div>
+  }
+</div>
