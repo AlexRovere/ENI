@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {SharedModule} from '../shared.module';
-import {FormControl, FormGroup, NgForm, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 
@@ -15,7 +15,7 @@ export class RegisterComponent {
   private readonly authService: AuthService = inject(AuthService)
 
   registerForm = new FormGroup({
-    email: new FormControl('user@gmail.com', Validators.required),
+    email: new FormControl('user@gmail.com', [Validators.required, Validators.email]),
     password: new FormControl('password', Validators.required),
     passwordConfirm: new FormControl('password', Validators.required),
     pseudo: new FormControl('ganu', Validators.required),
@@ -29,4 +29,6 @@ export class RegisterComponent {
       this.router.navigate(['/login'])
     }
   }
+
+  protected readonly Object = Object;
 }

@@ -1,0 +1,123 @@
+  <div class="flex items-center justify-center">
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          Créer votre compte
+        </h1>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
+
+          <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre email</label>
+            <input formControlName="email" name="email" id="email"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   placeholder="name@company.com" required>
+            @if (emailControl.invalid && (emailControl.dirty || emailControl.untouched)) {
+              <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                @if (emailControl.hasError('required')) {
+                  L'email est obligatoire.
+                }
+                @if (emailControl.hasError('email')) {
+                  Veuillez saisir un email valide.
+                }
+              </p>
+            }
+          </div>
+          <div formGroupName="passwordGroup">
+            <div>
+              <label for="password"
+                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
+              <input formControlName="password" type="password" name="password" id="password" placeholder="••••••••"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                     required>
+              @if (passwordControl.invalid && (passwordControl.dirty || passwordControl.untouched)) {
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  @if (passwordControl.hasError('required')) {
+                    Le mot de passe est obligatoire.
+                  }
+                  @if (passwordControl.hasError('minLength')) {
+                    Doit être supérieur à 5 caractères.
+                  }
+                </p>
+              }
+            </div>
+            <div>
+              <label for="password-confirm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Confirmer le mot de passe
+              </label>
+              <input formControlName="passwordConfirm" type="password" name="password-confirm" id="password-confirm"
+                     placeholder="••••••••"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                     required>
+              @if (passwordConfirmControl.invalid && (passwordConfirmControl.dirty || passwordConfirmControl.untouched)) {
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  @if (passwordConfirmControl.hasError('required')) {
+                    La confirmation du mot de passe est obligatoire.
+                  }
+                </p>
+              }
+              <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+              @if(registerForm.controls.passwordGroup.hasError('passwordMismatch')) {
+                Les mots de passes ne correspondent pas
+              }
+              </p>
+            </div>
+          </div>
+          <div>
+            <label for="pseudo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pseudo</label>
+            <input formControlName="pseudo" type="text" name="pseudo" id="pseudo" placeholder="bob"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   required>
+            @if (pseudoControl.invalid && (pseudoControl.dirty || pseudoControl.untouched)) {
+              <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                @if (pseudoControl.hasError('required')) {
+                  Le pseudo est obligatoire.
+                }
+              </p>
+            }
+          </div>
+          <div>
+            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telephone</label>
+            <input formControlName="phone" type="text" name="phone" id="phone" placeholder="065645843"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   required>
+            @if (phoneControl.invalid && (phoneControl.dirty || phoneControl.untouched)) {
+              <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                @if (phoneControl.hasError('required')) {
+                  Le téléphone est obligatoire.
+                }
+              </p>
+            }
+          </div>
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <input formControlName="terms" name="terms" id="terms" aria-describedby="terms" type="checkbox"
+                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                     required>
+              @if (termsControl.invalid && (termsControl.dirty || termsControl.untouched)) {
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  @if (termsControl.hasError('required')) {
+                    Vous devez accepter les conditions
+                  }
+                </p>
+              }
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="terms" class="font-light text-gray-500 dark:text-gray-300">J'accepte <a
+                class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">les termes</a></label>
+            </div>
+          </div>
+          <div class="flex justify-center">
+          <button [disabled]="!registerForm.valid" type="submit"
+                  class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+            Créer votre compte
+          </button>
+          </div>
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+            Vous avez déjà un compte ? <a [routerLink]="['/login']"
+                                        class="font-medium text-primary-600 hover:underline dark:text-primary-500">Connectez-vous ici</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>

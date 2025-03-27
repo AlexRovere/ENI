@@ -62,9 +62,21 @@ app.get('/find-movies', (req, res) => __awaiter(void 0, void 0, void 0, function
     const query = (_b = (_a = req.query) === null || _a === void 0 ? void 0 : _a.query) !== null && _b !== void 0 ? _b : "";
     try {
         const { data } = yield axios.get(`https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=fr-FR&page=1`, options);
-        const movie = data.results[0];
-        console.log(movie);
-        res.status(200).json({ message: 'success', code: 200, data: { movies: data.results, pages: data.total_pages, results: data.total_results } });
+        const movies = data.results.map((d) => {
+            return {
+                id: d.id,
+                categories: d.genre_ids,
+                title: d.title,
+                description: d.overview,
+                popularity: d.popularity,
+                releaseAt: d.release_date,
+                voteAverage: d.vote_average,
+                voteCount: d.vote_count,
+                posterPath: `https://image.tmdb.org/${d.poster_path}`,
+                backgroundPath: `https://image.tmdb.org/${d.background_path}`
+            };
+        });
+        res.status(200).json({ message: 'success', code: 200, data: { movies, pages: data.total_pages, results: data.total_results } });
     }
     catch (e) {
         console.error(e);
