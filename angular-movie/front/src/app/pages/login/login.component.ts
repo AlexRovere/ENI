@@ -17,7 +17,10 @@ export class LoginComponent {
   private authService: AuthService = inject(AuthService)
   private router: Router = inject(Router)
 
+  errorLogin: string = ""
+
   onSubmit(loginForm: NgForm) {
+    this.errorLogin = ""
     if (loginForm.valid) {
       const user: User = {
         email: loginForm.value.email,
@@ -25,7 +28,9 @@ export class LoginComponent {
       }
       this.authService.login(user)
       if (this.authService.isAuthenticated()) {
-        this.router.navigateByUrl('/products')
+        this.router.navigateByUrl('/')
+      } else {
+        this.errorLogin = "Login et/ou mot de passe invalide"
       }
     }
   }

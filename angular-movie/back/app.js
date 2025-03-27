@@ -19,20 +19,16 @@ const app = (0, express_1.default)();
 const port = 3000;
 const axios = require('axios');
 dotenv_1.default.config();
-class Server {
-    constructor(app) {
-        this.config(app);
-    }
-    config(app) {
-        const corsOptions = {
-            origin: "http://localhost:8080"
-        };
-        app.use((0, cors_1.default)(corsOptions));
-        app.use(express_1.default.json());
-        app.use(express_1.default.urlencoded({ extended: true }));
-    }
-}
-exports.default = Server;
+const API_YOUTUBE = process.env.API_YOUTUBE;
+const corsOptions = {
+    origin: ['http://localhost:4200', 'http://127.0.0.1:4200'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+app.use((0, cors_1.default)(corsOptions));
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.send('Welcome stranger');
 });
@@ -77,6 +73,34 @@ app.get('/find-movies', (req, res) => __awaiter(void 0, void 0, void 0, function
             };
         });
         res.status(200).json({ message: 'success', code: 200, data: { movies, pages: data.total_pages, results: data.total_results } });
+    }
+    catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'server error', code: 500 });
+    }
+}));
+const optionsYoutube = {
+    method: 'GET',
+    headers: {
+        accept: 'application/json',
+    }
+};
+app.get('/find-videos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const query = (_b = (_a = req.query) === null || _a === void 0 ? void 0 : _a.query) !== null && _b !== void 0 ? _b : "";
+    try {
+        const { data } = yield axios.get(`https://www.googleapis.com/youtube/v3/search?key=${API_YOUTUBE}&maxResults=20&q=${query}&part=snippet`, optionsYoutube);
+        res.status(200).json({ message: 'success', code: 200, data });
+    }
+    catch (e) {
+        console.error(e);
+        res.status(500).json({ message: 'server error', code: 500 });
+    }
+}));
+app.get('/get-popular-videos', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { data } = yield axios.get(`https://www.googleapis.com/youtube/v3/videos?key=${API_YOUTUBE}&maxResults=20&chart=mostPopular&regionCode=FR&part=id,player,statistics,snippet`, optionsYoutube);
+        res.status(200).json({ message: 'success', code: 200, data });
     }
     catch (e) {
         console.error(e);

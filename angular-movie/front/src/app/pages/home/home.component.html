@@ -1,1 +1,27 @@
-<p>home works!</p>
+<section>
+  <div class="flex gap-10 justify-center flex-wrap">
+    @for (video of videos(); track $index) {
+      <div class="max-w-sm">
+        <div class="w-full aspect-w-16 aspect-h-9">
+          <img class="rounded-t-lg w-full h-full object-cover" [src]="video.snippet.thumbnails.high.url" alt=""/>
+        </div>
+        <div class="p-5">
+          <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{ video.snippet.title }}
+          </p>
+        </div>
+        @if (video.statistics) {
+          <div>
+            commentCount : {{ video.statistics.commentCount }}
+            favoriteCount : {{ video.statistics.favoriteCount }}
+            likeCount : {{ video.statistics.likeCount }}
+            viewCount : {{ video.statistics.viewCount }}
+          </div>
+        }
+        <div>
+          chaine : {{ video.snippet.channelTitle }}
+        </div>
+      </div>
+    }
+  </div>
+</section>

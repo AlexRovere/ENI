@@ -17,7 +17,7 @@ export class RegisterComponent {
 
   emailControl = new FormControl('user@gmail.com', [Validators.required, Validators.email])
   passwordControl = new FormControl('password', [Validators.required, Validators.minLength(6)])
-  passwordConfirmControl = new FormControl('passwordConfirm', [Validators.required])
+  passwordConfirmControl = new FormControl('password', [Validators.required])
   pseudoControl = new FormControl('ganu', Validators.required)
   phoneControl = new FormControl('0645659832', Validators.required)
   termsControl = new FormControl(true, Validators.required)
