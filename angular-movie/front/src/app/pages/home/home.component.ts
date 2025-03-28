@@ -3,11 +3,15 @@ import {ApiVideoService} from '../../services/api-video.service';
 import {RouterLink} from '@angular/router';
 import {Video} from '../../models/video';
 import {AuthService} from '../../services/auth.service';
+import {DatePipe} from '@angular/common';
+import {ShortTextPipe} from '../../pipes/short-text.pipe';
 
 @Component({
   selector: 'app-home',
   imports: [
-    RouterLink
+    RouterLink,
+    DatePipe,
+    ShortTextPipe
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -18,6 +22,11 @@ export class HomeComponent implements OnInit {
 
 
   videos = computed(() => this.apiVideoService.getVideos())
+
+  isVideoFavorite(video: Video) {
+    const videosFavorite = this.authService.getUserLogged()?.videos ?? []
+    return videosFavorite.some(v => v.id === video.id)
+  }
 
   addFavorite(video: Video) {
     this.authService.addVideoFavorite(video)

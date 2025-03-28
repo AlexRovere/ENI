@@ -1,10 +1,10 @@
 <div class="h-screen flex flex-col">
   <app-header/>
-  <div class="flex grow">
-    @if (isAuthenticated()) {
-      <app-drawer></app-drawer>
+  <div class="flex grow  bg-gray-700 overflow-hidden">
+    @if (isAuthenticated() && showDrawer()) {
+      <app-drawer ></app-drawer>
     }
-    <div class="grow overflow-scroll p-8 bg-gray-700">
+    <div class="grow p-8 overflow-scroll">
       <router-outlet/>
     </div>
   </div>

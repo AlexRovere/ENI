@@ -26,7 +26,6 @@ export class AuthService {
   }
 
   login(user: User): Observable<ApiResponse<User>> {
-    // TODO : CALL API
     return this.http.get<ApiResponse<User>>(`${this.api}/login`, {
       params: {
         email: user.email,
@@ -62,7 +61,6 @@ export class AuthService {
   }
 
   addVideoFavorite(video: Video) {
-    console.log(this._userLogged())
     const foundVideo = this._userLogged()?.videos?.find(v => v.id === video.id)
     const userId = this._userLogged()?._id
 

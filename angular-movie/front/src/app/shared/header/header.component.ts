@@ -2,6 +2,7 @@ import {Component, computed, inject} from '@angular/core';
 import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {ApiVideoService} from '../../services/api-video.service';
+import {AppDataService} from '../../services/app-data.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent {
   private readonly router: Router = inject(Router)
   private readonly authService: AuthService = inject(AuthService)
   private readonly apiVideo: ApiVideoService = inject(ApiVideoService)
+  private appDataService: AppDataService = inject(AppDataService)
 
   logoPath: string = "images/logo.jpg"
 
@@ -32,5 +34,9 @@ export class HeaderComponent {
   logout() {
     this.authService.logout()
     this.router.navigateByUrl('/login')
+  }
+
+  toggleDrawer() {
+    this.appDataService.toggleDrawer()
   }
 }
