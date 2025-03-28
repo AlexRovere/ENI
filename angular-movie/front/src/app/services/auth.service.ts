@@ -1,49 +1,101 @@
-import {Injectable, signal} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {User} from '../models/user';
+import {HttpClient} from '@angular/common/http';
+import {ApiResponse} from '../models/apiResponse';
+import {Observable, tap} from 'rxjs';
+import {Video} from '../models/video';
+import {ApiVideoService} from './api-video.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AuthService {
+  private readonly apiVideoService: ApiVideoService = inject(ApiVideoService)
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly api: string = "http://localhost:3000"
 
-    private _userLogged = signal<User | null>(null)
-    private _isAuthenticated = signal<boolean>(false);
-    private fakeUsers: User[] = [
-        {
-            email: 'wormz91@hotmail.fr',
-            password: 'password',
-            pseudo: 'ganu',
-            phone: '0645896487'
+  private _userLogged = signal<User | null>(null)
+  private _isAuthenticated = signal<boolean>(false);
+
+  isAuthenticated(): boolean {
+    return this._isAuthenticated();
+  }
+
+  getUserLogged(): User | null {
+    return this._userLogged();
+  }
+
+  login(user: User): Observable<ApiResponse<User>> {
+    // TODO : CALL API
+    return this.http.get<ApiResponse<User>>(`${this.api}/login`, {
+      params: {
+        email: user.email,
+        password: user.password
+      }
+    }).pipe(
+      tap({
+        next: (response) => {
+          this._userLogged.set(response.data);
+          this._isAuthenticated.set(true);
+        },
+        error: (error) => {
+          this._isAuthenticated.set(false);
+          console.error(error);
         }
-    ]
+      })
+    );
+  }
 
-    isAuthenticated(): boolean {
-        return this._isAuthenticated();
-    }
+  logout() {
+    this._isAuthenticated.set(false)
+    this._userLogged.set(null)
+  }
 
-    getUserLogged(): User | null {
-        return this._userLogged();
-    }
+  register(user: any) {
+    this.http.post<ApiResponse<User>>(`${this.api}/register`, user).subscribe({
+      next: (response) => {
+      },
+      error: (error: Error) => {
+        console.error(error)
+      }
+    })
+  }
 
-    login(user: User) {
-        // TODO : CALL API
-        const userFound = this.fakeUsers.find(f => f.email === user.email && f.password === user.password)
-        if (userFound) {
-            this._isAuthenticated.set(true)
-            this._userLogged.set(user)
-        } else {
-            this._isAuthenticated.set(false)
-            this._userLogged.set(null)
-        }
-    }
+  addVideoFavorite(video: Video) {
+    console.log(this._userLogged())
+    const foundVideo = this._userLogged()?.videos?.find(v => v.id === video.id)
+    const userId = this._userLogged()?._id
 
-    logout() {
-        this._isAuthenticated.set(false)
-        this._userLogged.set(null)
-    }
+    if(userId  && !foundVideo) {
+      this.apiVideoService.addVideoFavorite(video, userId)
 
-    register(user: any) {
-        // TODO : CALL API
-        this.fakeUsers.push(user)
+      const currentVideos = this._userLogged()?.videos || []
+
+      const updatedVideos = [
+        ...currentVideos,
+        video]
+      this._userLogged.set({
+        ...this._userLogged() as User,
+        videos: updatedVideos
+      })
     }
+  }
+
+  removeVideoFavorite(video: Video) {
+    const foundVideo = this._userLogged()?.videos?.find(v => v.id === video.id)
+    const userId = this._userLogged()?._id
+
+    if(userId  && foundVideo) {
+      this.apiVideoService.removeVideoFavorite(video, userId)
+
+      const currentVideos = this._userLogged()?.videos || []
+      const updatedVideos = currentVideos.filter(v => v.id !== video.id);
+
+      this._userLogged.set({
+        ...this._userLogged() as User,
+        videos: updatedVideos
+      })
+    }
+  }
+
 }

@@ -4,6 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service'
 import {confirmPasswordValidator} from '../../validators/confimPasswordValidator';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-register',
@@ -35,9 +36,16 @@ export class RegisterComponent {
     },
   )
 
-  onSubmit() {
+   onSubmit() {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value)
+      const user: User = {
+        email:  this.registerForm.value.email ?? '',
+        password:  this.registerForm.value.passwordGroup?.password ?? '',
+        pseudo:  this.registerForm.value.pseudo ?? '',
+        phone:  this.registerForm.value.phone  ?? '',
+      }
+      this.authService.register(user)
+      // TODO: Gérer les erreurs du back
       this.router.navigate(['/login'])
     }
   }

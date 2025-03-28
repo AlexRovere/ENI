@@ -26,12 +26,19 @@ export class LoginComponent {
         email: loginForm.value.email,
         password: loginForm.value.password
       }
-      this.authService.login(user)
-      if (this.authService.isAuthenticated()) {
-        this.router.navigateByUrl('/')
-      } else {
-        this.errorLogin = "Login et/ou mot de passe invalide"
-      }
+      this.authService.login(user).subscribe({
+        next: (response) => {
+          if (this.authService.isAuthenticated()) {
+            this.router.navigateByUrl('/');
+          } else {
+            this.errorLogin = "Login et/ou mot de passe invalide";
+          }
+        },
+        error: (error) => {
+          this.errorLogin = "Erreur de connexion. Veuillez réessayer.";
+          console.error('Erreur de connexion', error);
+        }
+      })
     }
   }
 

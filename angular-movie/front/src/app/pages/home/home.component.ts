@@ -1,38 +1,30 @@
 import {Component, computed, effect, inject, OnInit} from '@angular/core';
 import {ApiVideoService} from '../../services/api-video.service';
+import {RouterLink} from '@angular/router';
+import {Video} from '../../models/video';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  apiVideo: ApiVideoService = inject(ApiVideoService)
+  apiVideoService: ApiVideoService = inject(ApiVideoService)
+  authService: AuthService = inject(AuthService)
 
 
-  videos = computed(() => this.apiVideo.getVideos())
+  videos = computed(() => this.apiVideoService.getVideos())
 
-
-
-  ngOnInit() {
-    this.apiVideo.getPopularVideos()
+  addFavorite(video: Video) {
+    this.authService.addVideoFavorite(video)
   }
 
-
-  // videos: any[] = [
-  //   {
-  //     id: 1,
-  //     imgPath: "images/logo.jpg"
-  //   },
-  //   {
-  //     id: 2,
-  //     imgPath: "images/logo.jpg"
-  //   },
-  //   {
-  //     id: 3,
-  //     imgPath: "images/logo.jpg"
-  //   }
-  // ]
+  ngOnInit() {
+    this.apiVideoService.getPopularVideos()
+  }
 
 }
