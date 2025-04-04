@@ -227,7 +227,6 @@ app.get("/users/detail/:id", (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 app.get("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.query);
     const email = req.query.email;
     const password = req.query.password;
     if (email && password) {
@@ -267,7 +266,6 @@ app.post("/users/remove-favorite-video", (req, res) => __awaiter(void 0, void 0,
         if (user) {
             const videoAlreadyExist = user.videos.find(v => v.id === video.id);
             if (videoAlreadyExist) {
-                console.log(videoAlreadyExist);
                 user.videos.splice(user.videos.indexOf(video), 1);
             }
             yield User_1.default.updateOne(user);
