@@ -29,5 +29,7 @@ public class Client {
     @Transient
     Integer age;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    Adress adress;
 
 }
